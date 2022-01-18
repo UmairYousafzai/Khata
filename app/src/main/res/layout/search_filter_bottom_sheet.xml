@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:id="@+id/edit_name_bottom_sheet_layout"
+    tools:context=".SearchFilterBottomSheetFragment"
+    android:elevation="5dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_sheet_background"
+
+        >
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="50dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/custom_nav_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_business_name"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_float_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/ic_letter_a"
+            app:elevation="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_float_give"
+            app:layout_constraintEnd_toStartOf="@+id/btn_float_give"
+            app:layout_constraintBottom_toBottomOf="@id/btn_float_give"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_float_give"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_add_24"
+            app:elevation="5dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_heading"
+            app:layout_constraintStart_toEndOf="@+id/btn_float_all"
+            app:layout_constraintEnd_toStartOf="@+id/btn_float_advance"
+
+            />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_float_advance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_remove_24"
+            app:elevation="5dp"
+            app:layout_constraintTop_toTopOf="@+id/btn_float_give"
+            app:layout_constraintStart_toEndOf="@+id/btn_float_give"
+            app:layout_constraintEnd_toStartOf="@+id/btn_float_settled"
+            app:layout_constraintBottom_toBottomOf="@id/btn_float_give"
+
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_float_settled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_exposure_zero_24"
+            app:elevation="5dp"
+            app:layout_constraintTop_toTopOf="@+id/btn_float_give"
+            app:layout_constraintStart_toEndOf="@+id/btn_float_advance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/btn_float_give"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_sub_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Short By"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_float_give"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/short_by_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/background_color_two"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sub_heading"
+            >
+
+            <RadioGroup
+                android:id="@+id/short_by_radio_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp"
+                >
+
+                <RadioButton
+                    android:id="@+id/most_recent_radio_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Most Recent"
+                    android:gravity="end|center"
+
+                    />
+
+                <RadioButton
+                    android:id="@+id/highest_amount_radio_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Highest Amount"
+                    android:gravity="end|center"
+                    />
+                <RadioButton
+                    android:id="@+id/by_name_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="By Name (A-Z)"
+                    android:gravity="end|center"
+                    />
+                <RadioButton
+                    android:id="@+id/oldest_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="oldest"
+                    android:gravity="end|center"
+                    />
+                <RadioButton
+                    android:id="@+id/least_amount_radio_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Least Amount"
+                    android:gravity="end|center"
+                    />
+                <RadioButton
+                    android:id="@+id/by_name_reverse_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="By Name (Z-A)"
+                    android:gravity="end|center"
+                    />
+            </RadioGroup>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_view_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Result"
+            android:textColor="@color/white"
+            app:cornerRadius="20dp"
+            android:layout_marginTop="20dp"
+            app:backgroundTint="@color/app_theme_color"
+            app:layout_constraintTop_toBottomOf="@+id/short_by_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

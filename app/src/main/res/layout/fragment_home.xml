@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <View
             android:id="@+id/background_image_home"
             android:layout_width="match_parent"
@@ -22,62 +22,66 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView"
+            android:id="@+id/customer_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:visibility="visible"
             app:cardCornerRadius="9dp"
             app:cardElevation="5dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_supplier_indicator"
 
-            app:layout_constraintBottom_toTopOf="@id/card_view_business_card">
+            app:layout_constraintTop_toBottomOf="@+id/view_supplier_indicator">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="20dp"
+                android:paddingVertical="15dp">
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+
                     android:text="You Will Give"
                     android:textColor="@color/gray_custom"
-                    android:textSize="10sp"
                     app:layout_constraintEnd_toStartOf="@+id/tv_amount_give"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_amount_give"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="Rs 0"
+                    android:textSize="16sp"
                     android:textColor="@android:color/holo_red_dark"
                     android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintEnd_toStartOf="@+id/view"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/textView2"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                    />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="20dp"
                     android:text="You Will Get"
                     android:textColor="@color/gray_custom"
-                    android:textSize="10sp"
+                    app:layout_constraintEnd_toStartOf="@id/tv_amount_get"
                     app:layout_constraintStart_toEndOf="@+id/view"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,14 +89,15 @@
                     android:id="@+id/tv_amount_get"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="16dp"
+
                     android:text="Rs 0"
+                    android:textSize="16sp"
                     android:textColor="@android:color/holo_green_dark"
                     android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/textView"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView" />
 
                 <View
                     android:id="@+id/view"
@@ -138,22 +143,105 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/supplier_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="9dp"
+            app:cardElevation="5dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/card_view_business_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_supplier_indicator">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:id="@+id/tv_month_purchase_supplier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Total Purchase For month"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_foward_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line_supplier"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_amount_supplier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rs 0"
+                    android:paddingHorizontal="5dp"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/tv_month_purchase_supplier"
+                    app:layout_constraintTop_toBottomOf="@id/tv_month_purchase_supplier"/>
+
+                <View
+                    android:id="@+id/view_line_supplier"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_custom"
+                    app:layout_constraintTop_toBottomOf="@id/tv_amount_supplier"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You'll give"
+                    android:padding="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_line_supplier"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rs 0"
+                    android:padding="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_line_supplier"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <TextView
             android:id="@+id/et_business_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
+            android:drawableEnd="@drawable/ic_edit_24"
             android:drawableRight="@drawable/ic_edit_24"
             android:drawablePadding="10dp"
             android:text="Business name"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/btn_suppliers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:drawableEnd="@drawable/ic_edit_24"
-            app:layout_constraintBottom_toTopOf="@id/btn_suppliers"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/Image_button_calender"
@@ -161,49 +249,44 @@
             android:layout_height="30dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_calendar_line"
+            app:layout_constraintBottom_toBottomOf="@id/et_business_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/et_business_name"
-            app:layout_constraintTop_toTopOf="@id/et_business_name"
-            app:layout_constraintBottom_toBottomOf="@id/et_business_name"/>
+            app:layout_constraintTop_toTopOf="@id/et_business_name" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_customer"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
             android:text="Customer"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="10sp"
             app:backgroundTint="@color/white"
             app:cornerRadius="30dp"
             app:elevation="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_suppliers"
             app:layout_constraintEnd_toStartOf="@+id/btn_suppliers"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_suppliers"
-            app:layout_constraintBottom_toBottomOf="@id/btn_suppliers"/>
+            app:layout_constraintTop_toTopOf="@+id/btn_suppliers" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_suppliers"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginTop="18dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
             android:text="Suppliers"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="10sp"
             app:backgroundTint="@color/white"
             app:cornerRadius="30dp"
             app:elevation="5dp"
-            app:layout_constraintStart_toEndOf="@id/btn_customer"
+            app:layout_constraintBottom_toTopOf="@id/view_supplier_indicator"
             app:layout_constraintEnd_toStartOf="@id/btn_all"
-            app:layout_constraintTop_toBottomOf="@+id/et_business_name"
-            app:layout_constraintBottom_toTopOf="@id/view_supplier_indicator"/>
+            app:layout_constraintStart_toEndOf="@id/btn_customer"
+            app:layout_constraintTop_toBottomOf="@+id/et_business_name" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_all"
@@ -211,19 +294,16 @@
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
             android:text="All"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="10sp"
             app:backgroundTint="@color/white"
             app:cornerRadius="20dp"
             app:elevation="5dp"
-            app:layout_constraintStart_toEndOf="@+id/btn_suppliers"
-            app:layout_constraintTop_toTopOf="@+id/btn_suppliers"
+            app:layout_constraintBottom_toBottomOf="@id/btn_suppliers"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/btn_suppliers"/>
+            app:layout_constraintStart_toEndOf="@+id/btn_suppliers"
+            app:layout_constraintTop_toTopOf="@+id/btn_suppliers" />
 
         <View
             android:id="@+id/view_customer"
@@ -253,9 +333,7 @@
             android:background="@color/custom_nav_color"
             app:layout_constraintEnd_toEndOf="@+id/btn_suppliers"
             app:layout_constraintStart_toStartOf="@+id/btn_suppliers"
-            app:layout_constraintTop_toBottomOf="@+id/btn_suppliers"
-            app:layout_constraintBottom_toTopOf="@id/materialCardView"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/btn_suppliers" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_cash_register"
@@ -265,17 +343,15 @@
             android:layout_marginLeft="40dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/card_view_business_card"
             app:layout_constraintEnd_toStartOf="@id/card_view_business_card"
-            app:layout_constraintTop_toTopOf="@+id/card_view_business_card"
-            >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/card_view_business_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
-                >
+                android:padding="10dp">
 
                 <ImageButton
                     android:layout_width="match_parent"
@@ -290,26 +366,53 @@
             android:id="@+id/card_view_business_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:cardCornerRadius="6dp"
+            android:layout_marginTop="150dp"
             app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
-            app:layout_constraintEnd_toStartOf="@id/card_view_digi_cash"
+            app:layout_constraintEnd_toStartOf="@id/card_view_make_invoice"
             app:layout_constraintStart_toEndOf="@id/card_view_cash_register"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-            app:layout_constraintBottom_toTopOf="@id/card_view_search_customer">
+            app:layout_constraintTop_toBottomOf="@+id/view_supplier_indicator">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:padding="10dp">
 
                 <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_debit_card" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_make_invoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="5dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/card_view_digi_cash"
+            app:layout_constraintStart_toEndOf="@id/card_view_business_card"
+            app:layout_constraintTop_toTopOf="@+id/card_view_business_card"
+            app:layout_constraintBottom_toBottomOf="@+id/card_view_business_card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:padding="10dp">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_question_mark" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -323,8 +426,8 @@
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
             app:layout_constraintBottom_toBottomOf="@id/card_view_business_card"
-            app:layout_constraintStart_toEndOf="@id/card_view_business_card"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/card_view_make_invoice"
             app:layout_constraintTop_toTopOf="@+id/card_view_business_card">
 
             <LinearLayout
@@ -345,36 +448,35 @@
             android:id="@+id/card_view_search_customer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
-            app:cardCornerRadius="20dp"
             android:padding="2dp"
+            app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_view_business_card"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/View3"
+            app:layout_constraintTop_toBottomOf="@+id/card_view_business_card"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
+                android:background="@color/white"
                 android:gravity="center"
-                android:weightSum="10"
+                android:orientation="horizontal"
                 android:padding="10dp"
-                android:background="@color/white">
+                android:weightSum="10">
 
                 <ImageButton
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
-                    android:background="@color/white"
-                    android:src="@drawable/ic_search"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:padding="5dp"
+                    android:src="@drawable/ic_search"
                     app:layout_constraintBottom_toBottomOf="@+id/editText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/editText"
@@ -384,22 +486,23 @@
                     android:id="@+id/editText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="7"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/gray_custom"
                     android:hint="Search Customer"
                     android:textColorHint="@color/gray_custom"
                     android:textSize="10sp"
-                    android:layout_weight="7"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
+                    android:id="@+id/btn_search_filter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
                     android:background="@color/white"
                     android:src="@drawable/ic_filter_24"
-                    android:layout_weight="1"
                     app:layout_constraintBottom_toBottomOf="@+id/editText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/editText"
@@ -432,52 +535,47 @@
             android:background="@color/gray_custom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_view_search_customer"
-            app:layout_constraintBottom_toTopOf="@id/image_view_customer"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/card_view_search_customer" />
 
         <ImageView
             android:id="@+id/image_view_customer"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:src="@drawable/customer_background"
+            android:layout_marginHorizontal="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/View3"
-            app:layout_constraintBottom_toTopOf="@id/text_view1"/>
+            app:layout_constraintTop_toBottomOf="@+id/View3" />
 
         <TextView
-            android:id="@+id/text_view1"
+            android:id="@+id/tv_footer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="Add Customer And Maintain Your Daily Khata"
             android:textColor="@color/gray_custom"
             android:textSize="16sp"
-            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="@+id/image_view_customer"
             app:layout_constraintStart_toStartOf="@+id/image_view_customer"
-            app:layout_constraintTop_toBottomOf="@+id/image_view_customer"
-            app:layout_constraintBottom_toTopOf="@id/btn_add_customer"/>
+            app:layout_constraintTop_toBottomOf="@+id/image_view_customer" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btn_add_customer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_margin="16dp"
             android:backgroundTint="@color/app_theme_color"
             android:text="Add Customers"
-            android:textSize="12sp"
-            android:textColor="@color/white"
             android:textAllCaps="false"
-            app:iconTint="@color/white"
+            android:textColor="@color/white"
             app:cornerRadius="30dp"
             app:elevation="5dp"
             app:icon="@drawable/ic_add_customer"
+            app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view1"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_footer" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

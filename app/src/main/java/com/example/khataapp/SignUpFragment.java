@@ -48,6 +48,7 @@ public class SignUpFragment extends Fragment {
     private List<Location> locationList= new ArrayList<>();
     private HashMap<String,String> locationCodeHashMap=new HashMap<>();
     private boolean isPasswordSame= false;
+    private String businessName="";
 
 
     @Override
@@ -153,7 +154,7 @@ public class SignUpFragment extends Fragment {
         progressDialog.show();
         SignUpUser signUpUser = new SignUpUser();
 
-        String username="",phoneNumber="",email="",address="",businessName="",password="",locationCode="";
+        String username="",phoneNumber="",email="",address="",password="",locationCode="";
         if (mBinding.etUserName.getText()!=null)
         {
             username= mBinding.etUserName.getText().toString();
@@ -210,9 +211,11 @@ public class SignUpFragment extends Fragment {
                              ServerResponse serverResponse = response.body();
                              Toast.makeText(requireContext(), ""+serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
 
-                             NavDirections navDirections = SignUpFragmentDirections.actionSignUpFragmentToHomeFragment();
+                             SignUpFragmentDirections.ActionSignUpFragmentToHomeFragment action = SignUpFragmentDirections
+                                     .actionSignUpFragmentToHomeFragment();
+                             action.setBusinessName(businessName);
 
-                             navController.navigate(navDirections);
+                             navController.navigate(action);
                          }
                          else
                          {
