@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private void bottomNavigationListener() {
 
 
-        mainBinding.bottomView.setOnClickMenuListener(model -> {
+        mainBinding.bottomView.setOnClickMenuListener((MeowBottomNavigation.Model model) -> {
 
             switch (model.getId())
             {

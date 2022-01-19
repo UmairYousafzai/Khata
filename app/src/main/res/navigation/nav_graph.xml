@@ -13,7 +13,11 @@
         tools:layout="@layout/fragment_splash_screen" >
         <action
             android:id="@+id/action_splashScreenFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -23,7 +27,11 @@
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signUpFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/phoneNumberFragment"
@@ -63,7 +71,8 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_searchFilterBottomSheetFragment"
-            app:destination="@id/searchFilterBottomSheetFragment" />
+            app:destination="@id/searchFilterBottomSheetFragment"
+            />
         <argument
             android:name="business_name"
             app:argType="string"
@@ -73,13 +82,28 @@
             app:destination="@id/editBusinessNameBottomSheetFragment" />
         <action
             android:id="@+id/action_homeFragment_to_calendarFragment"
-            app:destination="@id/calendarFragment" />
+            app:destination="@id/calendarFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/moneyFragment"
         android:name="com.example.khataapp.MoneyFragment"
         android:label="fragment_money"
-        tools:layout="@layout/fragment_money" />
+        tools:layout="@layout/fragment_money" >
+        <action
+            android:id="@+id/action_moneyFragment_to_editBusinessNameBottomSheetFragment2"
+            app:destination="@id/editBusinessNameBottomSheetFragment" />
+        <action
+            android:id="@+id/action_moneyFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.example.khataapp.MoreFragment"
