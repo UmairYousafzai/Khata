@@ -43,7 +43,7 @@ public class SplashScreenFragment extends Fragment {
             public void run() {
 
 
-                NavDirections navDirections = SplashScreenFragmentDirections.actionSplashScreenFragmentToSignUpFragment();
+                NavDirections navDirections = SplashScreenFragmentDirections.actionSplashScreenFragmentToLoginFragment();
 
                 navController.navigate(navDirections);
 

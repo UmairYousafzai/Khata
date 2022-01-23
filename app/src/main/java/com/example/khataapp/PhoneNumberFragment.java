@@ -44,7 +44,7 @@ public class PhoneNumberFragment extends Fragment {
 
     private void btnListener() {
 
-        mBinding.btnGetOTP.setOnClickListener(new View.OnClickListener() {
+        mBinding.btnGetOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

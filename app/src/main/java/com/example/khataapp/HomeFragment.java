@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -22,9 +24,12 @@ import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.khataapp.databinding.FragmentHomeBinding;
+import com.example.khataapp.models.User;
 import com.example.khataapp.utils.CONSTANTS;
+import com.example.khataapp.utils.DataViewModel;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
     private final int CUSTOMER_FRAGMENT = 1, SUPPLIER_FRAGMENT = 2, ALL_FRAGMENT = 3;
@@ -32,6 +37,10 @@ public class HomeFragment extends Fragment {
     private NavController navController;
     private String businessName;
     private NavBackStackEntry navBackStackEntry;
+    private DataViewModel dataViewModel;
+    private LifecycleEventObserver observer;
+    private User user= new User();
+    private boolean isCustomer=true,isSupplier=false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -51,13 +60,35 @@ public class HomeFragment extends Fragment {
         navBar.setVisibility(View.VISIBLE);
         navBar.show(1, true);
 
+
+
         navController = NavHostFragment.findNavController(this);
         navBackStackEntry = navController.getBackStackEntry(R.id.homeFragment);
-        final LifecycleEventObserver observer = (source, event) -> {
+        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+
+
+
+        getDataFromDialog();
+        getUserLiveData();
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        btnListener();
+
+    }
+
+    private void getDataFromDialog() {
+
+
+        observer = (source, event) -> {
             if (event.equals(Lifecycle.Event.ON_RESUME) && navBackStackEntry.getSavedStateHandle().contains(CONSTANTS.BUSINESS_NAME)) {
 
                 businessName = navBackStackEntry.getSavedStateHandle().get(CONSTANTS.BUSINESS_NAME);
-                mBinding.etBusinessName.setText(businessName);
+//                mBinding.etBusinessName.setText(businessName);
 
             }
         };
@@ -74,28 +105,24 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+    }
 
-        getDataFromDialog();
-        getBusinessName();
-        btnListener();
+    private void getUserLiveData() {
 
+        dataViewModel.getUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> users) {
+
+                if (users!=null&&users.size()>0)
+                {
+                    user= users.get(0);
+                    mBinding.etBusinessName.setText(user.getBusinessName());
+                }
+            }
+        });
 
     }
 
-    private void getDataFromDialog() {
-
-
-        // Create our observer and add it to the NavBackStackEntry's lifecycle
-
-    }
-
-    private void getBusinessName() {
-
-        if (getArguments() != null) {
-            businessName = HomeFragmentArgs.fromBundle(getArguments()).getBusinessName();
-            mBinding.etBusinessName.setText(businessName);
-        }
-    }
 
     private void btnListener() {
         mBinding.btnSearchFilter.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +170,27 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        mBinding.btnAddParty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeFragmentDirections.ActionHomeFragmentToAddPartyFragment action=
+                        HomeFragmentDirections.actionHomeFragmentToAddPartyFragment();
+                if (isCustomer)
+                {
+
+                    action.setPartyType("c");
+                }
+                else
+                {
+                    action.setPartyType("s");
+
+                }
+
+                navController.navigate(action);
+
+            }
+        });
+
     }
 
 
@@ -154,6 +202,10 @@ public class HomeFragment extends Fragment {
             mBinding.customerCard.setVisibility(View.VISIBLE);
             mBinding.supplierCard.setVisibility(View.GONE);
             mBinding.cardViewMakeInvoice.setVisibility(View.GONE);
+            mBinding.btnAddParty.setText("Add Customer");
+
+            isCustomer=true;
+            isSupplier=false;
 
         } else if (i == SUPPLIER_FRAGMENT) {
             mBinding.viewCustomer.setVisibility(View.GONE);
@@ -162,6 +214,10 @@ public class HomeFragment extends Fragment {
             mBinding.customerCard.setVisibility(View.GONE);
             mBinding.supplierCard.setVisibility(View.VISIBLE);
             mBinding.cardViewMakeInvoice.setVisibility(View.GONE);
+            mBinding.btnAddParty.setText("Add Supplier");
+
+            isCustomer=false;
+            isSupplier=true;
 
         } else if (i == ALL_FRAGMENT) {
             mBinding.viewCustomer.setVisibility(View.GONE);
@@ -170,6 +226,10 @@ public class HomeFragment extends Fragment {
             mBinding.customerCard.setVisibility(View.VISIBLE);
             mBinding.supplierCard.setVisibility(View.GONE);
             mBinding.cardViewMakeInvoice.setVisibility(View.VISIBLE);
+            mBinding.btnAddParty.setText("Add Customer");
+
+            isCustomer=true;
+            isSupplier=false;
         }
     }
 }

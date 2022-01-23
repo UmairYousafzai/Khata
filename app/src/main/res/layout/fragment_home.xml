@@ -63,14 +63,13 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="Rs 0"
-                    android:textSize="16sp"
                     android:textColor="@android:color/holo_red_dark"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/textView2"
-                    app:layout_constraintEnd_toStartOf="@+id/view"
-                    app:layout_constraintTop_toTopOf="@+id/textView2"
                     app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                    />
+                    app:layout_constraintEnd_toStartOf="@+id/view"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintTop_toTopOf="@+id/textView2" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -91,13 +90,13 @@
                     android:layout_height="wrap_content"
 
                     android:text="Rs 0"
-                    android:textSize="16sp"
                     android:textColor="@android:color/holo_green_dark"
+                    android:textSize="16sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView"
-                    app:layout_constraintTop_toTopOf="@+id/textView"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toTopOf="@+id/textView" />
 
                 <View
                     android:id="@+id/view"
@@ -343,6 +342,7 @@
             android:layout_marginLeft="40dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/card_view_business_card"
             app:layout_constraintEnd_toStartOf="@id/card_view_business_card"
             app:layout_constraintStart_toStartOf="parent"
@@ -370,6 +370,7 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@id/card_view_make_invoice"
             app:layout_constraintStart_toEndOf="@id/card_view_cash_register"
             app:layout_constraintTop_toBottomOf="@+id/view_supplier_indicator">
@@ -425,6 +426,7 @@
             android:layout_marginRight="40dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/card_view_business_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/card_view_make_invoice"
@@ -449,7 +451,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="-50dp"
             android:layout_marginRight="30dp"
             android:padding="2dp"
             app:cardCornerRadius="20dp"
@@ -538,7 +540,7 @@
             app:layout_constraintTop_toBottomOf="@+id/card_view_search_customer" />
 
         <ImageView
-            android:id="@+id/image_view_customer"
+            android:id="@+id/image_view_add_party"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:src="@drawable/customer_background"
@@ -556,12 +558,12 @@
             android:text="Add Customer And Maintain Your Daily Khata"
             android:textColor="@color/gray_custom"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/image_view_customer"
-            app:layout_constraintStart_toStartOf="@+id/image_view_customer"
-            app:layout_constraintTop_toBottomOf="@+id/image_view_customer" />
+            app:layout_constraintEnd_toEndOf="@+id/image_view_add_party"
+            app:layout_constraintStart_toStartOf="@+id/image_view_add_party"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_add_party" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btn_add_customer"
+            android:id="@+id/btn_add_party"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_margin="16dp"

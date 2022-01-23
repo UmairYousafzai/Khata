@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -28,8 +28,8 @@ import com.example.khataapp.models.Location;
 import com.example.khataapp.models.PostLocation;
 import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
-import com.example.khataapp.network.Api;
 import com.example.khataapp.network.ApiClient;
+import com.example.khataapp.utils.DataViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -48,7 +48,7 @@ public class SignUpFragment extends Fragment {
     private List<Location> locationList= new ArrayList<>();
     private HashMap<String,String> locationCodeHashMap=new HashMap<>();
     private boolean isPasswordSame= false;
-    private String businessName="";
+    private DataViewModel dataViewModel;
 
 
     @Override
@@ -64,6 +64,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(this);
+        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
         getLocations();
     }
@@ -73,11 +74,11 @@ public class SignUpFragment extends Fragment {
         super.onResume();
 
         btnListener();
-        textWacther();
+        textWatcher();
 
     }
 
-    private void textWacther() {
+    private void textWatcher() {
 
         mBinding.etConfirmPassword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -180,8 +181,7 @@ public class SignUpFragment extends Fragment {
         }
              if (mBinding.etBusinessName.getText()!=null)
         {
-            businessName= mBinding.etBusinessName.getText().toString();
-            signUpUser.setBusiness(businessName);
+            signUpUser.setBusiness(mBinding.etBusinessName.getText().toString());
 
         }
              if (mBinding.etPassword.getText()!=null)
@@ -209,13 +209,16 @@ public class SignUpFragment extends Fragment {
                          if (response.body()!=null)
                          {
                              ServerResponse serverResponse = response.body();
+                             if (serverResponse.getCode()==200)
+                             {
+                                 getUser();
+//                             navController.navigate(R.id.action_signUpFragment_to_homeFragment);
+
+                             }
                              Toast.makeText(requireContext(), ""+serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
 
-                             SignUpFragmentDirections.ActionSignUpFragmentToHomeFragment action = SignUpFragmentDirections
-                                     .actionSignUpFragmentToHomeFragment();
-                             action.setBusinessName(businessName);
 
-                             navController.navigate(action);
+
                          }
                          else
                          {
@@ -239,6 +242,11 @@ public class SignUpFragment extends Fragment {
              });
 
 
+
+
+    }
+
+    private void getUser() {
 
 
     }
