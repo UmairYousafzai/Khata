@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.khataapp.models.Party;
 import com.example.khataapp.models.User;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class DataViewModel extends AndroidViewModel {
 
     private DataRepository dataRepository;
     private LiveData<List<User>> userList;
+    private LiveData<List<Party>> partyList;
 
     public DataViewModel(@NonNull Application application) {
         super(application);
@@ -36,5 +38,22 @@ public class DataViewModel extends AndroidViewModel {
 
     public LiveData<List<User>> getUsers() {
         return userList;
+    }
+
+    public void insertParties(List<Party> partyList) {
+
+        dataRepository.insertParties(partyList);
+
+    }
+
+    public void deleteParties() {
+        dataRepository.deleteparties();
+
+    }
+
+    public LiveData<List<Party>> getParties(String type) {
+
+        return partyList = dataRepository.getParties(type);
+
     }
 }

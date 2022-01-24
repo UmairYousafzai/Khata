@@ -11,17 +11,21 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.khataapp.databinding.FragmentAddPartyBinding;
+import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.models.User;
 import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.DataViewModel;
+import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import java.util.List;
 
@@ -37,7 +41,8 @@ public class AddPartyFragment extends Fragment {
     private DataViewModel dataViewModel;
     private NavController navController;
     private User user= new User();
-
+    private String action = "INSERT";
+    private ProgressDialog progressDialog;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,6 +57,8 @@ public class AddPartyFragment extends Fragment {
 
         navController= NavHostFragment.findNavController(this);
         dataViewModel= new ViewModelProvider(this).get(DataViewModel.class);
+        progressDialog= new ProgressDialog(requireContext());
+        progressDialog.setCancelable(false);
 
 
         if (getArguments()!=null)
@@ -59,7 +66,57 @@ public class AddPartyFragment extends Fragment {
             partyType= AddPartyFragmentArgs.fromBundle(getArguments()).getPartyType();
         }
 
+        if (getArguments()!=null)
+        {
+            Party party = AddPartyFragmentArgs.fromBundle(getArguments()).getParty();
+
+            if (party!=null)
+            {
+                setupFields(party);
+
+            }
+        }
+
         getUserLiveData();
+    }
+
+    private void setupFields(Party party) {
+
+        if (party.getPartyAddress()!=null&&party.getPartyAddress().length()>0) {
+            mBinding.etPartyAddress.setText(party.getPartyAddress());
+        }
+        if (party.getCnic()!=null && party.getCnic().length()>0)
+        {
+            mBinding.etCNIC.setText(party.getCnic());
+        }
+
+        if (party.getEmail()!=null && party.getEmail().length()>0)
+        {
+            mBinding.etEmail.setText(party.getEmail());
+        }
+
+        if (party.getPhone()!=null && party.getPhone().length()>0)
+        {
+            mBinding.etPhoneNumber.setText(party.getPhone());
+        }
+
+        if (party.getMobile()!=null && party.getMobile().length()>0)
+        {
+            mBinding.etMobileNumber.setText(party.getMobile());
+        }
+
+        if (party.getPartyName()!=null && party.getPartyName().length()>0)
+        {
+            mBinding.etPartyName.setText(party.getPartyName());
+        }
+
+        action="UPDATE";
+        if (party.getPartyType()!=null&& party.getPartyType().length()>0)
+        {
+            partyType= party.getPartyType();
+
+        }
+
     }
 
     private void getUserLiveData() {
@@ -81,6 +138,37 @@ public class AddPartyFragment extends Fragment {
         super.onResume();
 
         btnListener();
+        textWatcher();
+    }
+
+    private void textWatcher() {
+
+        mBinding.etCNIC.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (s.length()==13)
+                {
+                    mBinding.etCNICLayout.setError(null);
+
+                }
+                else {
+                    mBinding.etCNICLayout.setError("CNIC Consist of 13 digit");
+
+                }
+
+            }
+        });
     }
 
     private void btnListener() {
@@ -107,6 +195,7 @@ public class AddPartyFragment extends Fragment {
 
         Party party = new Party();
         party.setPartyName(mBinding.etPartyName.getText().toString());
+
         party.setPartyType(partyType);
 
         if (mBinding.etPartyAddress.getText()!=null&& mBinding.etPartyAddress.getText().toString().length()>0)
@@ -129,7 +218,7 @@ public class AddPartyFragment extends Fragment {
         }
 
 
-        party.setAction("INSERT");
+        party.setAction(action);
 
         if (user!=null)
         {
@@ -158,10 +247,8 @@ public class AddPartyFragment extends Fragment {
 
     private void generateSaveRequest(Party party) {
 
-        ProgressDialog progressDialog = new ProgressDialog(requireContext());
         progressDialog.setTitle("Party");
         progressDialog.setMessage("Saving....");
-        progressDialog.setCancelable(false);
         progressDialog.show();
 
         Call<ServerResponse> call = ApiClient.getInstance().getApi().saveParty(party);
@@ -178,7 +265,10 @@ public class AddPartyFragment extends Fragment {
                         Toast.makeText(requireContext(), ""+serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         if (serverResponse.getCode()==200)
                         {
-                            navController.popBackStack();
+                            progressDialog.setMessage("Syncing...");
+                            progressDialog.setTitle("Parties");
+                            progressDialog.show();
+                            getParties("c");
                         }
 
                     }
@@ -199,5 +289,81 @@ public class AddPartyFragment extends Fragment {
 
             }
         });
+    }
+
+
+    public String getParties(String type) {
+
+
+
+        String businessID= SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID();
+
+        Call<GetPartyServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID,type);
+        call.enqueue(new Callback<GetPartyServerResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetPartyServerResponse> call, @NonNull Response<GetPartyServerResponse> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body()!=null)
+                    {
+                        GetPartyServerResponse getPartyServerResponse= response.body();
+
+                        if (getPartyServerResponse.getCode()==200)
+                        {
+
+                            if (getPartyServerResponse.getPartyList()!=null&& getPartyServerResponse.getPartyList().size()>0)
+                            {
+
+                                dataViewModel.insertParties(getPartyServerResponse.getPartyList());
+
+
+                            }
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    if (response.errorBody() != null) {
+                        Toast.makeText(requireContext(), ""+response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                progressDialog.dismiss();
+                if (type.equals("s"))
+                {
+                    navController.popBackStack();
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetPartyServerResponse> call, @NonNull Throwable t) {
+
+                Toast.makeText(requireContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                if (type.equals("s"))
+                {
+                    progressDialog.dismiss();
+                    navController.popBackStack();
+
+
+                }
+
+            }
+        });
+
+        if (type.equals("c"))
+        {
+            navController.popBackStack();
+
+            return getParties("s");
+        }
+        else
+        {
+            return "break";
+        }
+
     }
 }

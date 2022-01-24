@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khataapp.databinding.CountryCardBinding;
+import com.example.khataapp.databinding.PartyCardBinding;
 import com.example.khataapp.models.Location;
+import com.example.khataapp.models.Party;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.Part
 
 
     private LayoutInflater layoutInflater;
-    private List<Location> locationList= new ArrayList<>();
+    private List<Party> partyList= new ArrayList<>();
     private SetOnClickListener listener;
 
     public void SetOnClickListener(SetOnClickListener listener)
@@ -36,39 +38,35 @@ public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.Part
             layoutInflater = LayoutInflater.from(parent.getContext());
         }
 
-        CountryCardBinding binding = CountryCardBinding.inflate(layoutInflater,parent,false);
+        PartyCardBinding binding = PartyCardBinding.inflate(layoutInflater,parent,false);
         return new PartyViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PartyViewHolder holder, int position) {
 
-        Location location = new Location();
-        location = locationList.get(position);
-
-        if (location.getName()!=null)
-        {
-            holder.mBinding.tvLocation.setText(location.getName());
-
-        }
+        Party party = new Party();
+        party= partyList.get(position);
+        holder.mBinding.setParty(party);
+        holder.mBinding.executePendingBindings();
 
 
     }
 
     @Override
     public int getItemCount() {
-        return locationList.size();
+        return partyList.size();
     }
 
-    public void setLocationList(List<Location> list)
+    public void setPartyList(List<Party> list)
     {
         if (list!=null)
         {
-            locationList = list;
+            partyList = list;
         }
         else
         {
-            locationList.clear();
+            partyList.clear();
 
         }
         notifyDataSetChanged();
@@ -76,33 +74,31 @@ public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.Part
 
     public class PartyViewHolder extends RecyclerView.ViewHolder
     {
-        CountryCardBinding mBinding;
+        PartyCardBinding mBinding;
 
-        public PartyViewHolder(@NonNull CountryCardBinding binding) {
+        public PartyViewHolder(@NonNull PartyCardBinding binding) {
             super(binding.getRoot());
 
             mBinding= binding;
-            mBinding.locationCard.setOnClickListener(new View.OnClickListener() {
+
+            mBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-
-                    if(locationList.size()>0)
+                    if (getAdapterPosition()!=RecyclerView.NO_POSITION&&listener!=null)
                     {
-                        listener.onClick(locationList.get(getAdapterPosition()));
-                        notifyDataSetChanged();
+                        listener.onClick(partyList.get(getAdapterPosition()));
                     }
-
-
                 }
             });
+
         }
     }
 
 
     public interface  SetOnClickListener
     {
-        public void onClick(Location location);
+        public void onClick(Party party);
     }
 
 }

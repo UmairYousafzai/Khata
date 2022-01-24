@@ -1,6 +1,6 @@
 package com.example.khataapp;
 
-import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,20 +15,21 @@ import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.khataapp.adapter.PartyListAdapter;
 import com.example.khataapp.databinding.FragmentHomeBinding;
+import com.example.khataapp.models.Party;
 import com.example.khataapp.models.User;
 import com.example.khataapp.utils.CONSTANTS;
 import com.example.khataapp.utils.DataViewModel;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -39,8 +40,11 @@ public class HomeFragment extends Fragment {
     private NavBackStackEntry navBackStackEntry;
     private DataViewModel dataViewModel;
     private LifecycleEventObserver observer;
-    private User user= new User();
-    private boolean isCustomer=true,isSupplier=false;
+    private User user = new User();
+    private boolean isCustomer = true, isSupplier = false;
+    private List<Party> partyList = new ArrayList<>();
+    private PartyListAdapter adapter;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -56,10 +60,11 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         change_view(CUSTOMER_FRAGMENT);
-        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
-        navBar.setVisibility(View.VISIBLE);
-        navBar.show(1, true);
-
+//        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
+//        navBar.setVisibility(View.VISIBLE);
+//        navBar.show(1, true);
+        progressDialog = new ProgressDialog(requireContext());
+        progressDialog.setCancelable(false);
 
 
         navController = NavHostFragment.findNavController(this);
@@ -67,10 +72,9 @@ public class HomeFragment extends Fragment {
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
 
-
         getDataFromDialog();
         getUserLiveData();
-
+        setupRecyclerView();
     }
 
 
@@ -79,6 +83,74 @@ public class HomeFragment extends Fragment {
         super.onResume();
         btnListener();
 
+        if (isCustomer) {
+            getCustomerLiveData();
+        } else if (isSupplier) {
+            getSupplierLiveData();
+
+        }
+
+    }
+
+    private void setupRecyclerView() {
+
+        mBinding.partyRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        adapter = new PartyListAdapter();
+        mBinding.partyRecyclerView.setAdapter(adapter);
+    }
+
+
+    private void getCustomerLiveData() {
+
+        progressDialog.setMessage("Loading...");
+        progressDialog.setTitle("Customer");
+        progressDialog.show();
+        dataViewModel.getParties("c").observe(getViewLifecycleOwner(), new Observer<List<Party>>() {
+            @Override
+            public void onChanged(List<Party> list) {
+
+                if (list != null && list.size() > 0) {
+                    partyList.clear();
+                    partyList.addAll(list);
+                    adapter.setPartyList(partyList);
+                    mBinding.partyRecyclerView.setVisibility(View.VISIBLE);
+                    mBinding.tvFooter.setVisibility(View.GONE);
+                    mBinding.imageViewAddParty.setVisibility(View.GONE);
+                } else {
+                    mBinding.partyRecyclerView.setVisibility(View.GONE);
+                    mBinding.tvFooter.setVisibility(View.VISIBLE);
+                    mBinding.imageViewAddParty.setVisibility(View.VISIBLE);
+                }
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    private void getSupplierLiveData() {
+        progressDialog.setMessage("Loading...");
+        progressDialog.setTitle("Supplier");
+        progressDialog.show();
+
+        dataViewModel.getParties("s").observe(getViewLifecycleOwner(), new Observer<List<Party>>() {
+            @Override
+            public void onChanged(List<Party> list) {
+                if (list != null && list.size() > 0) {
+                    partyList.clear();
+                    partyList.addAll(list);
+                    adapter.setPartyList(partyList);
+                    mBinding.partyRecyclerView.setVisibility(View.VISIBLE);
+                    mBinding.tvFooter.setVisibility(View.GONE);
+                    mBinding.imageViewAddParty.setVisibility(View.GONE);
+                } else {
+                    mBinding.partyRecyclerView.setVisibility(View.GONE);
+                    mBinding.tvFooter.setVisibility(View.VISIBLE);
+                    mBinding.imageViewAddParty.setVisibility(View.VISIBLE);
+                }
+                progressDialog.dismiss();
+
+            }
+
+        });
     }
 
     private void getDataFromDialog() {
@@ -113,9 +185,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<User> users) {
 
-                if (users!=null&&users.size()>0)
-                {
-                    user= users.get(0);
+                if (users != null && users.size() > 0) {
+                    user = users.get(0);
                     mBinding.etBusinessName.setText(user.getBusinessName());
                 }
             }
@@ -155,17 +226,20 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 change_view(CUSTOMER_FRAGMENT);
+                getCustomerLiveData();
             }
         });
         mBinding.btnSuppliers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 change_view(SUPPLIER_FRAGMENT);
+                getSupplierLiveData();
             }
         });
         mBinding.btnAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getCustomerLiveData();
                 change_view(ALL_FRAGMENT);
             }
         });
@@ -173,20 +247,33 @@ public class HomeFragment extends Fragment {
         mBinding.btnAddParty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToAddPartyFragment action=
+                HomeFragmentDirections.ActionHomeFragmentToAddPartyFragment action =
                         HomeFragmentDirections.actionHomeFragmentToAddPartyFragment();
-                if (isCustomer)
-                {
+                if (isCustomer) {
 
                     action.setPartyType("c");
-                }
-                else
-                {
+                } else {
                     action.setPartyType("s");
 
                 }
 
                 navController.navigate(action);
+
+            }
+        });
+
+        adapter.SetOnClickListener(new PartyListAdapter.SetOnClickListener() {
+            @Override
+            public void onClick(Party party) {
+
+                if (party!=null)
+                {
+                    HomeFragmentDirections.ActionHomeFragmentToAddPartyFragment action =
+                            HomeFragmentDirections.actionHomeFragmentToAddPartyFragment();
+                    action.setParty(party);
+                    navController.navigate(action);
+
+                }
 
             }
         });
@@ -204,8 +291,8 @@ public class HomeFragment extends Fragment {
             mBinding.cardViewMakeInvoice.setVisibility(View.GONE);
             mBinding.btnAddParty.setText("Add Customer");
 
-            isCustomer=true;
-            isSupplier=false;
+            isCustomer = true;
+            isSupplier = false;
 
         } else if (i == SUPPLIER_FRAGMENT) {
             mBinding.viewCustomer.setVisibility(View.GONE);
@@ -216,8 +303,8 @@ public class HomeFragment extends Fragment {
             mBinding.cardViewMakeInvoice.setVisibility(View.GONE);
             mBinding.btnAddParty.setText("Add Supplier");
 
-            isCustomer=false;
-            isSupplier=true;
+            isCustomer = false;
+            isSupplier = true;
 
         } else if (i == ALL_FRAGMENT) {
             mBinding.viewCustomer.setVisibility(View.GONE);
@@ -228,8 +315,8 @@ public class HomeFragment extends Fragment {
             mBinding.cardViewMakeInvoice.setVisibility(View.VISIBLE);
             mBinding.btnAddParty.setText("Add Customer");
 
-            isCustomer=true;
-            isSupplier=false;
+            isCustomer = true;
+            isSupplier = false;
         }
     }
 }

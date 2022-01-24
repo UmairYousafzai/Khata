@@ -1,9 +1,19 @@
 package com.example.khataapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Party {
+@Entity
+public class Party implements Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    private  int id_pk;
 
     @SerializedName("PartyCode")
     @Expose
@@ -38,6 +48,44 @@ public class Party {
     @SerializedName("Action")
     @Expose
     private String action;
+
+    public Party() {
+    }
+
+    protected Party(Parcel in) {
+        id_pk = in.readInt();
+        partyCode = in.readString();
+        partyName = in.readString();
+        cnic = in.readString();
+        partyAddress = in.readString();
+        phone = in.readString();
+        mobile = in.readString();
+        email = in.readString();
+        partyType = in.readString();
+        userId = in.readString();
+        businessId = in.readString();
+        action = in.readString();
+    }
+
+    public static final Creator<Party> CREATOR = new Creator<Party>() {
+        @Override
+        public Party createFromParcel(Parcel in) {
+            return new Party(in);
+        }
+
+        @Override
+        public Party[] newArray(int size) {
+            return new Party[size];
+        }
+    };
+
+    public int getId_pk() {
+        return id_pk;
+    }
+
+    public void setId_pk(int id_pk) {
+        this.id_pk = id_pk;
+    }
 
     public String getPartyCode() {
         return partyCode;
@@ -125,5 +173,26 @@ public class Party {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id_pk);
+        dest.writeString(partyCode);
+        dest.writeString(partyName);
+        dest.writeString(cnic);
+        dest.writeString(partyAddress);
+        dest.writeString(phone);
+        dest.writeString(mobile);
+        dest.writeString(email);
+        dest.writeString(partyType);
+        dest.writeString(userId);
+        dest.writeString(businessId);
+        dest.writeString(action);
     }
 }

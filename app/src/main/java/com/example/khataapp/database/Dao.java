@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.example.khataapp.models.Party;
 import com.example.khataapp.models.User;
 
 import java.util.List;
@@ -19,5 +20,14 @@ public interface Dao {
 
     @Query("Select *from user")
     LiveData<List<User>> getUsers();
+
+    @Insert
+    void insertParties(List<Party> partyList);
+
+    @Query("Delete from Party")
+    void deleteParty( );
+
+    @Query("Select *from Party where partyType=:type")
+    LiveData<List<Party>> getParties(String type);
 
 }

@@ -1,6 +1,7 @@
 package com.example.khataapp.network;
 
 import com.example.khataapp.models.GetLocationResponse;
+import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.LoginResponse;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.PostLocation;
@@ -29,4 +30,7 @@ public interface Api {
 
     @POST("api/Party/Party")
     Call<ServerResponse> saveParty(@Body Party party);
+
+    @GET("api/Party/PartyData")
+    Call<GetPartyServerResponse> getParties(@Query("businessId")String businessID,@Query("partytype") String partyType);
 }
