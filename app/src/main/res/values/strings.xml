@@ -34,5 +34,7 @@
     <string name="enter_your_business_name">Enter your business name</string>
     <string name="save">Save</string>
     <string name="create_new_khata_business">CREATE NEW KHATA BUSINESS</string>
+    <string name="refresh">Refresh</string>
+    <string name="sign_out">Sign Out</string>
 
 </resources>

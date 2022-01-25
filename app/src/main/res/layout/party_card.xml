@@ -18,6 +18,7 @@
         app:cardCornerRadius="10dp"
         app:cardPreventCornerOverlap="true"
         android:layout_margin="5dp"
+        android:id="@+id/party_card"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout

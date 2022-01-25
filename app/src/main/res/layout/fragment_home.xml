@@ -29,7 +29,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:visibility="visible"
-            app:cardCornerRadius="9dp"
+            app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
 
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +123,7 @@
                     android:id="@+id/tv_view_report"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="4dp"
                     android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
                     android:drawablePadding="6dp"
@@ -229,7 +229,7 @@
             android:id="@+id/et_business_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             android:drawableEnd="@drawable/ic_edit_24"
             android:drawableRight="@drawable/ic_edit_24"
             android:drawablePadding="10dp"
@@ -338,54 +338,82 @@
             android:id="@+id/card_view_cash_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/card_view_business_card"
             app:layout_constraintEnd_toStartOf="@id/card_view_business_card"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintTop_toTopOf="@+id/card_view_business_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_notebook" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Cash Register"
+               android:textColor="@color/font_color_dark"
+               android:textStyle="bold"
+               android:textSize="12sp"
+               />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_business_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
+            android:visibility="invisible"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
-            android:visibility="invisible"
+
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintEnd_toStartOf="@id/card_view_make_invoice"
             app:layout_constraintStart_toEndOf="@id/card_view_cash_register"
-            app:layout_constraintTop_toBottomOf="@+id/view_supplier_indicator">
+            app:layout_constraintTop_toBottomOf="@+id/view_supplier_indicator"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:padding="10dp">
 
                 <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_debit_card" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Business Card"
+                    android:textColor="@color/font_color_dark"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+
+                    />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -398,22 +426,35 @@
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
             android:visibility="gone"
+            app:layout_constraintHorizontal_weight="1"
+
             app:layout_constraintEnd_toStartOf="@id/card_view_digi_cash"
             app:layout_constraintStart_toEndOf="@id/card_view_business_card"
             app:layout_constraintTop_toTopOf="@+id/card_view_business_card"
             app:layout_constraintBottom_toBottomOf="@+id/card_view_business_card">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:padding="10dp">
 
                 <ImageButton
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_question_mark" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="        Cash        "
+                    android:textColor="@color/font_color_dark"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+
+                    />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -422,11 +463,13 @@
             android:id="@+id/card_view_digi_cash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="5dp"
             android:visibility="invisible"
+            app:layout_constraintHorizontal_weight="1"
+
             app:layout_constraintBottom_toBottomOf="@id/card_view_business_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/card_view_make_invoice"
@@ -435,6 +478,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:padding="10dp">
 
                 <ImageButton
@@ -442,6 +487,15 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_money_back" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Make Invoice"
+                    android:textColor="@color/font_color_dark"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+
+                    />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -450,15 +504,15 @@
             android:id="@+id/card_view_search_customer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="-50dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="-60dp"
             android:padding="2dp"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_view_business_card"
+            app:layout_constraintTop_toBottomOf="@+id/card_view_cash_register"
             >
 
             <LinearLayout
@@ -470,32 +524,16 @@
                 android:padding="10dp"
                 android:weightSum="10">
 
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_search"
-                    app:layout_constraintBottom_toBottomOf="@+id/editText"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/editText"
-                    app:layout_constraintTop_toTopOf="@+id/editText" />
 
-                <EditText
-                    android:id="@+id/editText"
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/gray_custom"
-                    android:hint="Search Customer"
-                    android:textColorHint="@color/gray_custom"
-                    android:textSize="10sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_weight="8"
+                    app:queryHint="Type customer name ...."
+                    app:iconifiedByDefault="false"
+                    />
 
                 <ImageButton
                     android:id="@+id/btn_search_filter"
@@ -580,7 +618,7 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btn_add_party"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:backgroundTint="@color/app_theme_color"
             android:text="Add Customers"

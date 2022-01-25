@@ -2,8 +2,10 @@ package com.example.khataapp;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -54,16 +56,19 @@ public class SplashScreenFragment extends Fragment {
         getParties("c");
 
 
-//        new Handler().postDelayed(new Runnable(){
-//            @Override
-//            public void run() {
-//
-//
-//
-//
-//
-//            }
-//        }, 1000);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+
+                requireActivity().finishAffinity();
+                        }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+        {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().hide();
+
+        }
     }
 
     public String getParties(String type) {

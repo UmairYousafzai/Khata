@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -43,6 +44,7 @@ public class AddPartyFragment extends Fragment {
     private User user= new User();
     private String action = "INSERT";
     private ProgressDialog progressDialog;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,6 +66,23 @@ public class AddPartyFragment extends Fragment {
         if (getArguments()!=null)
         {
             partyType= AddPartyFragmentArgs.fromBundle(getArguments()).getPartyType();
+
+            if (partyType.equals("c"))
+            {
+                if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+                {
+                    ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Add Customer");
+
+                }
+            }
+            else
+            {
+                if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+                {
+                    ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Add Supplier");
+
+                }
+            }
         }
 
         if (getArguments()!=null)
@@ -72,6 +91,23 @@ public class AddPartyFragment extends Fragment {
 
             if (party!=null)
             {
+
+                if (party.getPartyType().equals("c"))
+                {
+                    if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+                    {
+                        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Add Customer");
+
+                    }
+                }
+                else
+                {
+                    if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+                    {
+                        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Add Supplier");
+
+                    }
+                }
                 setupFields(party);
 
             }
@@ -268,7 +304,7 @@ public class AddPartyFragment extends Fragment {
                             progressDialog.setMessage("Syncing...");
                             progressDialog.setTitle("Parties");
                             progressDialog.show();
-                            getParties("c");
+                            navController.popBackStack();
                         }
 
                     }
@@ -292,78 +328,4 @@ public class AddPartyFragment extends Fragment {
     }
 
 
-    public String getParties(String type) {
-
-
-
-        String businessID= SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID();
-
-        Call<GetPartyServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID,type);
-        call.enqueue(new Callback<GetPartyServerResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<GetPartyServerResponse> call, @NonNull Response<GetPartyServerResponse> response) {
-
-                if (response.isSuccessful())
-                {
-                    if (response.body()!=null)
-                    {
-                        GetPartyServerResponse getPartyServerResponse= response.body();
-
-                        if (getPartyServerResponse.getCode()==200)
-                        {
-
-                            if (getPartyServerResponse.getPartyList()!=null&& getPartyServerResponse.getPartyList().size()>0)
-                            {
-
-                                dataViewModel.insertParties(getPartyServerResponse.getPartyList());
-
-
-                            }
-                        }
-
-                    }
-
-                }
-                else
-                {
-                    if (response.errorBody() != null) {
-                        Toast.makeText(requireContext(), ""+response.errorBody().toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-                progressDialog.dismiss();
-                if (type.equals("s"))
-                {
-                    navController.popBackStack();
-
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<GetPartyServerResponse> call, @NonNull Throwable t) {
-
-                Toast.makeText(requireContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-                if (type.equals("s"))
-                {
-                    progressDialog.dismiss();
-                    navController.popBackStack();
-
-
-                }
-
-            }
-        });
-
-        if (type.equals("c"))
-        {
-            navController.popBackStack();
-
-            return getParties("s");
-        }
-        else
-        {
-            return "break";
-        }
-
-    }
 }

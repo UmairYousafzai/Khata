@@ -3,8 +3,10 @@ package com.example.khataapp;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -53,6 +55,21 @@ public class LoginFragment extends Fragment {
         progressDialog = new ProgressDialog(requireContext());
 
         btnListener();
+
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+
+                requireActivity().finishAffinity();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+        {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().hide();
+
+        }
     }
 
     private void btnListener() {

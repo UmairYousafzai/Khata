@@ -27,7 +27,7 @@ public interface Dao {
     @Query("Delete from Party")
     void deleteParty( );
 
-    @Query("Select *from Party where partyType=:type")
+    @Query("Select *from Party  where partyType=:type order by id_pk desc  ")
     LiveData<List<Party>> getParties(String type);
 
 }
