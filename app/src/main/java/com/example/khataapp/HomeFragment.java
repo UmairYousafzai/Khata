@@ -3,6 +3,7 @@ package com.example.khataapp;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -101,6 +102,22 @@ public class HomeFragment extends Fragment {
 
         if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
             ((AppCompatActivity) requireActivity()).getSupportActionBar().show();
+
+        }
+
+
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+
+                requireActivity().finishAffinity();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+        {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().hide();
 
         }
     }
@@ -349,7 +366,6 @@ public class HomeFragment extends Fragment {
             ViewGroup.MarginLayoutParams layoutParams =
                     (ViewGroup.MarginLayoutParams) mBinding.cardViewSearchCustomer.getLayoutParams();
             layoutParams.setMargins(50, 30, 50, 0);
-            mBinding.cardViewSearchCustomer.requestLayout();
 
         } else {
             isViewReport = true;
@@ -366,8 +382,8 @@ public class HomeFragment extends Fragment {
             ViewGroup.MarginLayoutParams layoutParams =
                     (ViewGroup.MarginLayoutParams) mBinding.cardViewSearchCustomer.getLayoutParams();
             layoutParams.setMargins(50, -160, 50, 0);
-            mBinding.cardViewSearchCustomer.requestLayout();
         }
+        mBinding.cardViewSearchCustomer.requestLayout();
 
     }
 
@@ -405,12 +421,12 @@ public class HomeFragment extends Fragment {
             mBinding.viewAllIndicator.setVisibility(View.VISIBLE);
             mBinding.customerCard.setVisibility(View.VISIBLE);
             mBinding.supplierCard.setVisibility(View.GONE);
-            mBinding.cardViewMakeInvoice.setVisibility(View.VISIBLE);
+            mBinding.cardViewMakeInvoice.setVisibility(View.GONE);
             mBinding.btnAddParty.setText("Add Customer");
 
             isCustomer = true;
             isSupplier = false;
-            isAll = false;
+            isAll = true;
         }
     }
 
@@ -469,8 +485,12 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 progressDialog.dismiss();
-                if (type.equals("s")) {
-
+                if (isSupplier) {
+                    getSupplierLiveData();
+                }
+                else
+                {
+                    getCustomerLiveData();
                 }
             }
 

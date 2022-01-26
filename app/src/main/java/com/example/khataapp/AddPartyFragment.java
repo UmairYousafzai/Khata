@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.khataapp.databinding.FragmentAddPartyBinding;
 import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Party;
@@ -42,7 +43,7 @@ public class AddPartyFragment extends Fragment {
     private DataViewModel dataViewModel;
     private NavController navController;
     private User user= new User();
-    private String action = "INSERT";
+    private String action = "INSERT",partyCode="";
     private ProgressDialog progressDialog;
 
     @Override
@@ -50,6 +51,14 @@ public class AddPartyFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         mBinding = FragmentAddPartyBinding.inflate(inflater,container,false);
+
+        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
+        if (navBar!=null)
+        {
+            navBar.setVisibility(View.GONE);
+        }
+
+
         return mBinding.getRoot();
     }
 
@@ -152,6 +161,11 @@ public class AddPartyFragment extends Fragment {
             partyType= party.getPartyType();
 
         }
+        if (party.getPartyCode()!=null&& party.getPartyCode().length()>0)
+        {
+            partyCode=party.getPartyCode();
+        }
+
 
     }
 
@@ -231,8 +245,10 @@ public class AddPartyFragment extends Fragment {
 
         Party party = new Party();
         party.setPartyName(mBinding.etPartyName.getText().toString());
+        party.setPartyCode(partyCode);
 
         party.setPartyType(partyType);
+
 
         if (mBinding.etPartyAddress.getText()!=null&& mBinding.etPartyAddress.getText().toString().length()>0)
         {

@@ -3,6 +3,7 @@ package com.example.khataapp;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.khataapp.databinding.ActivityMainBinding;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        mainBinding.bottomView.setVisibility(View.GONE);
         setUpBottomNavigation();
         bottomNavigationListener();
 
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(R.id.homeFragment).build();
+                new AppBarConfiguration.Builder(R.id.homeFragment,R.id.moneyFragment,R.id.moreFragment).build();
         Toolbar toolbar = mainBinding.toolbar;
 
         setSupportActionBar(toolbar);
@@ -75,13 +77,14 @@ public class MainActivity extends AppCompatActivity {
     private void bottomNavigationListener() {
 
 
-        mainBinding.bottomView.setOnClickMenuListener((MeowBottomNavigation.Model model) -> {
-            NavOptions navOptions = new NavOptions.Builder()
-                    .setEnterAnim(R.anim.slide_in_right)
-                    .setExitAnim(R.anim.slide_out_left)
-                    .setPopEnterAnim(R.anim.slide_in_left)
-                    .setPopExitAnim(R.anim.slide_out_right)
-                    .build();
+
+                    NavOptions navOptions = new NavOptions.Builder()
+                            .setEnterAnim(R.anim.slide_in_right)
+                            .setExitAnim(R.anim.slide_out_left)
+                            .setPopEnterAnim(R.anim.slide_in_left)
+                            .setPopExitAnim(R.anim.slide_out_right)
+                            .build();
+
 
         mainBinding.bottomView.setOnClickMenuListener((MeowBottomNavigation.Model model) -> {
 

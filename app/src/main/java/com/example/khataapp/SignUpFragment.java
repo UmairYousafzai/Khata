@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.khataapp.adapter.LocationListAdapter;
 import com.example.khataapp.databinding.CustomAddLocationDialogBinding;
 import com.example.khataapp.databinding.CustomLocationsDialogBinding;
@@ -57,12 +58,21 @@ public class SignUpFragment extends Fragment {
 
         mBinding= FragmentSignUpBinding.inflate(inflater,container,false);
 
+        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
+        if (navBar!=null)
+        {
+            navBar.setVisibility(View.GONE);
+        }
+
+
         return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         navController = NavHostFragment.findNavController(this);
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 

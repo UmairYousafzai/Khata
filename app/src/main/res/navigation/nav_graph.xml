@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/splashScreenFragment"
         android:name="com.example.khataapp.SplashScreenFragment"
-        android:label="fragment_splash_screen"
+        android:label="Loading"
         tools:layout="@layout/fragment_splash_screen" >
         <action
             android:id="@+id/action_splashScreenFragment_to_loginFragment"
@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.khataapp.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.khataapp.SignUpFragment"
-        android:label="fragment_sign_up"
+        android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signUpFragment_to_homeFragment"
@@ -124,7 +124,7 @@
     <fragment
         android:id="@+id/moneyFragment"
         android:name="com.example.khataapp.MoneyFragment"
-        android:label="fragment_money"
+        android:label="Money"
         tools:layout="@layout/fragment_money" >
         <action
             android:id="@+id/action_moneyFragment_to_editBusinessNameBottomSheetFragment2"
@@ -140,7 +140,7 @@
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.example.khataapp.MoreFragment"
-        android:label="fragment_more"
+        android:label="More"
         tools:layout="@layout/fragment_more" />
     <dialog
         android:id="@+id/searchFilterBottomSheetFragment"
@@ -155,7 +155,7 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.khataapp.CalendarFragment"
-        android:label="fragment_calendar"
+        android:label="Calendar"
         tools:layout="@layout/fragment_calendar" />
     <fragment
         android:id="@+id/addPartyFragment"

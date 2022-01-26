@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.khataapp.databinding.FragmentSplashScreenBinding;
 import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.network.ApiClient;
@@ -40,6 +41,14 @@ public class SplashScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         mBinding = FragmentSplashScreenBinding.inflate(inflater,container,false);
+
+        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
+
+        if (navBar!=null)
+        {
+            navBar.setVisibility(View.GONE);
+        }
+
 
         return mBinding.getRoot();
 
