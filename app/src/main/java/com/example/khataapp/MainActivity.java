@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -67,8 +68,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
     private void bottomNavigationListener() {
 
+
+        mainBinding.bottomView.setOnClickMenuListener((MeowBottomNavigation.Model model) -> {
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setEnterAnim(R.anim.slide_in_right)
+                    .setExitAnim(R.anim.slide_out_left)
+                    .setPopEnterAnim(R.anim.slide_in_left)
+                    .setPopExitAnim(R.anim.slide_out_right)
+                    .build();
 
         mainBinding.bottomView.setOnClickMenuListener((MeowBottomNavigation.Model model) -> {
 
@@ -76,17 +89,17 @@ public class MainActivity extends AppCompatActivity {
             {
                 case 1:
                 {
-                    navController.navigate(R.id.homeFragment);
+                    navController.navigate(R.id.homeFragment,null,navOptions);
                     break;
                 }
                 case 2:
                 {
-                    navController.navigate(R.id.moneyFragment);
+                    navController.navigate(R.id.moneyFragment,null,navOptions);
                     break;
                 }
                 case 3:
                 {
-                    navController.navigate(R.id.moreFragment);
+                    navController.navigate(R.id.moreFragment,null,navOptions);
                     break;
                 }
             }
