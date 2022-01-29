@@ -1,5 +1,7 @@
 package com.example.khataapp.adapter;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +10,13 @@ import android.widget.Filterable;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.khataapp.R;
 import com.example.khataapp.databinding.PartyCardBinding;
 import com.example.khataapp.models.Party;
+import com.example.khataapp.utils.CONSTANTS;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -24,6 +29,11 @@ public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.Part
     private List<Party> partyListFull = new ArrayList<>();
     private List<Party> partyList = new ArrayList<>();
     private SetOnClickListener listener;
+    private Context context;
+
+    public PartyListAdapter(Context context) {
+        this.context = context;
+    }
 
     public void SetOnClickListener(SetOnClickListener listener)
     {
@@ -52,6 +62,10 @@ public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.Part
         party= partyList.get(position);
         holder.mBinding.setParty(party);
         holder.mBinding.executePendingBindings();
+
+        String name= party.getPartyName().substring(0,1);
+        holder.mBinding.tvPartNameDrawable.setText(name);
+   
 
         if (position==partyList.size()-1)
         {
@@ -142,7 +156,7 @@ public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.Part
 
             mBinding= binding;
 
-            mBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
+            mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 

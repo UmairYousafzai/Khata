@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".HomeFragment">
+    tools:context=".HomeFragment"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -119,23 +120,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_amount_give" />
 
-                <TextView
-                    android:id="@+id/tv_view_report"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="4dp"
-                    android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
-                    android:drawablePadding="6dp"
-                    android:gravity="center"
-                    android:text="View Report "
-                    android:textColor="@color/dark_blue"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -150,8 +135,8 @@
             android:layout_marginEnd="20dp"
             app:cardCornerRadius="9dp"
             app:cardElevation="5dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/card_view_business_card"
+            android:visibility="visible"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_supplier_indicator">
@@ -267,6 +252,9 @@
             app:backgroundTint="@color/white"
             app:cornerRadius="30dp"
             app:elevation="5dp"
+            app:chainUseRtl="true"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintBottom_toBottomOf="@id/btn_suppliers"
             app:layout_constraintEnd_toStartOf="@+id/btn_suppliers"
             app:layout_constraintStart_toStartOf="parent"
@@ -283,23 +271,26 @@
             app:backgroundTint="@color/white"
             app:cornerRadius="30dp"
             app:elevation="5dp"
+            app:layout_constraintVertical_weight="1"
             app:layout_constraintBottom_toTopOf="@id/view_supplier_indicator"
-            app:layout_constraintEnd_toStartOf="@id/btn_all"
+            app:layout_constraintEnd_toStartOf="@id/btn_reports"
             app:layout_constraintStart_toEndOf="@id/btn_customer"
             app:layout_constraintTop_toBottomOf="@+id/et_business_name" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_all"
+            android:id="@+id/btn_reports"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:text="All"
+            android:text="Reports"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white"
             app:cornerRadius="20dp"
             app:elevation="5dp"
+            app:layout_constraintVertical_weight="1"
+
             app:layout_constraintBottom_toBottomOf="@id/btn_suppliers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_suppliers"
@@ -321,9 +312,9 @@
             android:layout_height="2dp"
             android:layout_marginTop="8dp"
             android:background="@color/custom_nav_color"
-            app:layout_constraintEnd_toEndOf="@+id/btn_all"
-            app:layout_constraintStart_toStartOf="@+id/btn_all"
-            app:layout_constraintTop_toBottomOf="@+id/btn_all" />
+            app:layout_constraintEnd_toEndOf="@+id/btn_reports"
+            app:layout_constraintStart_toStartOf="@+id/btn_reports"
+            app:layout_constraintTop_toBottomOf="@+id/btn_reports" />
 
         <View
             android:id="@+id/view_supplier_indicator"
@@ -380,7 +371,7 @@
             android:id="@+id/card_view_business_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="100dp"
             android:visibility="invisible"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="6dp"
@@ -507,13 +498,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="-60dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginBottom="10dp"
             android:padding="2dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_view_cash_register"
+            app:layout_constraintBottom_toTopOf="@id/View3"
+            app:layout_constraintTop_toBottomOf="@id/view_supplier_indicator"
             >
 
             <LinearLayout
@@ -526,15 +519,13 @@
                 android:weightSum="10">
 
 
-
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/search_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
-                    app:queryHint="Type customer name ...."
                     app:iconifiedByDefault="false"
-                    />
+                    app:queryHint="Type name ...." />
 
                 <ImageButton
                     android:id="@+id/btn_search_filter"
@@ -570,9 +561,7 @@
             android:layout_height="1dp"
             android:layout_marginStart="12dp"
             android:layout_marginLeft="12dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginTop="40dp"
             android:background="@color/gray_custom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -584,6 +573,7 @@
             android:layout_height="200dp"
             android:src="@drawable/customer_background"
             android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/View3"
@@ -595,6 +585,7 @@
             android:layout_marginHorizontal="10dp"
             android:visibility="gone"
             tools:listitem="@layout/party_card"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/View3"
@@ -610,8 +601,8 @@
             android:text="Add Customer And Maintain Your Daily Khata"
             android:textColor="@color/gray_custom"
             android:textSize="16sp"
-            app:layout_constraintVertical_bias="0.1"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_add_party"
             app:layout_constraintEnd_toEndOf="@+id/image_view_add_party"
             app:layout_constraintStart_toStartOf="@+id/image_view_add_party"
             app:layout_constraintTop_toBottomOf="@+id/image_view_add_party" />
@@ -622,7 +613,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:backgroundTint="@color/app_theme_color"
-            android:text="Add Customers"
+            android:text="@string/add_customers"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:cornerRadius="30dp"

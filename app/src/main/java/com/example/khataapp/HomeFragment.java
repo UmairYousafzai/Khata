@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
@@ -27,7 +27,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -40,17 +39,17 @@ import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.CONSTANTS;
 import com.example.khataapp.utils.DataViewModel;
 import com.example.khataapp.utils.SharedPreferenceHelper;
-import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
-    private final int CUSTOMER_FRAGMENT = 1, SUPPLIER_FRAGMENT = 2, ALL_FRAGMENT = 3;
+    private final int CUSTOMER_FRAGMENT = 1, SUPPLIER_FRAGMENT = 2, REPORTS_FRAGMENT = 3;
     private FragmentHomeBinding mBinding;
     private NavController navController;
     private String businessName;
@@ -58,7 +57,7 @@ public class HomeFragment extends Fragment {
     private DataViewModel dataViewModel;
     private LifecycleEventObserver observer;
     private User user = new User();
-    private boolean isCustomer = true, isSupplier = false, isAll = false;
+    private boolean isCustomer = true, isSupplier = false;
     private List<Party> partyList = new ArrayList<>();
     private PartyListAdapter adapter;
     private ProgressDialog progressDialog;
@@ -70,10 +69,10 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
 
 
-        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().show();
 
-        }
+            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
+
+
 
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
 
@@ -101,7 +100,7 @@ public class HomeFragment extends Fragment {
         setupRecyclerView();
 
         if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().show();
+            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
 
         }
 
@@ -115,11 +114,7 @@ public class HomeFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-        if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
-        {
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().hide();
 
-        }
     }
 
 
@@ -156,7 +151,7 @@ public class HomeFragment extends Fragment {
     private void setupRecyclerView() {
 
         mBinding.partyRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new PartyListAdapter();
+        adapter = new PartyListAdapter(requireContext());
         mBinding.partyRecyclerView.setAdapter(adapter);
     }
 
@@ -283,44 +278,29 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        mBinding.btnCustomer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                change_view_by_buttons(CUSTOMER_FRAGMENT);
-                getCustomerLiveData();
-            }
+        mBinding.btnCustomer.setOnClickListener(view -> {
+            change_view_by_buttons(CUSTOMER_FRAGMENT);
+            getCustomerLiveData();
         });
-        mBinding.btnSuppliers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                change_view_by_buttons(SUPPLIER_FRAGMENT);
-                getSupplierLiveData();
-            }
+        mBinding.btnSuppliers.setOnClickListener(view -> {
+            change_view_by_buttons(SUPPLIER_FRAGMENT);
+            getSupplierLiveData();
         });
-        mBinding.btnAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getCustomerLiveData();
-                change_view_by_buttons(ALL_FRAGMENT);
-            }
-        });
+        mBinding.btnReports.setOnClickListener(view -> change_view_by_buttons(REPORTS_FRAGMENT));
 
-        mBinding.btnAddParty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToAddPartyFragment action =
-                        HomeFragmentDirections.actionHomeFragmentToAddPartyFragment();
-                if (isCustomer) {
+        mBinding.btnAddParty.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToAddPartyFragment action =
+                    HomeFragmentDirections.actionHomeFragmentToAddPartyFragment();
+            if (isCustomer) {
 
-                    action.setPartyType("c");
-                } else {
-                    action.setPartyType("s");
-
-                }
-
-                navController.navigate(action);
+                action.setPartyType("c");
+            } else {
+                action.setPartyType("s");
 
             }
+
+            navController.navigate(action);
+
         });
 
         adapter.SetOnClickListener(new PartyListAdapter.SetOnClickListener() {
@@ -328,9 +308,16 @@ public class HomeFragment extends Fragment {
             public void onClick(Party party) {
 
                 if (party != null) {
-                    HomeFragmentDirections.ActionHomeFragmentToAddPartyFragment action =
-                            HomeFragmentDirections.actionHomeFragmentToAddPartyFragment();
+//                    HomeFragmentDirections.ActionHomeFragmentToAddPartyFragment action =
+//                            HomeFragmentDirections.actionHomeFragmentToAddPartyFragment();
+//                    action.setParty(party);
+//                    navController.navigate(action);
+
+
+                    HomeFragmentDirections.ActionHomeFragmentToPartyFullInfoFragment action =
+                            HomeFragmentDirections.actionHomeFragmentToPartyFullInfoFragment();
                     action.setParty(party);
+
                     navController.navigate(action);
 
                 }
@@ -338,54 +325,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        mBinding.tvViewReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                showButtonAccordingToViewReports();
-            }
-        });
 
     }
 
-    private void showButtonAccordingToViewReports() {
-
-        if (isViewReport) {
-            mBinding.cardViewCashRegister.setVisibility(View.VISIBLE);
-            mBinding.cardViewCashRegister.setActivated(true);
-            mBinding.cardViewBusinessCard.setVisibility(View.VISIBLE);
-            mBinding.cardViewBusinessCard.setActivated(true);
-            mBinding.cardViewDigiCash.setVisibility(View.VISIBLE);
-            mBinding.cardViewDigiCash.setActivated(true);
-            if (isAll) {
-                mBinding.cardViewMakeInvoice.setVisibility(View.VISIBLE);
-                mBinding.cardViewMakeInvoice.setActivated(true);
-            }
-
-            isViewReport = false;
-            ViewGroup.MarginLayoutParams layoutParams =
-                    (ViewGroup.MarginLayoutParams) mBinding.cardViewSearchCustomer.getLayoutParams();
-            layoutParams.setMargins(50, 30, 50, 0);
-
-        } else {
-            isViewReport = true;
-            mBinding.cardViewCashRegister.setVisibility(View.INVISIBLE);
-            mBinding.cardViewCashRegister.setActivated(false);
-            mBinding.cardViewBusinessCard.setVisibility(View.INVISIBLE);
-            mBinding.cardViewBusinessCard.setActivated(false);
-            mBinding.cardViewDigiCash.setVisibility(View.INVISIBLE);
-            mBinding.cardViewDigiCash.setActivated(false);
-
-
-            mBinding.cardViewMakeInvoice.setVisibility(View.GONE);
-            mBinding.cardViewMakeInvoice.setActivated(false);
-            ViewGroup.MarginLayoutParams layoutParams =
-                    (ViewGroup.MarginLayoutParams) mBinding.cardViewSearchCustomer.getLayoutParams();
-            layoutParams.setMargins(50, -160, 50, 0);
-        }
-        mBinding.cardViewSearchCustomer.requestLayout();
-
-    }
 
 
     private void change_view_by_buttons(int i) {
@@ -398,9 +341,22 @@ public class HomeFragment extends Fragment {
             mBinding.cardViewMakeInvoice.setVisibility(View.GONE);
             mBinding.btnAddParty.setText("Add Customer");
 
+            mBinding.cardViewCashRegister.setVisibility(View.INVISIBLE);
+            mBinding.cardViewCashRegister.setActivated(false);
+            mBinding.cardViewBusinessCard.setVisibility(View.INVISIBLE);
+            mBinding.cardViewBusinessCard.setActivated(false);
+            mBinding.cardViewDigiCash.setVisibility(View.INVISIBLE);
+            mBinding.cardViewDigiCash.setActivated(false);
+            mBinding.cardViewMakeInvoice.setVisibility(View.INVISIBLE);
+            mBinding.cardViewMakeInvoice.setActivated(false);
+            mBinding.partyRecyclerView.setVisibility(View.VISIBLE);
+            mBinding.View3.setVisibility(View.VISIBLE);
+            mBinding.cardViewSearchCustomer.setVisibility(View.VISIBLE);
+            mBinding.btnAddParty.setVisibility(View.VISIBLE);
+
+
             isCustomer = true;
             isSupplier = false;
-            isAll = false;
 
         } else if (i == SUPPLIER_FRAGMENT) {
             mBinding.viewCustomer.setVisibility(View.GONE);
@@ -411,22 +367,45 @@ public class HomeFragment extends Fragment {
             mBinding.cardViewMakeInvoice.setVisibility(View.GONE);
             mBinding.btnAddParty.setText("Add Supplier");
 
+            mBinding.cardViewCashRegister.setVisibility(View.INVISIBLE);
+            mBinding.cardViewCashRegister.setActivated(false);
+            mBinding.cardViewBusinessCard.setVisibility(View.INVISIBLE);
+            mBinding.cardViewBusinessCard.setActivated(false);
+            mBinding.cardViewDigiCash.setVisibility(View.INVISIBLE);
+            mBinding.cardViewDigiCash.setActivated(false);
+            mBinding.cardViewMakeInvoice.setVisibility(View.INVISIBLE);
+            mBinding.cardViewMakeInvoice.setActivated(false);
             isCustomer = false;
             isSupplier = true;
-            isAll = false;
+            mBinding.partyRecyclerView.setVisibility(View.VISIBLE);
+            mBinding.View3.setVisibility(View.VISIBLE);
+            mBinding.cardViewSearchCustomer.setVisibility(View.VISIBLE);
+            mBinding.btnAddParty.setVisibility(View.VISIBLE);
 
-        } else if (i == ALL_FRAGMENT) {
+        } else if (i == REPORTS_FRAGMENT) {
             mBinding.viewCustomer.setVisibility(View.GONE);
             mBinding.viewSupplierIndicator.setVisibility(View.GONE);
             mBinding.viewAllIndicator.setVisibility(View.VISIBLE);
-            mBinding.customerCard.setVisibility(View.VISIBLE);
+            mBinding.customerCard.setVisibility(View.GONE);
             mBinding.supplierCard.setVisibility(View.GONE);
             mBinding.cardViewMakeInvoice.setVisibility(View.GONE);
-            mBinding.btnAddParty.setText("Add Customer");
 
+            mBinding.cardViewCashRegister.setVisibility(View.VISIBLE);
+            mBinding.cardViewCashRegister.setActivated(true);
+            mBinding.cardViewBusinessCard.setVisibility(View.VISIBLE);
+            mBinding.cardViewBusinessCard.setActivated(true);
+            mBinding.cardViewDigiCash.setVisibility(View.VISIBLE);
+            mBinding.cardViewDigiCash.setActivated(true);
+            mBinding.cardViewMakeInvoice.setVisibility(View.VISIBLE);
+            mBinding.cardViewMakeInvoice.setActivated(true);
+
+            mBinding.partyRecyclerView.setVisibility(View.GONE);
+            mBinding.cardViewSearchCustomer.setVisibility(View.GONE);
+            mBinding.View3.setVisibility(View.GONE);
+            mBinding.btnAddParty.setVisibility(View.GONE);
             isCustomer = true;
             isSupplier = false;
-            isAll = true;
+
         }
     }
 

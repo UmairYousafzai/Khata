@@ -16,5 +16,7 @@
     <color name="background_color_two">#F2F2F2</color>
     <color name="font_color_dark">#152e3d</color>
     <color name="background_gray_color">#f2f2f2</color>
+    <color name="custom_red_color">#bc1200</color>
+    <color name="supplier_btn_color">#d3aa6e</color>
 
 </resources>

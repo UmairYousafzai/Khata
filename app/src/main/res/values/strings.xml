@@ -41,5 +41,8 @@
     <string name="help_support">Help/Support</string>
     <string name="about_us">About Us</string>
     <string name="logout">LogOut</string>
+    <string name="add_customers">Add Customers</string>
+    <string name="collection">Collection</string>
+    <string name="edit">Edit</string>
 
 </resources>
