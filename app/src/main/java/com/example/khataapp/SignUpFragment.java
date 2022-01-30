@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -25,12 +26,15 @@ import com.example.khataapp.databinding.CustomAddLocationDialogBinding;
 import com.example.khataapp.databinding.CustomLocationsDialogBinding;
 import com.example.khataapp.databinding.FragmentSignUpBinding;
 import com.example.khataapp.models.GetLocationResponse;
+import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Location;
+import com.example.khataapp.models.LoginResponse;
 import com.example.khataapp.models.PostLocation;
 import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
 import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.DataViewModel;
+import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,6 +54,7 @@ public class SignUpFragment extends Fragment {
     private HashMap<String,String> locationCodeHashMap=new HashMap<>();
     private boolean isPasswordSame= false;
     private DataViewModel dataViewModel;
+    private ProgressDialog progressDialog ;
 
 
     @Override
@@ -71,6 +76,8 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        progressDialog= new ProgressDialog(requireContext());
 
 
         navController = NavHostFragment.findNavController(this);
@@ -153,6 +160,15 @@ public class SignUpFragment extends Fragment {
                     Toast.makeText(requireContext(), "Please enter valid password", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+        mBinding.tvAlreadyMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NavDirections navDirections = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment();
+                navController.navigate(navDirections);
             }
         });
 
@@ -440,6 +456,139 @@ public class SignUpFragment extends Fragment {
 
             }
         });
+
+    }
+
+
+    private void login(String username, String password) {
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setTitle("Login");
+        progressDialog.show();
+
+        Call<LoginResponse> call = ApiClient.getInstance().getApi().login(username,password);
+
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body()!=null)
+                    {
+                        LoginResponse loginResponse= response.body();
+
+                        if (loginResponse.getCode() == 200) {
+
+                            SharedPreferenceHelper.getInstance(requireContext()).setUserID(loginResponse.getUser().getUserId());
+                            SharedPreferenceHelper.getInstance(requireContext()).setBUSINESS_ID(loginResponse.getUser().getBusinessId());
+                            SharedPreferenceHelper.getInstance(requireContext()).setIsLogin(true);
+
+                            dataViewModel.insertUser(loginResponse.getUser());
+                            Toast.makeText(requireContext(), "" + loginResponse.getUser().getUserName(), Toast.LENGTH_LONG).show();
+                            progressDialog.setMessage("Syncing...");
+                            progressDialog.setTitle("Parties");
+                            progressDialog.show();
+                            getParties("c");
+                        }
+                        else if(loginResponse.getCode()==401)
+                        {
+                            mBinding.etUserNameLayout.setError("Invalid");
+                            mBinding.etPasswordLayout.setError("Invalid");
+                            mBinding.etUserName.requestFocus();
+                        }
+
+                        Toast.makeText(requireContext(), ""+loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+                else {
+                    Toast.makeText(requireContext(), ""+response.message(), Toast.LENGTH_SHORT).show();
+                }
+
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+
+                Toast.makeText(requireContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
+            }
+        });
+    }
+
+    public String getParties(String type) {
+
+
+
+        String businessID= SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID();
+
+        Call<GetPartyServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID,type);
+        call.enqueue(new Callback<GetPartyServerResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetPartyServerResponse> call, @NonNull Response<GetPartyServerResponse> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body()!=null)
+                    {
+                        GetPartyServerResponse getPartyServerResponse= response.body();
+
+                        if (getPartyServerResponse.getCode()==200)
+                        {
+
+                            if (getPartyServerResponse.getPartyList()!=null&& getPartyServerResponse.getPartyList().size()>0)
+                            {
+
+                                dataViewModel.insertParties(getPartyServerResponse.getPartyList());
+
+
+                            }
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    if (response.errorBody() != null) {
+                        Toast.makeText(requireContext(), ""+response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                progressDialog.dismiss();
+                if (type.equals("s"))
+                {
+                    progressDialog.dismiss();
+                    navController.navigate(R.id.action_loginFragment_to_homeFragment);
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetPartyServerResponse> call, @NonNull Throwable t) {
+
+                Toast.makeText(requireContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                if (type.equals("s"))
+                {
+                    progressDialog.dismiss();
+                    navController.navigate(R.id.action_signUpFragment_to_homeFragment);
+
+                }
+
+            }
+        });
+
+        if (type.equals("c"))
+        {
+            return getParties("s");
+        }
+        else
+        {
+            return "break";
+        }
 
     }
 }

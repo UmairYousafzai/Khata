@@ -71,14 +71,14 @@ public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.Part
         {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(30,30,30,200);
+            layoutParams.setMargins(0,0,0,200);
             holder.mBinding.partyCard.setLayoutParams(layoutParams);
         }
         else
         {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(30,30,30,30);
+            layoutParams.setMargins(0,0,0,0);
             holder.mBinding.partyCard.setLayoutParams(layoutParams);
         }
 
