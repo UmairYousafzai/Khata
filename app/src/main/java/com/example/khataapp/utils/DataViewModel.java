@@ -56,4 +56,9 @@ public class DataViewModel extends AndroidViewModel {
         return partyList = dataRepository.getParties(type);
 
     }
+
+    public void getAndSaveParties()
+    {
+        dataRepository.getAndSaveParties();
+    }
 }

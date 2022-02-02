@@ -25,6 +25,8 @@ import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.DataViewModel;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,7 +64,6 @@ public class SplashScreenFragment extends Fragment {
         dataViewModel= new ViewModelProvider(this).get(DataViewModel.class);
         dataViewModel.deleteParties();
 
-        getParties("c");
 
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -75,73 +76,76 @@ public class SplashScreenFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
         {
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().hide();
+            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
 
         }
+
+        checkLogin();
+        dataViewModel.getAndSaveParties();
     }
-
-    public String getParties(String type) {
-
-
-        String businessID= SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID();
-
-        Call<GetPartyServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID,type);
-        call.enqueue(new Callback<GetPartyServerResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<GetPartyServerResponse> call, @NonNull Response<GetPartyServerResponse> response) {
-
-                if (response.isSuccessful())
-                {
-                    if (response.body()!=null)
-                    {
-                        GetPartyServerResponse getPartyServerResponse= response.body();
-
-                        if (getPartyServerResponse.getCode()==200)
-                        {
-
-                            if (getPartyServerResponse.getPartyList()!=null&& getPartyServerResponse.getPartyList().size()>0)
-                            {
-
-                                dataViewModel.insertParties(getPartyServerResponse.getPartyList());
-
-                            }
-                        }
-
-                    }
-
-                }
-                else
-                {
-                    if (response.errorBody() != null) {
-                        Toast.makeText(requireContext(), ""+response.errorBody().toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                if (type.equals("s"))
-                {
-                    checkLogin();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<GetPartyServerResponse> call, @NonNull Throwable t) {
-                if (type.equals("s"))
-                {
-                    checkLogin();
-                }
-            }
-        });
-
-        if (type.equals("c"))
-        {
-            return getParties("s");
-        }
-        else
-        {
-            return "break";
-        }
-
-    }
+//
+//    public String getParties(String type) {
+//
+//
+//        String businessID= SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID();
+//
+//        Call<GetPartyServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID,type);
+//        call.enqueue(new Callback<GetPartyServerResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<GetPartyServerResponse> call, @NonNull Response<GetPartyServerResponse> response) {
+//
+//                if (response.isSuccessful())
+//                {
+//                    if (response.body()!=null)
+//                    {
+//                        GetPartyServerResponse getPartyServerResponse= response.body();
+//
+//                        if (getPartyServerResponse.getCode()==200)
+//                        {
+//
+//                            if (getPartyServerResponse.getPartyList()!=null&& getPartyServerResponse.getPartyList().size()>0)
+//                            {
+//
+//                                dataViewModel.insertParties(getPartyServerResponse.getPartyList());
+//
+//                            }
+//                        }
+//
+//                    }
+//
+//                }
+//                else
+//                {
+//                    if (response.errorBody() != null) {
+//                        Toast.makeText(requireContext(), ""+response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                if (type.equals("s"))
+//                {
+//                    checkLogin();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<GetPartyServerResponse> call, @NonNull Throwable t) {
+//                if (type.equals("s"))
+//                {
+//                    checkLogin();
+//                }
+//            }
+//        });
+//
+//        if (type.equals("c"))
+//        {
+//            return getParties("s");
+//        }
+//        else
+//        {
+//            return "break";
+//        }
+//
+//    }
 
     public void checkLogin()
     {
