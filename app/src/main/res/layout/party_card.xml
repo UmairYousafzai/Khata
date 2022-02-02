@@ -14,10 +14,7 @@
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardBackgroundColor="@color/white"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="10dp"
-        app:cardPreventCornerOverlap="true"
-        android:layout_margin="5dp"
+        app:cardCornerRadius="5dp"
         android:id="@+id/party_card"
         >
 
@@ -25,162 +22,83 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
+
+            <TextView
+                android:id="@+id/tv_part_name_drawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="W"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/party_name_background"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/view"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="5dp"
+
+                />
+            
+            <TextView
+                android:id="@+id/tv_name_party"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{party.partyName}"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:padding="3dp"
+                app:layout_constraintTop_toTopOf="@id/tv_part_name_drawable"
+                app:layout_constraintStart_toEndOf="@id/tv_part_name_drawable"
+                app:layout_constraintBottom_toTopOf="@id/tv_date_time"
+                android:layout_marginStart="6dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs 5000."
+                android:textColor="@color/custom_red_color"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yesterday"
+                android:padding="3dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_name_party"
+                app:layout_constraintStart_toStartOf="@id/tv_name_party"
+                app:layout_constraintBottom_toBottomOf="@id/tv_part_name_drawable"
+                />
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You Will get"
+                android:padding="3dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_credit"
+                app:layout_constraintEnd_toEndOf="@id/tv_credit"
+                app:layout_constraintBottom_toTopOf="@id/view"
+                />
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@color/app_theme_color"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-
-            <ImageButton
-                android:id="@+id/btn_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_baseline_edit_24"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-
-                android:layout_margin="5dp"
-                />
-
-            <TextView
-                android:id="@+id/tv_name_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name: "
-                android:textColor="@color/app_theme_color"
-                android:textStyle="bold"
-                android:gravity="center_vertical"
-                android:layout_margin="5dp"
-                app:layout_constraintTop_toBottomOf="@id/view"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_name"
-                />
-
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{party.partyName}"
-                android:textColor="@color/font_color_dark"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="18dp"
-                app:layout_constraintTop_toTopOf="@id/tv_name_heading"
-                app:layout_constraintBottom_toBottomOf="@id/tv_name_heading"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_name_heading"
-                app:layout_constraintHorizontal_weight="1"
-                />
-
-            <TextView
-                android:id="@+id/tv_phone_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phone: "
-                android:textColor="@color/app_theme_color"
-                android:textStyle="bold"
-                android:gravity="center_vertical"
-                android:layout_margin="5dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_phone"
-                />
-
-            <TextView
-                android:id="@+id/tv_phone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{party.phone}"
-                android:textColor="@color/font_color_dark"
-                android:gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="13dp"
-                app:layout_constraintTop_toTopOf="@id/tv_phone_heading"
-                app:layout_constraintBottom_toBottomOf="@id/tv_phone_heading"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_phone_heading"
-                app:layout_constraintHorizontal_weight="1"
-                />
-
-            <TextView
-                android:id="@+id/tv_email_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email: "
-                android:textColor="@color/app_theme_color"
-                android:textStyle="bold"
-                android:gravity="center_vertical"
-                android:layout_margin="5dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_phone_heading"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_email"
-                />
-
-            <TextView
-                android:id="@+id/tv_email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{party.email}"
-                android:textColor="@color/font_color_dark"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="18dp"
-                app:layout_constraintTop_toTopOf="@id/tv_email_heading"
-                app:layout_constraintBottom_toBottomOf="@id/tv_email_heading"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_email_heading"
-                app:layout_constraintHorizontal_weight="1"
-                />
-            <TextView
-                android:id="@+id/tv_address_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Address: "
-                android:textColor="@color/app_theme_color"
-                android:textStyle="bold"
-                android:gravity="center_vertical"
-                android:layout_margin="5dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_email_heading"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_address"
-                app:layout_constraintBottom_toTopOf="@id/view1"
-                />
-
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{party.partyAddress}"
-                android:textColor="@color/font_color_dark"
-                android:gravity="center_vertical"
-                android:layout_marginStart="2dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                app:layout_constraintTop_toTopOf="@id/tv_address_heading"
-                app:layout_constraintBottom_toBottomOf="@id/tv_address_heading"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_address_heading"
-                app:layout_constraintHorizontal_weight="1"
-
-                />
-
-            <View
-                android:id="@+id/view1"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:background="@color/app_theme_color"
+                android:layout_height="1dp"
+                android:background="@color/gray_custom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main,menu);
 
         menu.findItem(R.id.action_refresh).setVisible(false);
+        menu.findItem(R.id.action_edit).setVisible(false);
 
 
         return true;
