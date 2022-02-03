@@ -204,7 +204,15 @@
             app:argType="com.example.khataapp.models.Party"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_partyFullInfoFragment_to_setReminderBottomSheetDialogFragment"
+            app:destination="@id/setReminderBottomSheetDialogFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/setReminderBottomSheetDialogFragment"
+        android:name="com.example.khataapp.SetReminderBottomSheetDialogFragment"
+        android:label="fragment_set_reminder_bottom_sheet_dialog"
+        tools:layout="@layout/fragment_set_reminder_bottom_sheet_dialog" />
 
 
 </navigation>

@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SetReminderBottomSheetDialogFragment"
-    android:padding="10dp">
+    android:paddingHorizontal="10dp"
+    android:paddingTop="10dp">
 
     <TextView
         android:id="@+id/tv_heading"
@@ -23,13 +24,105 @@
         android:id="@+id/tv_sub_heading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Set Date for Party"
-        android:textSize="18sp"
-        android:textColor="@color/font_color_dark"
+        android:text="Khata will remind customer on selected Date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_heading"
         android:layout_marginTop="15dp"
+        />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/tv_sub_heading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+
+        >
+        <RadioButton
+            android:id="@+id/radio_btn_next_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next Week"
+
+            /> <RadioButton
+            android:id="@+id/radio_btn_next_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next Month"
+
+            />
+
+        <RadioButton
+            android:id="@+id/radio_btn_calender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calendar"
+
+            />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tv_next_week_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="07 Feb 2022"
+        app:drawableStartCompat="@drawable/ic_calendar_line_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/radio_group"
+        android:layout_marginTop="12dp"
+        android:drawablePadding="10dp"
+
+        />
+    <TextView
+        android:id="@+id/tv_next_month_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="07 Feb 2022"
+        app:drawableStartCompat="@drawable/ic_calendar_line_blue"
+        app:layout_constraintEnd_toEndOf="@id/tv_next_week_date"
+        app:layout_constraintStart_toStartOf="@id/tv_next_week_date"
+        app:layout_constraintTop_toBottomOf="@id/tv_next_week_date"
+        app:layout_constraintBottom_toBottomOf="@id/radio_group"
+        app:layout_constraintVertical_bias="0.3"
+        android:drawablePadding="10dp"
+
+        />
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/radio_group"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remove"
+        android:textStyle="bold"
+        android:textColor="@color/app_theme_color"
+        app:backgroundTint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/view1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

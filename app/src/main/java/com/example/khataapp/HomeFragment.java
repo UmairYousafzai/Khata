@@ -54,8 +54,9 @@ public class HomeFragment extends Fragment {
     private NavController navController;
     private String businessName;
     private NavBackStackEntry navBackStackEntry;
-    private DataViewModel dataViewModel;
     private LifecycleEventObserver observer;
+    private DataViewModel dataViewModel;
+
     private User user = new User();
     private boolean isCustomer = true, isSupplier = false;
     private List<Party> partyList = new ArrayList<>();

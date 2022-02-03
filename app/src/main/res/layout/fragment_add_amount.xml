@@ -8,6 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText
+        android:id="@+id/et_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -30,413 +31,431 @@
         android:drawableLeft="@drawable/ic_pakistan_rupee" />
 
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="7dp"
-        android:backgroundTint="@color/custom_blue"
-        android:elevation="5dp"
-        android:paddingVertical="10dp"
-        android:text="save"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:cornerRadius="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/Gl_keyboard"
-        app:layout_constraintEnd_toEndOf="@+id/Gl_keyboard"
-        app:layout_constraintStart_toStartOf="@+id/Gl_keyboard" />
 
 
-    <GridLayout android:id="@+id/Gl_keyboard"
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="3dp"
+            android:backgroundTint="@color/custom_blue"
+            android:elevation="5dp"
+            android:paddingVertical="10dp"
+            android:text="Save"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:cornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/keyboard_layout"
+             />
+
+    <include
+        android:id="@+id/keyboard_layout"
+        layout="@layout/custom_keyboard_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:rowCount="6"
-        android:elevation="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_AC"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="AC"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_M_Plus"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="M+"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_M_Minus"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="M-"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_Back"
-            android:layout_row="0"
-            android:layout_column="3"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:drawablePadding="4dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            app:icon="@drawable/ic_outline_backspace_24"
-            app:iconGravity="textStart"
-            app:iconTint="@color/black"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_modulas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="%"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_divide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="/"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_Multiply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="×"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_minus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="3"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="-"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="7"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="8"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="9"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_Plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_rowSpan="2"
-            android:layout_column="3"
-            android:layout_gravity="fill_vertical"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="+"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
+        />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="4"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="5"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="6"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="4"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="1"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="4"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="2"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="4"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="3"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_equals"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_row="4"
-            android:layout_column="3"
-            android:layout_rowSpan="2"
-            android:layout_gravity="fill_vertical"
-            android:layout_rowWeight="2"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="="
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/gray_custom"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="5"
-            android:layout_column="0"
-            android:layout_columnSpan="2"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="0"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="5"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginStart="5dp"
-            android:elevation="5dp"
-            android:paddingVertical="10dp"
-            android:text="."
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="5dp"
-            android:layout_marginLeft="5dp" />
 
 
-    </GridLayout>
+<!--    <GridLayout android:id="@+id/Gl_keyboard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:columnCount="4"-->
+<!--        android:rowCount="6"-->
+<!--        android:elevation="5dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_AC"-->
+<!--            android:layout_row="0"-->
+<!--            android:layout_column="0"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="AC"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_M_Plus"-->
+<!--            android:layout_row="0"-->
+<!--            android:layout_column="1"-->
+<!--            android:layout_columnWeight="1"-->
+
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="M+"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_M_Minus"-->
+<!--            android:layout_row="0"-->
+<!--            android:layout_column="2"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="M-"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_Back"-->
+<!--            android:layout_row="0"-->
+<!--            android:layout_column="3"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:drawablePadding="4dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            app:icon="@drawable/ic_outline_backspace_24"-->
+<!--            app:iconGravity="textStart"-->
+<!--            app:iconTint="@color/black"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_modulas"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="1"-->
+<!--            android:layout_column="0"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="%"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_divide"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="1"-->
+<!--            android:layout_column="1"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="/"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_Multiply"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="1"-->
+<!--            android:layout_column="2"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="×"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_minus"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="1"-->
+<!--            android:layout_column="3"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="-"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_7"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="2"-->
+<!--            android:layout_column="0"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="7"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_8"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="2"-->
+<!--            android:layout_column="1"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="8"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_9"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="2"-->
+<!--            android:layout_column="2"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="9"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_Plus"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="2"-->
+<!--            android:layout_rowSpan="2"-->
+<!--            android:layout_column="3"-->
+<!--            android:layout_gravity="fill_vertical"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="+"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_4"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="3"-->
+<!--            android:layout_column="0"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="4"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_5"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="3"-->
+<!--            android:layout_column="1"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="5"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_6"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="3"-->
+<!--            android:layout_column="2"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="6"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="4"-->
+<!--            android:layout_column="0"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="1"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="4"-->
+<!--            android:layout_column="1"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="2"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_3"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="4"-->
+<!--            android:layout_column="2"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="3"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_equals"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="42dp"-->
+<!--            android:layout_row="4"-->
+<!--            android:layout_column="3"-->
+<!--            android:layout_rowSpan="2"-->
+<!--            android:layout_gravity="fill_vertical"-->
+<!--            android:layout_rowWeight="2"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="="-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/gray_custom"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_0"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="5"-->
+<!--            android:layout_column="0"-->
+<!--            android:layout_columnSpan="2"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="0"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_dot"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="5"-->
+<!--            android:layout_column="2"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:layout_gravity="fill_horizontal"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:elevation="5dp"-->
+<!--            android:paddingVertical="10dp"-->
+<!--            android:text="."-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18sp"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:cornerRadius="5dp"-->
+<!--            android:layout_marginLeft="5dp" />-->
+
+
+<!--    </GridLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

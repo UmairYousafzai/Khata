@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         menu.findItem(R.id.action_refresh).setVisible(false);
         menu.findItem(R.id.action_edit).setVisible(false);
+        menu.findItem(R.id.action_call).setVisible(false);
 
 
         return true;
