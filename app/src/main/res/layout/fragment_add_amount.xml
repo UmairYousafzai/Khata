@@ -7,30 +7,126 @@
     android:background="#F6F1E2"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditText
-        android:id="@+id/et_amount"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/amount_card_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/text_view_background_1"
-        android:drawableStart="@drawable/ic_pakistan_rupee"
-        android:drawableEnd="@drawable/ic_outline_backspace_24"
-        android:drawablePadding="10dp"
-        android:drawableTint="@color/custom_blue"
-        android:elevation="5dp"
-        android:hint="Enter Amount"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="10dp"
-        android:textSize="18sp"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="6dp"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:drawableRight="@drawable/ic_outline_backspace_24"
-        android:drawableLeft="@drawable/ic_pakistan_rupee" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <EditText
+                android:id="@+id/et_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_pakistan_rupee"
+                android:drawableEnd="@drawable/ic_outline_backspace_24"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/custom_blue"
+                android:hint="Enter Amount"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="10dp"
+                android:textSize="18sp"
+                android:drawableRight="@drawable/ic_outline_backspace_24"
+                android:drawableLeft="@drawable/ic_pakistan_rupee" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_custom"
+                android:layout_marginHorizontal="10dp"
+                android:visibility="gone"
+
+                />
+            <TextView
+                android:id="@+id/tv_amount_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="mjdjkfsdfd"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:visibility="gone"
+
+                />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 
+    <EditText
+        android:id="@+id/et_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_view_background_1"
+        android:elevation="5dp"
+        android:hint="@string/enter_details_item_name_bill_no_quantity"
+        android:maxLines="5"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="10dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/amount_card_layout"
+        app:layout_constraintStart_toStartOf="@id/amount_card_layout"
+        app:layout_constraintTop_toBottomOf="@id/amount_card_layout"
+        android:layout_marginTop="5dp"
+        />
+    <TextView
+        android:id="@+id/tv_add_bill_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_bill_no"
+        android:textSize="15sp"
+        android:textColor="@color/app_theme_color"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toBottomOf="@id/et_details"
+        app:layout_constraintEnd_toEndOf="@id/et_details"
+        android:layout_marginTop="12dp"
+
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_attach_bill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/attach_bills"
+        android:textSize="11sp"
+        android:textColor="@color/font_color_dark"
+        app:backgroundTint="@color/white"
+        app:icon="@drawable/ic_baseline_photo_camera_24"
+        app:iconTint="@color/app_theme_color"
+        app:layout_constraintTop_toBottomOf="@id/tv_add_bill_no"
+        app:layout_constraintEnd_toEndOf="@id/tv_add_bill_no"
+       />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"
+        android:textSize="11sp"
+        android:textColor="@color/font_color_dark"
+        app:backgroundTint="@color/white"
+        app:icon="@drawable/ic_calendar_line_blue"
+        app:iconSize="18dp"
+        app:iconTint="@color/app_theme_color"
+        app:layout_constraintTop_toTopOf="@id/btn_attach_bill"
+        app:layout_constraintBottom_toBottomOf="@id/btn_attach_bill"
+        app:layout_constraintStart_toStartOf="@id/et_details"
+        app:layout_constraintEnd_toStartOf="@id/btn_attach_bill"
+        app:layout_constraintHorizontal_bias="0.0"
+         />
 
 
         <com.google.android.material.button.MaterialButton

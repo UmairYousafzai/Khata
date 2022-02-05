@@ -43,12 +43,12 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         mBinding= FragmentLoginBinding.inflate(inflater,container,false);
-
-        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
-        if (navBar!=null)
-        {
-            navBar.setVisibility(View.GONE);
-        }
+//
+//        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
+//        if (navBar!=null)
+//        {
+//            navBar.setVisibility(View.GONE);
+//        }
 
 
         return mBinding.getRoot();
@@ -73,11 +73,11 @@ public class LoginFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-        if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
-        {
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().hide();
-
-        }
+//        if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+//        {
+//            ((AppCompatActivity) requireActivity()).getSupportActionBar().hide();
+//
+//        }
     }
 
     private void btnListener() {

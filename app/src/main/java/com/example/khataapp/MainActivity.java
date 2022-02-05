@@ -12,10 +12,12 @@ import com.example.khataapp.utils.SharedPreferenceHelper;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -53,8 +55,52 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationListener();
 
         setupToolbar();
+        fragmentListener();
 
+    }
 
+    private void fragmentListener() {
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable @org.jetbrains.annotations.Nullable Bundle arguments) {
+
+                if (destination.getId()==R.id.homeFragment)
+                {
+                    mainBinding.bottomView.setVisibility(View.VISIBLE);
+                }
+                else if (destination.getId()==R.id.moneyFragment)
+                {
+                    mainBinding.bottomView.setVisibility(View.VISIBLE);
+
+                }
+                else if (destination.getId()==R.id.moreFragment)
+                {
+                    mainBinding.bottomView.setVisibility(View.VISIBLE);
+
+                }
+                else
+                {
+                    mainBinding.bottomView.setVisibility(View.GONE);
+                }
+
+                if (destination.getId()==R.id.splashScreenFragment)
+                {
+                    mainBinding.toolbar.setVisibility(View.GONE);
+                }
+                else  if (destination.getId()==R.id.loginFragment)
+                {
+                    mainBinding.toolbar.setVisibility(View.GONE);
+                }
+                else  if (destination.getId()==R.id.signUpFragment)
+                {
+                    mainBinding.toolbar.setVisibility(View.GONE);
+                }
+                else {
+                    mainBinding.toolbar.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void setupToolbar() {

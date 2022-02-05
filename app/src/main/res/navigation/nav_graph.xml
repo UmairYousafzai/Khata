@@ -155,7 +155,15 @@
         android:id="@+id/moreFragment"
         android:name="com.example.khataapp.MoreFragment"
         android:label="More"
-        tools:layout="@layout/fragment_more" />
+        tools:layout="@layout/fragment_more" >
+        <action
+            android:id="@+id/action_moreFragment_to_addItemFragment"
+            app:destination="@id/addItemFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <dialog
         android:id="@+id/searchFilterBottomSheetFragment"
         android:name="com.example.khataapp.SearchFilterBottomSheetFragment"
@@ -207,12 +215,28 @@
         <action
             android:id="@+id/action_partyFullInfoFragment_to_setReminderBottomSheetDialogFragment"
             app:destination="@id/setReminderBottomSheetDialogFragment" />
+        <action
+            android:id="@+id/action_partyFullInfoFragment_to_addAmountFragment"
+            app:destination="@id/addAmountFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <dialog
         android:id="@+id/setReminderBottomSheetDialogFragment"
         android:name="com.example.khataapp.SetReminderBottomSheetDialogFragment"
         android:label="fragment_set_reminder_bottom_sheet_dialog"
         tools:layout="@layout/fragment_set_reminder_bottom_sheet_dialog" />
+    <fragment
+        android:id="@+id/addAmountFragment"
+        android:name="com.example.khataapp.addAmountFragment"
+        android:label="addAmountFragment" />
+    <fragment
+        android:id="@+id/addItemFragment"
+        android:name="com.example.khataapp.stock.AddItemFragment"
+        android:label="fragment_add_item"
+        tools:layout="@layout/fragment_add_item" />
 
 
 </navigation>

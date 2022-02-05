@@ -63,11 +63,11 @@ public class SignUpFragment extends Fragment {
 
         mBinding= FragmentSignUpBinding.inflate(inflater,container,false);
 
-        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
-        if (navBar!=null)
-        {
-            navBar.setVisibility(View.GONE);
-        }
+//        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
+//        if (navBar!=null)
+//        {
+//            navBar.setVisibility(View.GONE);
+//        }
 
 
         return mBinding.getRoot();

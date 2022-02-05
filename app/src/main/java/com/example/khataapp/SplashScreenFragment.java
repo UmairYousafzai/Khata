@@ -44,12 +44,12 @@ public class SplashScreenFragment extends Fragment {
 
         mBinding = FragmentSplashScreenBinding.inflate(inflater,container,false);
 
-        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
-
-        if (navBar!=null)
-        {
-            navBar.setVisibility(View.GONE);
-        }
+//        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
+//
+//        if (navBar!=null)
+//        {
+//            navBar.setVisibility(View.GONE);
+//        }
 
 
         return mBinding.getRoot();
@@ -74,11 +74,11 @@ public class SplashScreenFragment extends Fragment {
                         }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
-        if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
-        {
-            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
-
-        }
+//        if (((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+//        {
+//            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).hide();
+//
+//        }
 
         checkLogin();
         dataViewModel.getAndSaveParties();

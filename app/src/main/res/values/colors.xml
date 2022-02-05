@@ -18,5 +18,6 @@
     <color name="background_gray_color">#f2f2f2</color>
     <color name="custom_red_color">#bc1200</color>
     <color name="supplier_btn_color">#d3aa6e</color>
+    <color name="brown">#654321</color>
 
 </resources>

@@ -3,32 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable-v24/ic_baseline_arrow_forward_blue.xml" value="0.1215" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.1215" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1215" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.1215" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1215" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/ic_calendar_line_blue.xml" value="0.1215" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/ic_edit_24.xml" value="0.1215" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/ic_id_card.xml" value="0.1" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/ic_notebook.xml" value="0.1215" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/ic_outline_backspace_24.xml" value="0.1215" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/keyboard_button_background.xml" value="0.1215" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/party_name_background.xml" value="0.1215" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/drawable/text_view_background_1.xml" value="0.1215" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/activity_main.xml" value="0.209375" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/custom_keyboard_layout.xml" value="0.2" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_add_amount.xml" value="0.25" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_add_customer_and_supplier_fragment.xml" value="0.17074275362318841" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_add_party.xml" value="0.22" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_calculator.xml" value="0.3140625" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_login.xml" value="0.18" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_party_full_info.xml" value="0.3140625" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_phone_number.xml" value="0.10182370820668693" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_set_reminder_bottom_sheet_dialog.xml" value="0.33" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_sign_up.xml" value="0.28592162554426703" />
-        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/party_card.xml" value="0.25" />
+        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/fragment_sign_up.xml" value="0.67" />
+        <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/layout/party_card.xml" value="0.33" />
         <entry key="..\:/Android Projects Repositary/Khata/app/src/main/res/menu/menu_main.xml" value="0.1824074074074074" />
         <entry key="..\:/Android Projects Repositary/khataApp/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.157" />
         <entry key="..\:/Android Projects Repositary/khataApp/app/src/main/res/drawable/ic_collection.xml" value="0.157" />
@@ -45,6 +31,37 @@
         <entry key="..\:/Android Projects Repositary/khataApp/app/src/main/res/layout/fragment_more.xml" value="0.3140625" />
         <entry key="..\:/Android Projects Repositary/khataApp/app/src/main/res/layout/fragment_sign_up.xml" value="0.18548387096774194" />
         <entry key="..\:/Android Projects Repositary/khataApp/app/src/main/res/layout/search_filter_bottom_sheet.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/customer_name_background.xml" value="0.1305" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/et_background.xml" value="0.12" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/header_backgroud.xml" value="0.1305" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/header_backgroud_customer.xml" value="0.1305" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/ic_baseline_call_24.xml" value="0.12" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.1145" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/ic_boxes.xml" value="0.127" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/ic_calendar_line_blue.xml" value="0.1145" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/ic_pdf_svgrepo_com.xml" value="0.1145" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/ic_recycle_line.xml" value="0.127" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/ic_whatsapp_svgrepo_com.xml" value="0.1145" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/party_name_background.xml" value="0.1305" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/drawable/seach_view_background.xml" value="0.127" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/activity_main.xml" value="0.3024193548387097" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/custom_keyboard_layout.xml" value="0.30625" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_add_amount.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_add_item.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_add_party.xml" value="0.3024193548387097" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_emtry_detail.xml" value="0.30625" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_item_list.xml" value="0.28515625" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_money.xml" value="0.30625" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_more.xml" value="0.30625" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_party_full_info.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/fragment_sign_up.xml" value="0.1469265367316342" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/item_card.xml" value="0.30625" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/party_card.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.26944444444444443" />
+        <entry key="..\:/AndroidProjects/Khata/app/src/main/res/menu/menu_main.xml" value="0.30625" />
+        <entry key="..\:/umair folder/Khata/app/src/main/res/layout/activity_main.xml" value="0.2558876811594203" />
+        <entry key="..\:/umair folder/Khata/app/src/main/res/layout/fragment_home.xml" value="0.2" />
       </map>
     </option>
   </component>

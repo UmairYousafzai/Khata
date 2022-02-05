@@ -71,7 +71,12 @@ public class HomeFragment extends Fragment {
 
 
 
-            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
+        if( ((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
+        {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().show();
+
+        }
+
 
 
 
@@ -84,9 +89,13 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         change_view_by_buttons(CUSTOMER_FRAGMENT);
-        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
-        navBar.setVisibility(View.VISIBLE);
-        navBar.show(1, true);
+//        MeowBottomNavigation navBar = getActivity().findViewById(R.id.bottom_view);
+//        if (navBar!=null)
+//        {
+//            navBar.setVisibility(View.VISIBLE);
+//            navBar.show(1, true);
+//        }
+
         progressDialog = new ProgressDialog(requireContext());
         progressDialog.setCancelable(false);
 
@@ -100,10 +109,10 @@ public class HomeFragment extends Fragment {
         getUserLiveData();
         setupRecyclerView();
 
-        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
-            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
-
-        }
+//        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+//            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
+//
+//        }
 
 
 

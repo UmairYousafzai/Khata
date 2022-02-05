@@ -52,8 +52,8 @@ public class PartyFullInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navBackStackEntry = navController.getBackStackEntry(R.id.partyFullInfoFragment);
         navController = NavHostFragment.findNavController(this);
+        navBackStackEntry = navController.getBackStackEntry(R.id.partyFullInfoFragment);
 
         if (getArguments()!=null)
         {
@@ -71,6 +71,14 @@ public class PartyFullInfoFragment extends Fragment {
         mBinding.tvDialogOpener.setOnClickListener(v -> navController.navigate(R.id.action_partyFullInfoFragment_to_setReminderBottomSheetDialogFragment));
 
         mBinding.tvDialogOpener1.setOnClickListener(v -> navController.navigate(R.id.action_partyFullInfoFragment_to_setReminderBottomSheetDialogFragment));
+
+        mBinding.btnDebit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                navController.navigate(R.id.action_partyFullInfoFragment_to_addAmountFragment);
+            }
+        });
     }
 
     private void getDataFromDialog() {

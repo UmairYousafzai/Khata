@@ -112,7 +112,7 @@ public class SetReminderBottomSheetDialogFragment extends BottomSheetDialogFragm
                 {
                     if (mBinding.tvNextWeekDate.getText()!=null && mBinding.tvNextWeekDate.getText().toString().length()>0)
                     {
-                        date= mBinding.radioBtnNextWeek.getText().toString();
+                        date= mBinding.tvNextWeekDate.getText().toString();
                         if (navController.getPreviousBackStackEntry()!=null)
                         {
                             navController.getPreviousBackStackEntry().getSavedStateHandle().set(DATE_KEY,date);

@@ -52,11 +52,11 @@ public class AddPartyFragment extends Fragment {
 
         mBinding = FragmentAddPartyBinding.inflate(inflater,container,false);
 
-        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
-        if (navBar!=null)
-        {
-            navBar.setVisibility(View.GONE);
-        }
+//        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
+//        if (navBar!=null)
+//        {
+//            navBar.setVisibility(View.GONE);
+//        }
 
 
         return mBinding.getRoot();

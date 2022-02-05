@@ -242,7 +242,6 @@
             android:elevation="5dp"
             android:text="4"
             android:textColor="@color/black"
-            android:textSize="18sp"
             app:backgroundTint="@color/white"
             app:cornerRadius="5dp"
            />
@@ -259,7 +258,6 @@
             android:elevation="5dp"
             android:text="5"
             android:textColor="@color/black"
-            android:textSize="18sp"
             app:backgroundTint="@color/white"
             app:cornerRadius="5dp"
             android:layout_margin="5dp"
@@ -276,7 +274,6 @@
             android:layout_column="2"
             style="@style/FunctionalButtons"
             android:elevation="5dp"
-            android:paddingVertical="10dp"
             android:text="6"
             android:textColor="@color/black"
             app:backgroundTint="@color/white"
