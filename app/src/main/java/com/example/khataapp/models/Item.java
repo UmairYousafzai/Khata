@@ -13,6 +13,14 @@ public class Item {
     @SerializedName("BusinessBarcode")
     @Expose
     private String businessBarcode;
+
+    @SerializedName("BusinessId")
+    @Expose
+    private String businessID;
+
+    @SerializedName("UserId")
+    @Expose
+    private String userID;
     @SerializedName("ReferenceCode")
     @Expose
     private String referenceCode;
@@ -64,6 +72,11 @@ public class Item {
     @SerializedName("GSTType")
     @Expose
     private String gstType;
+
+    @SerializedName("Action")
+    @Expose
+    private String action;
+
     @SerializedName("GST_Percentage")
     @Expose
     private double gstPercentage;
@@ -79,6 +92,14 @@ public class Item {
     @SerializedName("NetCost")
     @Expose
     private double netCost;
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
 
     public String getBarcode() {
         return barcode;
@@ -270,5 +291,21 @@ public class Item {
 
     public void setNetCost(double netCost) {
         this.netCost = netCost;
+    }
+
+    public String getBusinessID() {
+        return businessID;
+    }
+
+    public void setBusinessID(String businessID) {
+        this.businessID = businessID;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

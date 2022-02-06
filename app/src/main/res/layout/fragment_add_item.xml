@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:layout_marginBottom="30dp"
             >
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -51,13 +51,15 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 app:hintTextColor="@color/app_theme_color"
-                app:layout_constraintTop_toBottomOf="@id/btn_department">
+                app:layout_constraintTop_toBottomOf="@id/btn_department"
+                android:visibility="gone">
 
                 <AutoCompleteTextView
                     android:id="@+id/department_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="textCapSentences"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -238,13 +240,14 @@
                 app:hintTextColor="@color/app_theme_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_supplier">
+                app:layout_constraintTop_toBottomOf="@id/btn_supplier"
+                android:visibility="gone">
 
                 <AutoCompleteTextView
                     android:id="@+id/supplier_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                     />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -254,6 +257,7 @@
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"
