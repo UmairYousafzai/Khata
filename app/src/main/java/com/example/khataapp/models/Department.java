@@ -11,6 +11,41 @@ public class Department {
     @Expose
     private String departmentName;
 
+    @SerializedName("UserId")
+    @Expose
+    private String userID;
+
+    @SerializedName("BusinessId")
+    @Expose
+    private String businessID;
+
+    @SerializedName("Action")
+    @Expose
+    private String action;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getBusinessID() {
+        return businessID;
+    }
+
+    public void setBusinessID(String businessID) {
+        this.businessID = businessID;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
 
     public String getDepartmentCode() {
         return departmentCode;
