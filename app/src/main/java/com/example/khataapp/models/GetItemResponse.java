@@ -3,6 +3,8 @@ package com.example.khataapp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class GetItemResponse {
 
     @SerializedName("Code")
@@ -13,7 +15,7 @@ public class GetItemResponse {
     private String message;
     @SerializedName("Data")
     @Expose
-    private Item item;
+    private List<Item> item;
 
     public int getCode() {
         return code;
@@ -31,11 +33,11 @@ public class GetItemResponse {
         this.message = message;
     }
 
-    public Item getItem() {
+    public List<Item> getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(List<Item> item) {
         this.item = item;
     }
 }

@@ -8,5 +8,6 @@ public class CONSTANTS {
     public static final int SERVER_RESPONSE=2;
     public static final int SERVER_ERROR=0;
     public static final int GET_SUPPLIER=3;
+    public static final int GET_ITEMS=4;
     public static  int THEME_KEY=1;
 }

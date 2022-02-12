@@ -68,15 +68,19 @@ public class MainActivity extends AppCompatActivity {
                 if (destination.getId()==R.id.homeFragment)
                 {
                     mainBinding.bottomView.setVisibility(View.VISIBLE);
+                    mainBinding.bottomView.show(1,true);
                 }
                 else if (destination.getId()==R.id.moneyFragment)
                 {
                     mainBinding.bottomView.setVisibility(View.VISIBLE);
+                    mainBinding.bottomView.show(2,true);
+
 
                 }
                 else if (destination.getId()==R.id.moreFragment)
                 {
                     mainBinding.bottomView.setVisibility(View.VISIBLE);
+                    mainBinding.bottomView.show(3,true);
 
                 }
                 else
@@ -159,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpBottomNavigation() {
 
-
         mainBinding.bottomView.add(new MeowBottomNavigation.Model(1,R.drawable.ic_homepage));
         mainBinding.bottomView.add(new MeowBottomNavigation.Model(2,R.drawable.ic_money_bag));
         mainBinding.bottomView.add(new MeowBottomNavigation.Model(3,R.drawable.ic_more));
@@ -187,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferenceHelper.getInstance(this).setBUSINESS_ID("");
             SharedPreferenceHelper.getInstance(this).setUserID("");
             navController.navigate(R.id.splashScreenFragment);
+        }
+        else if (item.getItemId()==R.id.action_department)
+        {
+            navController.navigate(R.id.addDepartmentFragment);
         }
 
         return super.onOptionsItemSelected(item);

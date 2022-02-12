@@ -156,9 +156,10 @@
         android:name="com.example.khataapp.MoreFragment"
         android:label="More"
         tools:layout="@layout/fragment_more" >
+
         <action
-            android:id="@+id/action_moreFragment_to_addItemFragment"
-            app:destination="@id/addItemFragment"
+            android:id="@+id/action_moreFragment_to_itemListFragment"
+            app:destination="@id/itemListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -236,7 +237,29 @@
         android:id="@+id/addItemFragment"
         android:name="com.example.khataapp.stock.AddItemFragment"
         android:label="fragment_add_item"
-        tools:layout="@layout/fragment_add_item" />
+        tools:layout="@layout/fragment_add_item" >
+        <argument
+            android:name="item"
+            app:argType="com.example.khataapp.models.Item"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemListFragment"
+        android:name="com.example.khataapp.stock.ItemListFragment"
+        android:label="ItemListFragment" >
+        <action
+            android:id="@+id/action_itemListFragment_to_addItemFragment"
+            app:destination="@id/addItemFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addDepartmentFragment"
+        android:name="com.example.khataapp.department.AddDepartmentFragment"
+        android:label="AddDepartmentFragment" />
 
 
 </navigation>

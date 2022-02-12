@@ -1,91 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".stock.ItemListFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    android:background="@color/background_gray_color">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.khataapp.stock.viewmodel.StockViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/head_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/white"
-        >
-        <TextView
-            android:id="@+id/tv_all_items"
-            android:layout_width="0dp"
+        android:layout_height="match_parent"
+        tools:context=".stock.ItemListFragment"
+
+        android:background="@color/background_gray_color">
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All Items"
-            android:textColor="@color/font_color_dark"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:padding="5dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_low_stock"
+            android:text="@string/add"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:elevation="5dp"
             />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="5dp"
-            android:background="@color/app_theme_color"
-            app:layout_constraintTop_toBottomOf="@id/tv_all_items"
-            app:layout_constraintStart_toStartOf="@id/tv_all_items"
-            app:layout_constraintEnd_toEndOf="@id/tv_all_items"
-            />
-        <TextView
-            android:id="@+id/tv_low_stock"
-            android:layout_width="0dp"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/head_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Low Stock"
-            android:textColor="@color/font_color_dark"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:padding="5dp"
+            android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_all_items"
-            />
-        <View
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_all_items"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="All Items"
+                android:textColor="@color/font_color_dark"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:padding="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_low_stock" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:background="@color/app_theme_color"
+                app:layout_constraintTop_toBottomOf="@id/tv_all_items"
+                app:layout_constraintStart_toStartOf="@id/tv_all_items"
+                app:layout_constraintEnd_toEndOf="@id/tv_all_items" />
+
+            <TextView
+                android:id="@+id/tv_low_stock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Low Stock"
+                android:textColor="@color/font_color_dark"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:padding="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_all_items" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:background="@color/app_theme_color"
+                app:layout_constraintTop_toBottomOf="@id/tv_low_stock"
+                app:layout_constraintStart_toStartOf="@id/tv_low_stock"
+                app:layout_constraintEnd_toEndOf="@id/tv_low_stock"
+                android:visibility="gone"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
             android:layout_width="0dp"
-            android:layout_height="5dp"
-            android:background="@color/app_theme_color"
-            app:layout_constraintTop_toBottomOf="@id/tv_low_stock"
-            app:layout_constraintStart_toStartOf="@id/tv_low_stock"
-            app:layout_constraintEnd_toEndOf="@id/tv_low_stock"
-            />
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            app:iconifiedByDefault="false"
+            app:queryHint="Type name ...."
+            android:background="@drawable/text_view_background_1"
+            android:layout_marginTop="15dp"
+            android:elevation="5dp"
+            app:layout_constraintTop_toBottomOf="@id/head_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/item_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingTop="20dp"
+            android:background="@color/white"
+
+            app:setAdapter="@{viewModel.adapter}"
+            app:layout_constraintTop_toBottomOf="@id/search_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="8"
-        app:iconifiedByDefault="false"
-        app:queryHint="Type name ...."
-        android:background="@drawable/text_view_background_1"
-        android:layout_marginTop="15dp"
-        android:elevation="5dp"
-        app:layout_constraintTop_toBottomOf="@id/head_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/item_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingTop="20dp"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/search_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

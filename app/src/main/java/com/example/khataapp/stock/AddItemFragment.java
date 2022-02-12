@@ -1,5 +1,6 @@
 package com.example.khataapp.stock;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,8 @@ public class AddItemFragment extends Fragment {
     private HashMap<String, String> supplierHashMapForID = new HashMap<>();
     private ArrayList<String> supplierNameList = new ArrayList<>();
     private ArrayList<String> departmentNameList = new ArrayList<>();
+    private ProgressDialog progressDialog;
+    private Item item= new Item();
 
 
     @Override
@@ -52,6 +55,11 @@ public class AddItemFragment extends Fragment {
 
         stockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
 
+        if (getArguments()!=null)
+        {
+            item = AddItemFragmentArgs.fromBundle(getArguments()).getItem();
+            mBinding.setItem(item);
+        }
 
         getDepartment();
         getSupplier();
@@ -98,52 +106,58 @@ public class AddItemFragment extends Fragment {
 
     private void saveItem() {
 
-        String unitSize,cartonSize,costPrice,salePrice;
+        progressDialog = new ProgressDialog(requireContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Item");
+        progressDialog.setMessage("Saving....");
+        progressDialog.show();
+        String unitSize, cartonSize, costPrice, salePrice;
 
-        if (mBinding.etItemName.getText() != null && !mBinding.etItemName.getText().toString().equals("."))
-        {
+        if (mBinding.etItemName.getText() != null && !mBinding.etItemName.getText().toString().equals(".")) {
 
         }
         Item item = new Item();
 
         if (mBinding.etItemName.getText() != null && !mBinding.etItemName.getText().toString().isEmpty()) {
             mBinding.etItemNameLayout.setError(null);
-            if (mBinding.etUnitSize.getText() != null && !mBinding.etUnitSize.getText().toString().equals("."))
-            {
+            if (mBinding.etUnitSize.getText() != null && !mBinding.etUnitSize.getText().toString().equals(".")) {
                 mBinding.etUnitSizeLayout.setError(null);
-                if (mBinding.etCartonSize.getText() != null && !mBinding.etCartonSize.getText().toString().equals("."))
-                {
+                if (mBinding.etCartonSize.getText() != null && !mBinding.etCartonSize.getText().toString().equals(".")) {
                     mBinding.etCartonSizeLayout.setError(null);
-                    if (mBinding.etCostPrice.getText() != null && !mBinding.etCostPrice.getText().toString().equals("."))
-                    {
+                    if (mBinding.etCostPrice.getText() != null && !mBinding.etCostPrice.getText().toString().equals(".")) {
                         mBinding.etCostPriceLayout.setError(null);
-                        if (mBinding.etSalePrice.getText() != null && !mBinding.etSalePrice.getText().toString().equals("."))
-                        {
+                        if (mBinding.etSalePrice.getText() != null && !mBinding.etSalePrice.getText().toString().equals(".")) {
                             mBinding.etSalePriceLayout.setError(null);
 
 
-                            if (mBinding.etCartonSize.getText().toString().length()>0) {
+                            if (mBinding.etCartonSize.getText().toString().length() > 0) {
 
-                                    item.setCtnPcs(Double.parseDouble(mBinding.etCartonSize.getText().toString()));
+                                item.setCtnPcs(Double.parseDouble(mBinding.etCartonSize.getText().toString()));
+
+                            }
+
+
+                            if (mBinding.etUnitSize.getText().toString().length() > 0) {
+
+                                item.setUnitSize(Double.parseDouble(mBinding.etUnitSize.getText().toString()));
 
                             }
 
 
-                            if ( mBinding.etCostPrice.getText().toString().length()>0) {
+                            if (mBinding.etCostPrice.getText().toString().length() > 0) {
 
 
-                                    item.setUnitCost(Double.parseDouble(mBinding.etCostPrice.getText().toString()));
+                                item.setUnitCost(Double.parseDouble(mBinding.etCostPrice.getText().toString()));
 
                             }
 
-                            if (mBinding.etSalePrice.getText().toString().length()>0) {
+                            if (mBinding.etSalePrice.getText().toString().length() > 0) {
 
-                                    item.setUnitRetail(Double.parseDouble(mBinding.etSalePrice.getText().toString()));
+                                item.setUnitRetail(Double.parseDouble(mBinding.etSalePrice.getText().toString()));
                             }
 
-                            if (departmentNameList!=null)
-                            {
-                                String name =departmentNameList.get(0);
+                            if (departmentNameList != null) {
+                                String name = departmentNameList.get(0);
                                 item.setDepartmentCode(departmentHashMapForID.get(name));
                                 item.setGroupCode(departmentHashMapForID.get(name));
                                 item.setSubGroupCode(departmentHashMapForID.get(name));
@@ -151,16 +165,12 @@ public class AddItemFragment extends Fragment {
                             }
 
 
-
-                            if (mBinding.supplierSpinner.getText()!=null && mBinding.supplierSpinner.getText().toString().length()>0)
-                            {
-                                String name =mBinding.supplierSpinner.getText().toString();
+                            if (mBinding.supplierSpinner.getText() != null && mBinding.supplierSpinner.getText().toString().length() > 0) {
+                                String name = mBinding.supplierSpinner.getText().toString();
                                 item.setSupplierCode(supplierHashMapForID.get(name));
 
-                            }
-                            else
-                            {
-                                item.setSupplierCode("0");
+                            } else {
+                                item.setSupplierCode("000001");
                             }
 
                             item.setDescription(mBinding.etItemName.getText().toString());
@@ -170,28 +180,20 @@ public class AddItemFragment extends Fragment {
                             item.setUserID(SharedPreferenceHelper.getInstance(requireContext()).getUserID());
                             item.setBusinessID(SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID());
 
-                           saveCall(item);
-                        }
-                        else
-                        {
+                            saveCall(item);
+                        } else {
                             mBinding.etSalePriceLayout.setError("Please Enter valid sale price");
 
                         }
-                    }
-                    else
-                    {
+                    } else {
                         mBinding.etCostPriceLayout.setError("Please Enter valid cost price");
 
                     }
-                }
-                else
-                {
+                } else {
                     mBinding.etCartonSizeLayout.setError("Please Enter valid carton size");
 
                 }
-            }
-            else
-            {
+            } else {
                 mBinding.etUnitSizeLayout.setError("Please Enter valid unit size");
 
             }
@@ -207,9 +209,9 @@ public class AddItemFragment extends Fragment {
             @Override
             public void onChanged(ServerResponse serverResponse) {
 
-                if (serverResponse!=null)
-                {
-                    Toast.makeText(requireContext(), ""+serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                if (serverResponse != null) {
+                    progressDialog.dismiss();
+                    Toast.makeText(requireContext(), "" + serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

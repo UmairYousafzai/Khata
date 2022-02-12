@@ -1,6 +1,7 @@
 package com.example.khataapp.stock.viewmodel;
 
 import static com.example.khataapp.utils.CONSTANTS.GET_DEPARTMENT;
+import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
@@ -11,11 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.models.Department;
 import com.example.khataapp.models.GetDepartmentResponse;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.ServerResponse;
+import com.example.khataapp.stock.adapter.ItemListAdapter;
 import com.example.khataapp.stock.repository.StockRepository;
 import com.example.khataapp.utils.CONSTANTS;
 import com.example.khataapp.utils.SharedPreferenceHelper;
@@ -26,15 +29,39 @@ import java.util.List;
 public class StockViewModel extends AndroidViewModel {
 
     private final StockRepository stockRepository;
-    private MutableLiveData<List<Department>> departmentMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<List<Party>> partyMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<ServerResponse> serverLiveData = new MutableLiveData<>();
-    private MutableLiveData<String> serverErrorLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Department>> departmentMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Party>> partyMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<ServerResponse> serverLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> serverErrorLiveData = new MutableLiveData<>();
+    private final ItemListAdapter adapter;
+    private final MutableLiveData<Item> itemMutableLiveData;
 
     public StockViewModel(@NonNull Application application) {
         super(application);
 
         stockRepository = StockRepository.getInstance(application);
+        adapter = new ItemListAdapter(this);
+        itemMutableLiveData= new MutableLiveData<>();
+    }
+
+    public MutableLiveData<String> getServerErrorLiveData() {
+        return serverErrorLiveData;
+    }
+
+    public ItemListAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void onAdapterCardClick(Item item)
+    {
+        if (item!=null)
+        {
+            itemMutableLiveData.setValue(item);
+        }
+    }
+
+    public MutableLiveData<Item> getItemMutableLiveData() {
+        return itemMutableLiveData;
     }
 
     public MutableLiveData<ServerResponse> saveItem(Item item) {
@@ -57,9 +84,17 @@ public class StockViewModel extends AndroidViewModel {
         return partyMutableLiveData;
     }
 
+    public void getItemsList()
+    {
+        String businessID= SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
+
+        getServerResponse();
+        stockRepository.getItems(businessID);
+    }
+
 
     public void getServerResponse() {
-        stockRepository.setCallBackListener(new StockRepository.CallBackListener() {
+        stockRepository.setCallBackListener(new CallBackListener() {
             @Override
             public void getServerResponse(Object object, int key) {
 
@@ -81,6 +116,10 @@ public class StockViewModel extends AndroidViewModel {
 
                         List<Party> partyList= (List<Party>) object;
                         partyMutableLiveData.setValue(partyList);
+                    }else if (key == GET_ITEMS) {
+
+                        List<Item> list= (List<Item>) object;
+                        adapter.setItemList(list);
                     }
                 }
 

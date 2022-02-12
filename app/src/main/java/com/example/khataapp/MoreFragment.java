@@ -44,7 +44,7 @@ public class MoreFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                navController.navigate(R.id.action_moreFragment_to_addItemFragment);
+                navController.navigate(R.id.action_moreFragment_to_itemListFragment);
             }
         });
     }

@@ -1,259 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddDepartmentFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.khataapp.department.DepartmentViewModel" />
+    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        tools:context=".department.AddDepartmentFragment">
 
-        >
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/department_spinner_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:elevation="5dp"
-            android:hint="Select Department"
-            app:boxBackgroundColor="@color/white"
-            app:hintTextColor="@color/app_theme_color"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_add_department"
-            app:layout_constraintBottom_toTopOf="@id/et_new_department_layout"
-            android:layout_marginLeft="10dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/department_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:id="@+id/btn_add_department"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_baseline_add_24"
-            android:background="@android:color/transparent"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/department_spinner_layout"
-            app:layout_constraintBottom_toBottomOf="@id/department_spinner_layout"
-            app:layout_constraintStart_toEndOf="@id/department_spinner_layout"
-            app:tint="@color/app_theme_color"
-            android:contentDescription="Add New Department"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_new_department_layout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="5dp"
-            app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="5dp"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp"
-            android:hint="Enter New Department"
-            app:hintTextColor="@color/app_theme_color"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/department_spinner_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btn_save_department"
 
             >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_department"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/department_spinner_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:elevation="5dp"
+                android:hint="Select Department"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="@color/app_theme_color"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_add_department"
+                app:layout_constraintBottom_toTopOf="@id/et_new_department_layout"
+                android:layout_marginLeft="10dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/department_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:text="@={viewModel.departmentName}"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/btn_add_department"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Add New Department"
+                android:minWidth="48dp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_constraintBottom_toBottomOf="@id/department_spinner_layout"
+                app:layout_constraintEnd_toStartOf="@id/btn_edit_department"
+                app:layout_constraintStart_toEndOf="@id/department_spinner_layout"
+                app:layout_constraintTop_toTopOf="@id/department_spinner_layout"
+                app:tint="@color/app_theme_color"
+                android:layout_marginRight="10dp" />
+
+            <ImageButton
+                android:id="@+id/btn_edit_department"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Edit Department"
+                android:minWidth="48dp"
+                android:src="@drawable/ic_edit_24"
+                app:layout_constraintBottom_toBottomOf="@id/department_spinner_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_add_department"
+                app:layout_constraintTop_toTopOf="@id/department_spinner_layout"
+                app:tint="@color/app_theme_color"
+                android:layout_marginRight="10dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_new_department_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:elevation="5dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                android:hint="Enter New Department"
+                app:hintTextColor="@color/app_theme_color"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/department_spinner_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/btn_save_department"
 
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                >
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_save_department"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:layout_marginTop="10dp"
-            app:cornerRadius="10dp"
-            app:layout_constraintTop_toBottomOf="@id/et_new_department_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintBottom_toTopOf="@id/group_spinner_layout"
-            />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_department"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:layout_marginTop="10dp"
+                app:cornerRadius="10dp"
+                app:layout_constraintTop_toBottomOf="@id/et_new_department_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintBottom_toTopOf="@id/group_spinner_layout" />
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/group_spinner_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:elevation="5dp"
-            android:hint="Select Group"
-            app:boxBackgroundColor="@color/white"
-            app:hintTextColor="@color/app_theme_color"
-            app:layout_constraintTop_toBottomOf="@id/btn_save_department"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_add_group"
-            app:layout_constraintBottom_toTopOf="@id/et_new_group_layout"
-            android:layout_marginLeft="10dp">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/group_spinner_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:elevation="5dp"
+                android:hint="Select Group"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="@color/app_theme_color"
+                app:layout_constraintTop_toBottomOf="@id/btn_save_department"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_add_group"
+                app:layout_constraintBottom_toTopOf="@id/et_new_group_layout"
+                android:layout_marginLeft="10dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/department_spinner"
+                <AutoCompleteTextView
+                    android:id="@+id/group_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/btn_add_group"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Add New Group"
+                android:minWidth="48dp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_constraintBottom_toBottomOf="@id/group_spinner_layout"
+                app:layout_constraintEnd_toStartOf="@id/btn_edit_group"
+                app:layout_constraintStart_toEndOf="@id/group_spinner_layout"
+                app:layout_constraintTop_toTopOf="@id/group_spinner_layout"
+                app:tint="@color/app_theme_color" />
+
+            <ImageButton
+                android:id="@+id/btn_edit_group"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Edit Group"
+                android:minWidth="48dp"
+                android:src="@drawable/ic_edit_24"
+                app:layout_constraintBottom_toBottomOf="@id/group_spinner_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_add_group"
+                app:layout_constraintTop_toTopOf="@id/group_spinner_layout"
+                app:tint="@color/app_theme_color" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_new_group_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:elevation="5dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                android:hint="Enter New Group"
+                app:hintTextColor="@color/app_theme_color"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/group_spinner_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/btn_save_group">
 
-        <ImageButton
-            android:id="@+id/btn_add_group"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_baseline_add_24"
-            android:background="@android:color/transparent"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/group_spinner_layout"
-            app:layout_constraintBottom_toBottomOf="@id/group_spinner_layout"
-            app:layout_constraintStart_toEndOf="@id/group_spinner_layout"
-            app:tint="@color/app_theme_color"
-            android:contentDescription="Add New Group"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_new_group_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="5dp"
-            app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="5dp"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp"
-            android:hint="Enter New Group"
-            app:hintTextColor="@color/app_theme_color"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/group_spinner_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btn_save_group"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_group"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:layout_marginTop="10dp"
+                app:cornerRadius="10dp"
+                app:layout_constraintTop_toBottomOf="@id/et_new_group_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintBottom_toTopOf="@id/sub_group_spinner_layout" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sub_group_spinner_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:elevation="5dp"
+                android:hint="Select Sub Group"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="@color/app_theme_color"
+                app:layout_constraintTop_toBottomOf="@id/btn_save_group"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_add_sub_group"
+                app:layout_constraintBottom_toTopOf="@id/et_new_sub_group_layout"
+                android:layout_marginLeft="10dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/sub_group_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/btn_add_sub_group"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Add New Sub Group"
+                android:minWidth="48dp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_constraintBottom_toBottomOf="@id/sub_group_spinner_layout"
+                app:layout_constraintEnd_toStartOf="@+id/btn_edit_sub_group"
+                app:layout_constraintStart_toEndOf="@id/sub_group_spinner_layout"
+                app:layout_constraintTop_toTopOf="@id/sub_group_spinner_layout"
+                app:tint="@color/app_theme_color" />
+
+            <ImageButton
+                android:id="@+id/btn_edit_sub_group"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Edit Sub Group"
+                android:minWidth="48dp"
+                android:src="@drawable/ic_edit_24"
+                app:layout_constraintBottom_toBottomOf="@id/sub_group_spinner_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_add_sub_group"
+                app:layout_constraintTop_toTopOf="@id/sub_group_spinner_layout"
+                app:tint="@color/app_theme_color" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_new_sub_group_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:elevation="5dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                android:hint="Enter New Sub Group"
+                app:hintTextColor="@color/app_theme_color"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/sub_group_spinner_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_save_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:layout_marginTop="10dp"
-            app:cornerRadius="10dp"
-            app:layout_constraintTop_toBottomOf="@id/et_new_group_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintBottom_toTopOf="@id/sub_group_spinner_layout"
-            />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_sub_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/sub_group_spinner_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:elevation="5dp"
-            android:hint="Select Sub Group"
-            app:boxBackgroundColor="@color/white"
-            app:hintTextColor="@color/app_theme_color"
-            app:layout_constraintTop_toBottomOf="@id/btn_save_group"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_add_sub_group"
-            app:layout_constraintBottom_toTopOf="@id/et_new_sub_group_layout"
-            android:layout_marginLeft="10dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/sub_group_spinner"
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_sub_group"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:id="@+id/btn_add_sub_group"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_baseline_add_24"
-            android:background="@android:color/transparent"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/sub_group_spinner_layout"
-            app:layout_constraintBottom_toBottomOf="@id/sub_group_spinner_layout"
-            app:layout_constraintStart_toEndOf="@id/sub_group_spinner_layout"
-            app:tint="@color/app_theme_color"
-            android:contentDescription="Add New Sub Group"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_new_sub_group_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="5dp"
-            app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="5dp"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp"
-            android:hint="Enter New Sub Group"
-            app:hintTextColor="@color/app_theme_color"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/sub_group_spinner_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_sub_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_save_sub_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:layout_marginTop="10dp"
-            app:cornerRadius="10dp"
-            app:layout_constraintTop_toBottomOf="@id/et_new_sub_group_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+                android:text="@string/save"
+                android:layout_marginTop="10dp"
+                app:cornerRadius="10dp"
+                app:layout_constraintTop_toBottomOf="@id/et_new_sub_group_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+    </ScrollView>
+</layout>

@@ -1,6 +1,7 @@
 package com.example.khataapp.stock.repository;
 
 import static com.example.khataapp.utils.CONSTANTS.GET_DEPARTMENT;
+import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
@@ -11,9 +12,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.database.Dao;
 import com.example.khataapp.database.KhataDB;
 import com.example.khataapp.models.GetDepartmentResponse;
+import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.ServerResponse;
@@ -197,9 +200,73 @@ public class StockRepository {
         });
 
     }
-
-    public interface CallBackListener
+    public void getItems(String businessID)
     {
-         void getServerResponse(Object object,int key);
+        Call<GetItemResponse> call = ApiClient.getInstance().getApi().getProducts(businessID);
+        call.enqueue(new Callback<GetItemResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetItemResponse> call, @NonNull Response<GetItemResponse> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body()!=null)
+                    {
+                        GetItemResponse getItemResponse= response.body();
+
+                        if (getItemResponse.getCode()==200)
+                        {
+
+                            if (getItemResponse.getItem()!=null&& getItemResponse.getItem().size()>0)
+                            {
+                                if (callBackListener!=null)
+                                {
+                                    callBackListener.getServerResponse(getItemResponse.getItem(),GET_ITEMS);
+
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            callBackListener.getServerResponse(getItemResponse.getMessage(),SERVER_ERROR);
+                        }
+
+                    }
+                    else
+                    {
+                        callBackListener.getServerResponse(response.message(),SERVER_ERROR);
+
+                    }
+
+                }
+                else
+                {
+                    if (response.errorBody() != null) {
+
+                        if (callBackListener!=null)
+                        {
+                            callBackListener.getServerResponse(response.errorBody().toString(),SERVER_ERROR);
+
+                        }
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetItemResponse> call, @NonNull Throwable t) {
+                Log.e("Parties Saving Error:",t.getMessage());
+                if (callBackListener!=null)
+                {
+                    callBackListener.getServerResponse(t.getMessage(),SERVER_ERROR);
+
+                }
+            }
+        });
+
     }
+
+
 }

@@ -58,5 +58,6 @@
     <string name="select_supplier">Select Supplier</string>
     <string name="rs">Rs </string>
     <string name="stock">Stock</string>
+    <string name="department">Department</string>
 
 </resources>

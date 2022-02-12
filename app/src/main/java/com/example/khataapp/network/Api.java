@@ -1,6 +1,7 @@
 package com.example.khataapp.network;
 
 import com.example.khataapp.models.GetDepartmentResponse;
+import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetLocationResponse;
 import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Item;
@@ -34,10 +35,13 @@ public interface Api {
     Call<ServerResponse> saveParty(@Body Party party);
 
     @GET("api/Party/PartyData")
-    Call<GetPartyServerResponse> getParties(@Query("businessId")String businessID,@Query("partytype") String partyType);
+    Call<GetPartyServerResponse> getParties(@Query("BusinessId")String businessID,@Query("partytype") String partyType);
 
     @GET("api/Department/DepartmentData")
-    Call<GetDepartmentResponse> getDepartment(@Query("businessId")String businessID);
+    Call<GetDepartmentResponse> getDepartment(@Query("BusinessId")String businessID);
+
+    @GET("api/Product/ProductData")
+    Call<GetItemResponse> getProducts(@Query("BusinessId")String businessID);
 
     @POST("api/Product/SaveProduct")
     Call<ServerResponse> saveItem(@Body Item item);

@@ -9,17 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khataapp.databinding.ItemCardBinding;
 import com.example.khataapp.models.Item;
+import com.example.khataapp.stock.viewmodel.StockViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemViewHolder> {
 
-    private List<Item> itemList ;
+    private final List<Item> itemList ;
     private LayoutInflater layoutInflater;
+    private StockViewModel viewModel;
 
-    public ItemListAdapter()
+    public ItemListAdapter(StockViewModel viewModel)
     {
+        this.viewModel= viewModel;
         itemList = new ArrayList<>();
     }
 
@@ -43,6 +46,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         Item item = itemList.get(position);
 
         holder.mBinding.setItem(item);
+        holder.mBinding.setViewmodel(viewModel);
         holder.mBinding.executePendingBindings();
 
 
@@ -53,7 +57,19 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         return itemList.size();
     }
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder
+    public void setItemList(List<Item> list)
+    {
+        itemList.clear();
+        if (list!=null)
+        {
+            itemList.addAll(list);
+
+
+        }
+        notifyDataSetChanged();
+    }
+
+    public static class ItemViewHolder extends RecyclerView.ViewHolder
     {
         ItemCardBinding mBinding;
         public ItemViewHolder(@NonNull ItemCardBinding binding) {

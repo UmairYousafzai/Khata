@@ -6,6 +6,9 @@
         <variable
             name="item"
             type="com.example.khataapp.models.Item" />
+        <variable
+            name="viewmodel"
+            type="com.example.khataapp.stock.viewmodel.StockViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -33,8 +36,8 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.description}"
-                android:textSize="16sp"
+                android:text="@{item.description,default=product}"
+                android:textSize="18sp"
                 android:textColor="@color/font_color_dark"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="@+id/image"
@@ -62,9 +65,10 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{@string/rs+item.unitRetail}"
+                android:text="@{@string/rs+item.unitRetail,default=Rs2345}"
                 android:textColor="@android:color/holo_green_dark"
-                android:textSize="14sp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/tv_selling_price"
                 app:layout_constraintStart_toStartOf="@id/tv_name"
                 app:layout_constraintBottom_toBottomOf="@id/image"
@@ -79,6 +83,7 @@
                 android:src="@drawable/ic_baseline_edit_24"
                 android:background="@color/app_theme_color"
                 android:padding="5dp"
+                android:onClick="@{()->viewmodel.onAdapterCardClick(item)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/bottom_view" />
