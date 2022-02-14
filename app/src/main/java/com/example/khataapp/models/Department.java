@@ -1,5 +1,7 @@
 package com.example.khataapp.models;
 
+import androidx.databinding.Bindable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -56,10 +58,14 @@ public class Department {
     }
 
     public String getDepartmentName() {
+
         return departmentName;
     }
 
     public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+
+            this.departmentName = departmentName;
+
+
     }
 }

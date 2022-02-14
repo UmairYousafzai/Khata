@@ -10,4 +10,7 @@ public class CONSTANTS {
     public static final int GET_SUPPLIER=3;
     public static final int GET_ITEMS=4;
     public static  int THEME_KEY=1;
+    public static  int ADD_BTN=1;
+    public static  int EDIT_BTN=2;
+    public static  int SAVE_BTN=4;
 }

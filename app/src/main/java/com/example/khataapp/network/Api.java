@@ -1,5 +1,6 @@
 package com.example.khataapp.network;
 
+import com.example.khataapp.models.Department;
 import com.example.khataapp.models.GetDepartmentResponse;
 import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetLocationResponse;
@@ -39,6 +40,9 @@ public interface Api {
 
     @GET("api/Department/DepartmentData")
     Call<GetDepartmentResponse> getDepartment(@Query("BusinessId")String businessID);
+
+    @POST("api/Department/SaveDepartment")
+    Call<ServerResponse> saveDepartment(@Body Department department);
 
     @GET("api/Product/ProductData")
     Call<GetItemResponse> getProducts(@Query("BusinessId")String businessID);

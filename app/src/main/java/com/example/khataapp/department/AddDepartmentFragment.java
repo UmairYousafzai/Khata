@@ -51,7 +51,7 @@ public class AddDepartmentFragment extends Fragment {
         progressDialog.show();
 
 
-        viewModel.getDepartment();
+        viewModel.getDepartmentList();
 
         viewModel.getProgressMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -82,6 +82,17 @@ public class AddDepartmentFragment extends Fragment {
                 if (stringArrayAdapter!=null)
                 {
                     mBinding.departmentSpinner.setAdapter(stringArrayAdapter);
+                }
+            }
+        });
+
+        viewModel.getToastMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+
+                if (s!=null)
+                {
+                    Toast.makeText(requireContext(), ""+s, Toast.LENGTH_SHORT).show();
                 }
             }
         });
