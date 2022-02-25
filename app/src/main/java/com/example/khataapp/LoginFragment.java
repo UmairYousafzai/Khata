@@ -158,7 +158,7 @@ public class LoginFragment extends Fragment {
                         else if(loginResponse.getCode()==401)
                         {
                             mBinding.etUserNameLayout.setError("Invalid");
-                            mBinding.etPasswordLayout.setError("incalid");
+                            mBinding.etPasswordLayout.setError("Invalid");
                             mBinding.etUserName.requestFocus();
                         }
 

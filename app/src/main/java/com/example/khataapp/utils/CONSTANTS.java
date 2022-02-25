@@ -9,8 +9,16 @@ public class CONSTANTS {
     public static final int SERVER_ERROR=0;
     public static final int GET_SUPPLIER=3;
     public static final int GET_ITEMS=4;
+    public static final int SERVER_RESPONSE_DEPARTMENT=5;
+    public static final int GET_GROUP=6;
+    public static final int SERVER_RESPONSE_GROUP=7;
+
+
     public static  int THEME_KEY=1;
-    public static  int ADD_BTN=1;
-    public static  int EDIT_BTN=2;
-    public static  int SAVE_BTN=4;
+    public static  int ADD_DEPARTMENT_BTN =1;
+    public static  int EDIT_DEPARTMENT_BTN =2;
+    public static  int SAVE_DEPARTMENT_BTN =4;
+    public static  int ADD_GROUP_BTN =5;
+    public static  int EDIT_GROUP_BTN =6;
+    public static  int SAVE_GROUP_BTN =7;
 }

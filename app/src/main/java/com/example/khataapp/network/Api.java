@@ -2,13 +2,17 @@ package com.example.khataapp.network;
 
 import com.example.khataapp.models.Department;
 import com.example.khataapp.models.GetDepartmentResponse;
+import com.example.khataapp.models.GetGroupResponse;
 import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetLocationResponse;
 import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.Group;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.LoginResponse;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.PostLocation;
+import com.example.khataapp.models.SaveDepartmentResponse;
+import com.example.khataapp.models.SaveGroupResponse;
 import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
 
@@ -42,11 +46,17 @@ public interface Api {
     Call<GetDepartmentResponse> getDepartment(@Query("BusinessId")String businessID);
 
     @POST("api/Department/SaveDepartment")
-    Call<ServerResponse> saveDepartment(@Body Department department);
+    Call<SaveDepartmentResponse> saveDepartment(@Body Department department);
 
     @GET("api/Product/ProductData")
     Call<GetItemResponse> getProducts(@Query("BusinessId")String businessID);
 
     @POST("api/Product/SaveProduct")
     Call<ServerResponse> saveItem(@Body Item item);
+
+    @GET("api/Group/GroupData")
+    Call<GetGroupResponse> getGroupList(@Query("BusinessId")String businessID, @Query("DepartmentCode")String departmentCode);
+
+    @POST("api/SubGroup/SaveSubGroup")
+    Call<SaveGroupResponse> saveGroup(@Body Group group);
 }

@@ -84,6 +84,15 @@ public class AddDepartmentFragment extends Fragment {
                     mBinding.departmentSpinner.setAdapter(stringArrayAdapter);
                 }
             }
+        });        viewModel.getGroupAdapterMutableLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayAdapter<String>>() {
+            @Override
+            public void onChanged(ArrayAdapter<String> stringArrayAdapter) {
+
+                if (stringArrayAdapter!=null)
+                {
+                    mBinding.groupSpinner.setAdapter(stringArrayAdapter);
+                }
+            }
         });
 
         viewModel.getToastMessage().observe(getViewLifecycleOwner(), new Observer<String>() {

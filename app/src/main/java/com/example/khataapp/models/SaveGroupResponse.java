@@ -3,7 +3,7 @@ package com.example.khataapp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SaveDepartmentResponse {
+public class SaveGroupResponse {
 
     @SerializedName("Code")
     @Expose
@@ -13,8 +13,7 @@ public class SaveDepartmentResponse {
     private String message;
     @SerializedName("Data")
     @Expose
-    Department department;
-
+    private Group group;
 
     public int getCode() {
         return code;
@@ -32,11 +31,11 @@ public class SaveDepartmentResponse {
         this.message = message;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }
