@@ -6,6 +6,7 @@ import com.example.khataapp.models.GetGroupResponse;
 import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetLocationResponse;
 import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPurchaseResponse;
 import com.example.khataapp.models.Group;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.LoginResponse;
@@ -59,4 +60,7 @@ public interface Api {
 
     @POST("api/SubGroup/SaveSubGroup")
     Call<SaveGroupResponse> saveGroup(@Body Group group);
+
+    @GET("api/Purchase/PurchaseData")
+    Call<GetPurchaseResponse> getPurchasesList(@Query("BusinessId")String businessID);
 }

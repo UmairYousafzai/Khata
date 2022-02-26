@@ -194,6 +194,9 @@ public class MainActivity extends AppCompatActivity {
         else if (item.getItemId()==R.id.action_department)
         {
             navController.navigate(R.id.addDepartmentFragment);
+        }   else if (item.getItemId()==R.id.action_purchase)
+        {
+            navController.navigate(R.id.purchaseFragment);
         }
 
         return super.onOptionsItemSelected(item);

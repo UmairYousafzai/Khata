@@ -34,11 +34,14 @@ public class DepartmentViewModel extends AndroidViewModel {
 
     private ArrayAdapter<String> departmentAdapter;
     private ArrayAdapter<String> groupAdapter;
+    private ArrayAdapter<String> subGroupAdapter;
     private final MutableLiveData<String> serverErrorMutableLiveData;
     private final HashMap<String, String> departmentHashMap;
     private final HashMap<String, String> groupHashMap;
+    private final HashMap<String, String> subGroupHashMap;
     private final MutableLiveData<ArrayAdapter<String>> departmentAdapterMutableLiveData;
     private final MutableLiveData<ArrayAdapter<String>> groupAdapterMutableLiveData;
+    private final MutableLiveData<ArrayAdapter<String>> subGroupAdapterMutableLiveData;
     private final MutableLiveData<Integer> progressMutableLiveData;
     private List<Department> departmentList = new ArrayList<>();
     private List<Group> groupList = new ArrayList<>();
@@ -48,15 +51,21 @@ public class DepartmentViewModel extends AndroidViewModel {
     private ObservableField<String> selectedGroupName;
     private ObservableField<String> editGroupName;
     private ObservableField<Boolean> groupEditTextVisibility;
+    private ObservableField<String> selectedSubGroupName;
+    private ObservableField<String> editSubGroupName;
+    private ObservableField<Boolean> subGroupEditTextVisibility;
     private String departmentID = "";
     private String departmentAction = "";
     private String groupID = "";
     private String groupAction = "";
+    private String subGroupID = "";
+    private String subGroupAction = "";
     private final MutableLiveData<String> toastMessage;
     private ObservableField<String> departmentError;
     private ObservableBoolean observableBoolean;
     private String departmentName;
     private String groupName;
+    private String subGroupName;
 
 
 
@@ -77,7 +86,36 @@ public class DepartmentViewModel extends AndroidViewModel {
         selectedGroupName = new ObservableField<>();
         editGroupName = new ObservableField<>();
         groupEditTextVisibility = new ObservableField<>();
+        selectedSubGroupName = new ObservableField<>();
+        editSubGroupName = new ObservableField<>();
+        subGroupEditTextVisibility = new ObservableField<>();
+        subGroupHashMap= new HashMap<>();
+        subGroupAdapterMutableLiveData= new MutableLiveData<>();
     }
+
+
+    public MutableLiveData<ArrayAdapter<String>> getSubGroupAdapterMutableLiveData() {
+        return subGroupAdapterMutableLiveData;
+    }
+
+    public ObservableField<String> getEditSubGroupName() {
+        return editSubGroupName;
+    }
+
+    public void setEditSubGroupName(ObservableField<String> editSubGroupName) {
+        this.editSubGroupName = editSubGroupName;
+    }
+
+    public ObservableField<Boolean> getSubGroupEditTextVisibility() {
+        return subGroupEditTextVisibility;
+    }
+
+    public void setSubGroupEditTextVisibility(ObservableField<Boolean> subGroupEditTextVisibility) {
+        this.subGroupEditTextVisibility = subGroupEditTextVisibility;
+    }
+
+
+
 
     public ObservableField<String> getSelectedGroupName() {
         groupName = selectedGroupName.get();

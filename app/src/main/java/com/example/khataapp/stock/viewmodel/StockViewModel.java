@@ -9,6 +9,7 @@ import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
@@ -35,6 +36,12 @@ public class StockViewModel extends AndroidViewModel {
     private final MutableLiveData<String> serverErrorLiveData = new MutableLiveData<>();
     private final ItemListAdapter adapter;
     private final MutableLiveData<Item> itemMutableLiveData;
+    private final MutableLiveData<List<Item>> itemListMutableLiveData;
+    private List<Item> selectedItems;
+    private final MutableLiveData<String> selectedBtnText;
+
+
+
 
     public StockViewModel(@NonNull Application application) {
         super(application);
@@ -42,6 +49,13 @@ public class StockViewModel extends AndroidViewModel {
         stockRepository = StockRepository.getInstance(application);
         adapter = new ItemListAdapter(this);
         itemMutableLiveData= new MutableLiveData<>();
+        itemListMutableLiveData= new MutableLiveData<>();
+        selectedItems= new ArrayList<>();
+        selectedBtnText= new MutableLiveData<>();
+    }
+
+    public MutableLiveData<String> getSelectedBtnText() {
+        return selectedBtnText;
     }
 
     public MutableLiveData<String> getServerErrorLiveData() {
@@ -52,14 +66,53 @@ public class StockViewModel extends AndroidViewModel {
         return adapter;
     }
 
-    public void onAdapterCardClick(Item item)
+    public void onAdapterCardClick(Item item,int action)
     {
         if (item!=null)
         {
-            itemMutableLiveData.setValue(item);
+            if (action==1)
+            {
+                if (!selectedItems.contains(item))
+                {
+                    selectedItems.add(item);
+                    String size= String.valueOf(selectedItems.size());
+                    selectedBtnText.setValue(size);
+                }
+                else
+                {
+                    serverErrorLiveData.setValue("Already selected");
+                }
+
+            }
+            else
+            {
+                item.setBtn_action(action);
+                itemMutableLiveData.setValue(item);
+            }
+
         }
     }
 
+    public MutableLiveData<List<Item>> getItemListMutableLiveData() {
+        return itemListMutableLiveData;
+    }
+
+    public void onClick()
+    {
+        if (selectedItems.size()>0)
+        {
+            itemListMutableLiveData.setValue(selectedItems);
+        }
+        else
+        {
+            serverErrorLiveData.setValue("please select item");
+        }
+    }
+
+    public void setAdapterKey(int key)
+    {
+        adapter.setKey(key);
+    }
     public MutableLiveData<Item> getItemMutableLiveData() {
         return itemMutableLiveData;
     }

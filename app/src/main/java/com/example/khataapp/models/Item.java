@@ -99,10 +99,11 @@ public class Item implements Parcelable {
     @Expose
     private double unitSize;
 
+    private int btn_action;
+
 
     public Item() {
     }
-
 
     protected Item(Parcel in) {
         barcode = in.readString();
@@ -133,6 +134,45 @@ public class Item implements Parcelable {
         gstAmount = in.readDouble();
         netCost = in.readDouble();
         unitSize = in.readDouble();
+        btn_action = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(barcode);
+        dest.writeString(businessBarcode);
+        dest.writeString(businessID);
+        dest.writeString(userID);
+        dest.writeString(referenceCode);
+        dest.writeString(uan);
+        dest.writeStringList(uanList);
+        dest.writeString(departmentCode);
+        dest.writeString(groupCode);
+        dest.writeString(subGroupCode);
+        dest.writeString(description);
+        dest.writeString(nativeDescription);
+        dest.writeDouble(unitCost);
+        dest.writeDouble(unitRetail);
+        dest.writeDouble(ctnPcs);
+        dest.writeString(supplierCode);
+        dest.writeString(productType);
+        dest.writeString(comments);
+        dest.writeString(status);
+        dest.writeString(productImage);
+        dest.writeString(gstType);
+        dest.writeString(action);
+        dest.writeDouble(gstPercentage);
+        dest.writeString(hsCode);
+        dest.writeDouble(hsPercentage);
+        dest.writeDouble(gstAmount);
+        dest.writeDouble(netCost);
+        dest.writeDouble(unitSize);
+        dest.writeInt(btn_action);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Item> CREATOR = new Creator<Item>() {
@@ -146,6 +186,14 @@ public class Item implements Parcelable {
             return new Item[size];
         }
     };
+
+    public int getBtn_action() {
+        return btn_action;
+    }
+
+    public void setBtn_action(int btn_action) {
+        this.btn_action = btn_action;
+    }
 
     public double getUnitSize() {
         return unitSize;
@@ -372,40 +420,4 @@ public class Item implements Parcelable {
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(barcode);
-        parcel.writeString(businessBarcode);
-        parcel.writeString(businessID);
-        parcel.writeString(userID);
-        parcel.writeString(referenceCode);
-        parcel.writeString(uan);
-        parcel.writeStringList(uanList);
-        parcel.writeString(departmentCode);
-        parcel.writeString(groupCode);
-        parcel.writeString(subGroupCode);
-        parcel.writeString(description);
-        parcel.writeString(nativeDescription);
-        parcel.writeDouble(unitCost);
-        parcel.writeDouble(unitRetail);
-        parcel.writeDouble(ctnPcs);
-        parcel.writeString(supplierCode);
-        parcel.writeString(productType);
-        parcel.writeString(comments);
-        parcel.writeString(status);
-        parcel.writeString(productImage);
-        parcel.writeString(gstType);
-        parcel.writeString(action);
-        parcel.writeDouble(gstPercentage);
-        parcel.writeString(hsCode);
-        parcel.writeDouble(hsPercentage);
-        parcel.writeDouble(gstAmount);
-        parcel.writeDouble(netCost);
-        parcel.writeDouble(unitSize);
-    }
 }

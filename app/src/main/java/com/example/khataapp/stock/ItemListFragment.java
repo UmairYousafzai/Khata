@@ -1,5 +1,7 @@
 package com.example.khataapp.stock;
 
+import static com.example.khataapp.utils.CONSTANTS.ITEM;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,12 +21,17 @@ import com.example.khataapp.R;
 import com.example.khataapp.databinding.FragmentItemListBinding;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.stock.viewmodel.StockViewModel;
+import com.example.khataapp.utils.CONSTANTS;
+
+import java.util.List;
+import java.util.Objects;
 
 public class ItemListFragment extends Fragment {
 
     private FragmentItemListBinding mBinding;
     private StockViewModel viewModel;
     private NavController navController;
+    private int key=0;
 
 
     @Override
@@ -45,6 +52,17 @@ public class ItemListFragment extends Fragment {
         mBinding.setViewModel(viewModel);
 
         viewModel.getItemsList();
+
+        if (getArguments()!=null)
+        {
+            key=ItemListFragmentArgs.fromBundle(getArguments()).getKey();
+            if (key==1)
+            {
+                mBinding.btnAdd.setVisibility(View.GONE);
+                viewModel.setAdapterKey(key);
+                mBinding.btnSelect.setVisibility(View.VISIBLE);
+            }
+        }
 
         getLiveData();
 
@@ -80,12 +98,40 @@ public class ItemListFragment extends Fragment {
 
                 if (item!=null)
                 {
-                    ItemListFragmentDirections.ActionItemListFragmentToAddItemFragment action=
-                            ItemListFragmentDirections.actionItemListFragmentToAddItemFragment();
+                    if (item.getBtn_action()==2){
+                        ItemListFragmentDirections.ActionItemListFragmentToAddItemFragment action=
+                                ItemListFragmentDirections.actionItemListFragmentToAddItemFragment();
 
-                    action.setItem(item);
-                    navController.navigate(action);
-                    viewModel.getItemMutableLiveData().setValue(null);
+                        action.setItem(item);
+                        navController.navigate(action);
+                        viewModel.getItemMutableLiveData().setValue(null);
+                    }
+
+
+                }
+            }
+        });
+
+        viewModel.getItemListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+
+                if (items!=null&& items.size()>0)
+                {
+
+                        Objects.requireNonNull(navController.getPreviousBackStackEntry()).getSavedStateHandle().set(ITEM,items);
+                        navController.popBackStack();
+                }
+            }
+        });
+
+        viewModel.getSelectedBtnText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+
+                if (s!=null)
+                {
+                    mBinding.btnSelect.setText(s);
                 }
             }
         });

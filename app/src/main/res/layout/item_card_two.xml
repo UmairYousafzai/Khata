@@ -6,16 +6,13 @@
         <variable
             name="item"
             type="com.example.khataapp.models.Item" />
-        <variable
-            name="viewmodel"
-            type="com.example.khataapp.stock.viewmodel.StockViewModel" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
-        android:onClick="@{()->viewmodel.onAdapterCardClick(item,1)}"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,18 +75,6 @@
                 app:layout_constraintEnd_toEndOf="@id/tv_selling_price"
                 app:layout_constraintHorizontal_bias="0.0" />
 
-            <ImageButton
-                android:id="@+id/btn_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_edit_24"
-                android:background="@color/app_theme_color"
-                android:padding="5dp"
-                android:onClick="@{()->viewmodel.onAdapterCardClick(item,2)}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/bottom_view"
-                />
 
             <TextView
                 android:id="@+id/tv_stock"
@@ -98,7 +83,7 @@
                 android:text="@{@string/stock+item.ctnPcs}"
                 android:textSize="16sp"
                 android:layout_marginEnd="10dp"
-                app:layout_constraintEnd_toStartOf="@id/btn_edit"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_name"
                 app:layout_constraintBottom_toBottomOf="@id/tv_price"
                 app:layout_constraintStart_toEndOf="@id/tv_selling_price"
