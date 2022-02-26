@@ -161,7 +161,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:elevation="5dp"
             android:hint="@string/select_supplier"
             app:boxBackgroundColor="@color/white"
@@ -177,8 +177,9 @@
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
                 android:inputType="none"
-                android:onClick="@{()-> viewModel.onClick(CONSTANTS.SELECT_SUPPLIER_BTN)}"
-                android:text="@{viewModel.party.partyName}" />
+                android:text="@{viewModel.party.partyName}"
+                app:setTextAdapter="@{viewModel.supplierAdapter}"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -186,8 +187,8 @@
             android:id="@+id/btn_select_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
             android:onClick="@{()-> viewModel.onClick(CONSTANTS.SELECT_ITEMS_BTN)}"
             android:text="@string/select_products"
             app:cornerRadius="5dp"
