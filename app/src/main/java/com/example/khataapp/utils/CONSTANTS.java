@@ -25,8 +25,8 @@ public class CONSTANTS {
     public static  int ADD_GROUP_BTN =5;
     public static  int EDIT_GROUP_BTN =6;
     public static  int SAVE_GROUP_BTN =7;
-    public static  int SELECT_SUPPLIER_BTN =8;
-    public static  int SELECT_ITEMS_BTN =9;
+    public static  int SEARCH_SUPPLIER_BTN =8;
+    public static  int SEARCH_ITEMS_BTN =9;
 
 
 }

@@ -71,6 +71,20 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         notifyDataSetChanged();
     }
 
+    public void addItem(Item item)
+    {
+        if (!itemList.contains(item))
+        {
+            itemList.add(item);
+            notifyDataSetChanged();
+        }
+    }
+
+    public boolean checkItemExists(Item item)
+    {
+        return itemList.contains(item);
+    }
+
     public static class ProductViewHolder extends RecyclerView.ViewHolder
     {
         ItemCardTwoBinding mBinding;

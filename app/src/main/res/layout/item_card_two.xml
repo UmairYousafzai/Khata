@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="com.example.khataapp.utils.Converter" />
+
         <variable
             name="item"
             type="com.example.khataapp.models.Item" />
@@ -12,8 +15,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white"
-        >
+        app:cardBackgroundColor="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,82 +23,94 @@
             android:paddingHorizontal="10dp"
             android:paddingTop="10dp">
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/customer_background"
-                android:scaleType="centerInside"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/bottom_view" />
-
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/header_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{item.description,default=product}"
-                android:textSize="18sp"
-                android:textColor="@color/font_color_dark"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@+id/image"
-                app:layout_constraintStart_toEndOf="@id/image"
-                app:layout_constraintBottom_toTopOf="@id/tv_selling_price"
-                android:padding="5dp"
-                android:maxLines="2"
-                app:layout_constraintEnd_toStartOf="@id/tv_stock"
-                app:layout_constraintHorizontal_bias="0.0" />
-
-            <TextView
-                android:id="@+id/tv_selling_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Selling Price"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/tv_name"
-                app:layout_constraintStart_toStartOf="@id/tv_name"
-                app:layout_constraintBottom_toTopOf="@id/tv_price"
-                android:padding="5dp"
-                app:layout_constraintEnd_toEndOf="@id/tv_name"
-                app:layout_constraintHorizontal_bias="0.0" />
-
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{@string/rs+item.unitRetail,default=Rs2345}"
-                android:textColor="@android:color/holo_green_dark"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/tv_selling_price"
-                app:layout_constraintStart_toStartOf="@id/tv_name"
-                app:layout_constraintBottom_toBottomOf="@id/image"
-                android:padding="5dp"
-                app:layout_constraintEnd_toEndOf="@id/tv_selling_price"
-                app:layout_constraintHorizontal_bias="0.0" />
-
-
-            <TextView
-                android:id="@+id/tv_stock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{@string/stock+item.ctnPcs}"
-                android:textSize="16sp"
-                android:layout_marginEnd="10dp"
+                android:orientation="horizontal"
+                android:weightSum="5"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_name"
-                app:layout_constraintBottom_toBottomOf="@id/tv_price"
-                app:layout_constraintStart_toEndOf="@id/tv_selling_price"
-                app:layout_constraintHorizontal_bias="1" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(item.ctnPcs),default=CTNPCS}"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@={Converter.doubleToString(item.qty),default=QTY}"
+                    android:textSize="20sp"
+                    android:hint="@string/qty"
+                    android:gravity="center"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@={Converter.doubleToString(item.freeQty),default=Free}"
+                    android:textSize="20sp"
+                    android:hint="@string/free"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@={Converter.doubleToString(item.cost),default=Cost}"
+                    android:textSize="20sp"
+                    android:hint="@string/cost"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{@string/rs+String.valueOf(item.amount),default=RSamoun}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/custom_red_color"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/customer_background"
+                app:layout_constraintTop_toBottomOf="@id/header_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/view"
+                app:layout_constraintEnd_toStartOf="@id/tv_item_name"
+                />
+            <TextView
+                android:id="@+id/tv_item_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.description,default=name}"
+                android:textColor="@color/app_theme_color"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="@id/item_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/item_image"
+                app:layout_constraintBottom_toBottomOf="@id/item_image"
+                android:padding="5dp"
+                android:paddingStart="10dp"
+                />
             <View
-                android:id="@+id/bottom_view"
+                android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray_custom"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintTop_toBottomOf="@id/item_image"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

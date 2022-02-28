@@ -1,14 +1,16 @@
 package com.example.khataapp.purchase;
 
 import static com.example.khataapp.utils.CONSTANTS.ITEM;
-import static com.example.khataapp.utils.CONSTANTS.SELECT_ITEMS_BTN;
-import static com.example.khataapp.utils.CONSTANTS.SELECT_SUPPLIER_BTN;
+import static com.example.khataapp.utils.CONSTANTS.SEARCH_ITEMS_BTN;
+import static com.example.khataapp.utils.CONSTANTS.SEARCH_SUPPLIER_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SUPPLIER;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -16,17 +18,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.os.Parcel;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.khataapp.R;
+import com.example.khataapp.databinding.CustomProductDialogBinding;
 import com.example.khataapp.databinding.FragmentPurchaseBinding;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.purchase.viewmodel.PurchaseViewModel;
-import com.example.khataapp.utils.CONSTANTS;
 
 import java.util.List;
 import java.util.Objects;
@@ -37,7 +40,7 @@ public class PurchaseFragment extends Fragment {
     private FragmentPurchaseBinding mBinding;
     private NavController navController;
     private PurchaseViewModel viewModel;
-
+    private AlertDialog alertDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -75,46 +78,82 @@ public class PurchaseFragment extends Fragment {
                 {
                     navController.navigate(R.id.action_purchaseFragment_to_purchaseListFragment);
                 }
-                else if (action==SELECT_SUPPLIER_BTN)
+                else if (action== SEARCH_SUPPLIER_BTN)
                 {
-                    navController.navigate(R.id.action_purchaseFragment_to_supplierListFragment);
-                }  else if (action==SELECT_ITEMS_BTN)
+                    mBinding.supplierSpinner.setFocusableInTouchMode(true);
+                    mBinding.supplierSpinner.setInputType(InputType.TYPE_CLASS_TEXT);
+                    openKeyBoard(mBinding.supplierSpinner);
+
+                }  else if (action== SEARCH_ITEMS_BTN)
                 {
-                    PurchaseFragmentDirections.ActionPurchaseFragmentToItemListFragment navAction=
-                            PurchaseFragmentDirections.actionPurchaseFragmentToItemListFragment();
-                    navAction.setKey(1);
-                    navController.navigate(navAction);
+                    mBinding.itemSpinner.setFocusableInTouchMode(true);
+                    mBinding.itemSpinner.setInputType(InputType.TYPE_CLASS_TEXT);
+                    openKeyBoard(mBinding.itemSpinner);
                 }
             }
         });
 
-        MutableLiveData<Party> partyLiveData = Objects.requireNonNull(navController.getCurrentBackStackEntry())
-                .getSavedStateHandle()
-                .getLiveData(SUPPLIER);
-        partyLiveData.observe(getViewLifecycleOwner(), new Observer<Party>() {
+        viewModel.getItemMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Item>() {
             @Override
-            public void onChanged(Party model) {
-                if (model!=null)
+            public void onChanged(Item item) {
+                if (item!=null)
                 {
-                    viewModel.setParty(model);
+                    showProductDialog();
                 }
-
-
             }
         });
-        MutableLiveData<List<Item>> ItemsLiveData = Objects.requireNonNull(navController.getCurrentBackStackEntry())
-                .getSavedStateHandle()
-                .getLiveData(ITEM);
-        ItemsLiveData.observe(getViewLifecycleOwner(), new Observer<List<Item>>() {
+
+    }
+
+    private void showProductDialog() {
+
+        CustomProductDialogBinding dialogBinding = CustomProductDialogBinding.inflate(getLayoutInflater());
+
+         alertDialog= new AlertDialog.Builder(requireContext()).setView(dialogBinding.getRoot())
+                .setCancelable(false)
+                .create();
+
+        dialogBinding.setViewModel(viewModel);
+
+        alertDialog.show();
+
+        viewModel.getDialogDismiss().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
-            public void onChanged(List<Item> list) {
-                if (list!=null)
+            public void onChanged(Integer integer) {
+                if (integer==1)
                 {
-                    viewModel.setAdapterList(list);
+                    alertDialog.dismiss();
+                    viewModel.getDialogDismiss().setValue(0);
+
                 }
 
 
             }
         });
+    }
+
+
+    public void openKeyBoard(View view)
+    {
+        if (view.requestFocus())
+        {
+            InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.showSoftInput(view,InputMethodManager.SHOW_IMPLICIT);
+        }
+
+    }
+
+    public void closeKeyBoard()
+    {
+        View view = requireActivity().getCurrentFocus();
+
+        if (view!=null)
+        {
+            InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+
+        }
+
+
     }
 }

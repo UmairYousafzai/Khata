@@ -1,5 +1,9 @@
 package com.example.khataapp.utils;
 
+import android.util.Log;
+
+import androidx.databinding.InverseMethod;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,6 +11,27 @@ import java.util.Date;
 
 public class Converter {
 
+    @InverseMethod("stringToDouble")
+    public static String doubleToString(double num)
+    {
+        return String.valueOf(num);
+    }
+
+    public static double stringToDouble(String num)
+    {
+        double doubleNum=0;
+       try {
+           doubleNum= Double.parseDouble(num);
+
+       }
+       catch (Exception e)
+       {
+           Log.e("Conversion Error:",e.getMessage());
+       }
+
+       return doubleNum;
+
+    }
     public static String StringToFormatDate(String date)
     {
         String formatDate="";

@@ -100,7 +100,21 @@ public class Item implements Parcelable {
     private double unitSize;
 
     private int btn_action;
-
+    @SerializedName("Qty")
+    @Expose
+    private double qty;
+    @SerializedName("FreeQty")
+    @Expose
+    private double freeQty;
+    @SerializedName("Cost")
+    @Expose
+    private double cost;
+    @SerializedName("Discount")
+    @Expose
+    private double discount;
+    @SerializedName("Amount")
+    @Expose
+    private double amount;
 
     public Item() {
     }
@@ -135,6 +149,11 @@ public class Item implements Parcelable {
         netCost = in.readDouble();
         unitSize = in.readDouble();
         btn_action = in.readInt();
+        qty = in.readDouble();
+        freeQty = in.readDouble();
+        cost = in.readDouble();
+        discount = in.readDouble();
+        amount = in.readDouble();
     }
 
     @Override
@@ -168,6 +187,11 @@ public class Item implements Parcelable {
         dest.writeDouble(netCost);
         dest.writeDouble(unitSize);
         dest.writeInt(btn_action);
+        dest.writeDouble(qty);
+        dest.writeDouble(freeQty);
+        dest.writeDouble(cost);
+        dest.writeDouble(discount);
+        dest.writeDouble(amount);
     }
 
     @Override
@@ -186,6 +210,46 @@ public class Item implements Parcelable {
             return new Item[size];
         }
     };
+
+    public double getQty() {
+        return qty;
+    }
+
+    public void setQty(double qty) {
+        this.qty = qty;
+    }
+
+    public double getFreeQty() {
+        return freeQty;
+    }
+
+    public void setFreeQty(double freeQty) {
+        this.freeQty = freeQty;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
     public int getBtn_action() {
         return btn_action;

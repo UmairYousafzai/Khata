@@ -66,5 +66,13 @@
     <string name="retrieve">Retrieve</string>
     <string name="select_products">Select Products</string>
     <string name="select">Select</string>
+    <string name="cost">cost</string>
+    <string name="free">free</string>
+    <string name="qty">Qty</string>
+    <string name="product_detail">Product Detail</string>
+    <string name="quantity">Quantity</string>
+    <string name="rate">Rate</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
 
 </resources>
