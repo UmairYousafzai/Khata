@@ -1,10 +1,12 @@
 package com.example.khataapp.purchase;
 
+import static com.example.khataapp.utils.CONSTANTS.DATE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.ITEM;
 import static com.example.khataapp.utils.CONSTANTS.SEARCH_ITEMS_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SEARCH_SUPPLIER_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SUPPLIER;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -23,6 +25,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.example.khataapp.R;
 import com.example.khataapp.databinding.CustomProductDialogBinding;
@@ -31,6 +35,7 @@ import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.purchase.viewmodel.PurchaseViewModel;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,7 +45,7 @@ public class PurchaseFragment extends Fragment {
     private FragmentPurchaseBinding mBinding;
     private NavController navController;
     private PurchaseViewModel viewModel;
-    private AlertDialog alertDialog;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -90,6 +95,10 @@ public class PurchaseFragment extends Fragment {
                     mBinding.itemSpinner.setInputType(InputType.TYPE_CLASS_TEXT);
                     openKeyBoard(mBinding.itemSpinner);
                 }
+                else if (action== DATE_BTN)
+                {
+                    openDateDialog();
+                }
             }
         });
 
@@ -99,17 +108,64 @@ public class PurchaseFragment extends Fragment {
                 if (item!=null)
                 {
                     showProductDialog();
+
+                }
+            }
+        });
+
+        viewModel.getToastMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+
+                if (s!=null)
+                {
+                    Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
 
+    private void openDateDialog() {
+
+        Calendar calendar = Calendar.getInstance();
+        int day= calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int year = calendar.get(Calendar.YEAR);
+        DatePickerDialog datePickerDialog= new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                int checkMonth = (month ) % 10, checkDay = (dayOfMonth % 10);
+
+                String mMonth, mDay;
+                if (checkMonth > 0 && month < 9) {
+                    mMonth = "0" + (month );
+                } else {
+                    mMonth = String.valueOf(month);
+
+                }
+
+                if (checkDay > 0 && dayOfMonth < 10) {
+                    mDay = "0" + (dayOfMonth);
+
+                } else {
+
+                    mDay = String.valueOf(dayOfMonth);
+                }
+                String date= year +"-"+ mMonth +"-" +mDay;
+                mBinding.tvDate.setText(date);
+                viewModel.getDate().setValue(date);
+            }
+        },year,month,day);
+        datePickerDialog.show();
+    }
+
     private void showProductDialog() {
 
         CustomProductDialogBinding dialogBinding = CustomProductDialogBinding.inflate(getLayoutInflater());
 
-         alertDialog= new AlertDialog.Builder(requireContext()).setView(dialogBinding.getRoot())
+       AlertDialog  alertDialog= new AlertDialog.Builder(requireContext()).setView(dialogBinding.getRoot())
                 .setCancelable(false)
                 .create();
 
@@ -117,19 +173,24 @@ public class PurchaseFragment extends Fragment {
 
         alertDialog.show();
 
-        viewModel.getDialogDismiss().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        dialogBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(Integer integer) {
-                if (integer==1)
-                {
-                    alertDialog.dismiss();
-                    viewModel.getDialogDismiss().setValue(0);
-
-                }
-
-
+            public void onClick(View v) {
+                alertDialog.dismiss();
             }
         });
+
+        dialogBinding.btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertDialog.dismiss();
+
+                viewModel.addItemToProductAdapter();
+            }
+        });
+
+
     }
 
 

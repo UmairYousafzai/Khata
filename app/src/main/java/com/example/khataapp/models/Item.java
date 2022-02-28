@@ -3,12 +3,16 @@ package com.example.khataapp.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+import com.example.khataapp.BR;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Item implements Parcelable {
+public class Item  extends BaseObservable implements Parcelable {
 
     @SerializedName("Barcode")
     @Expose
@@ -102,12 +106,15 @@ public class Item implements Parcelable {
     private int btn_action;
     @SerializedName("Qty")
     @Expose
-    private double qty;
+    @Bindable
+    private double qty=0;
     @SerializedName("FreeQty")
     @Expose
+    @Bindable
     private double freeQty;
     @SerializedName("Cost")
     @Expose
+    @Bindable
     private double cost;
     @SerializedName("Discount")
     @Expose
@@ -115,6 +122,10 @@ public class Item implements Parcelable {
     @SerializedName("Amount")
     @Expose
     private double amount;
+
+
+    public static double totalQty=0;
+    public static double totalAmount=0;
 
     public Item() {
     }
@@ -216,7 +227,12 @@ public class Item implements Parcelable {
     }
 
     public void setQty(double qty) {
-        this.qty = qty;
+        if (this.qty!=qty)
+        {
+            this.qty = qty;
+            totalQty+=qty;
+            notifyPropertyChanged(BR.qty);
+        }
     }
 
     public double getFreeQty() {
@@ -224,7 +240,11 @@ public class Item implements Parcelable {
     }
 
     public void setFreeQty(double freeQty) {
-        this.freeQty = freeQty;
+        if (this.freeQty!=freeQty)
+        {
+            this.freeQty = freeQty;
+            notifyPropertyChanged(BR.freeQty);
+        }
     }
 
     public double getCost() {
@@ -232,7 +252,11 @@ public class Item implements Parcelable {
     }
 
     public void setCost(double cost) {
-        this.cost = cost;
+        if (this.cost!=cost)
+        {
+            this.cost = cost;
+            notifyPropertyChanged(BR.cost);
+        }
     }
 
     public double getDiscount() {
@@ -249,6 +273,7 @@ public class Item implements Parcelable {
 
     public void setAmount(double amount) {
         this.amount = amount;
+        totalAmount+=amount;
     }
 
     public int getBtn_action() {
@@ -364,11 +389,13 @@ public class Item implements Parcelable {
     }
 
     public double getUnitRetail() {
+
         return unitRetail;
     }
 
     public void setUnitRetail(double unitRetail) {
         this.unitRetail = unitRetail;
+        this.cost = unitRetail;
     }
 
     public double getCtnPcs() {

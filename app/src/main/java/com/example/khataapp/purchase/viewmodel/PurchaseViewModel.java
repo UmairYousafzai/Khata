@@ -5,6 +5,7 @@ import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 
 import android.app.Application;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.example.khataapp.utils.SharedPreferenceHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class PurchaseViewModel extends AndroidViewModel  {
 
@@ -33,15 +35,17 @@ public class PurchaseViewModel extends AndroidViewModel  {
     private final MutableLiveData<Item> itemMutableLiveData;
     private final ProductRecyclerAdapter adapter;
     private final MutableLiveData<String> toastMessage;
-    private final MutableLiveData<Integer> dialogDismiss;
+    private final MutableLiveData<String> date;
     private final ObservableField<ArrayAdapter<String>> supplierAdapter;
     private final HashMap<String, String> supplierHashMap;
     private final ObservableField<String> selectedSupplierName;
     private final ObservableField<ArrayAdapter<String>> productAdapter;
     private final HashMap<String, String> productHashMap;
     private final ObservableField<String> selectedProductName;
-    private String supplierCode,productBarCode;
+    private String supplierCode,productBarCode,productName="";
     private List<Item> itemList;
+    private final ObservableField<String> totalQty;
+    private final ObservableField<String> totalAmount;
 
 
     public PurchaseViewModel(@NonNull Application application) {
@@ -53,12 +57,14 @@ public class PurchaseViewModel extends AndroidViewModel  {
         itemMutableLiveData = new MutableLiveData<>();
         adapter = new ProductRecyclerAdapter();
         toastMessage= new MutableLiveData<>();
-        dialogDismiss= new MutableLiveData<>();
+        date= new MutableLiveData<>();
+        totalQty= new ObservableField<>("0");
+        totalAmount= new ObservableField<>("0");
         supplierAdapter= new ObservableField<>();
         selectedSupplierName= new ObservableField<>();
         supplierHashMap= new HashMap<>();
         productAdapter= new ObservableField<>();
-        selectedProductName= new ObservableField<>();
+        selectedProductName= new ObservableField<>("");
         productHashMap= new HashMap<>();
         itemList= new ArrayList<>();
         getSuppliers();
@@ -69,35 +75,66 @@ public class PurchaseViewModel extends AndroidViewModel  {
     public void onClick(int key)
     {
 
-        if (key!=10&&key!=11)
-        {
+
+
             btnAction.setValue(key);
+
+
+
+
+    }
+
+    public ObservableField<String> getTotalAmount() {
+        return totalAmount;
+    }
+
+    public ObservableField<String> getTotalQty() {
+        return totalQty;
+    }
+
+    public MutableLiveData<String> getDate() {
+        return date;
+    }
+
+    public void addItemToProductAdapter( )
+    {
+        if (!adapter.checkItemExists(itemMutableLiveData.getValue()))
+        {
+            Item item =new Item();
+            item= itemMutableLiveData.getValue();
+            if (item != null) {
+                item.setAmount(item.getQty()*item.getCost());
+
+
+                try
+                {
+                    double qty= Double.parseDouble(totalQty.get());
+                    double amount= Double.parseDouble(totalAmount.get());
+                    qty+=item.getQty();
+                    amount+=item.getAmount();
+                    totalQty.set(String.valueOf(qty));
+                    totalAmount.set(String.valueOf(amount));
+                }
+                catch (Exception e)
+                {
+                    Log.e("ConverSion error:",e.getMessage());
+                }
+
+            }
+
+
+
+
+
+            adapter.addItem(itemMutableLiveData.getValue());
 
         }
         else
         {
-            if (key==10)
-            {
-                if (!adapter.checkItemExists(itemMutableLiveData.getValue()))
-                {
-                    adapter.addItem(itemMutableLiveData.getValue());
-
-                }
-                else
-                {
-                    toastMessage.setValue("Item already Exists");
-                }
-
-            }
-            dialogDismiss.setValue(1);
-
+            toastMessage.setValue("Item already Exists");
         }
-
     }
 
-    public MutableLiveData<Integer> getDialogDismiss() {
-        return dialogDismiss;
-    }
 
     public MutableLiveData<Item> getItemMutableLiveData() {
         return itemMutableLiveData;
@@ -112,14 +149,16 @@ public class PurchaseViewModel extends AndroidViewModel  {
     }
 
     public ObservableField<String> getSelectedProductName() {
-        if (selectedProductName!=null)
+        if (selectedProductName!=null && !productName.equals(selectedProductName.get()))
         {
+            productName= selectedProductName.get();
             productBarCode= productHashMap.get(selectedProductName.get());
 
             for (Item model:itemList)
             {
                 if (model.getBarcode().equals(productBarCode))
                 {
+                    model.setCost(model.getUnitRetail());
                     itemMutableLiveData.setValue(model);
                     break;
                 }

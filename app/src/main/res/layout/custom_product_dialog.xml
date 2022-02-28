@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:xmnls="http://schemas.android.com/tools">
+    xmlns:xmnls="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
         <import type="com.example.khataapp.utils.Converter"/>
@@ -144,7 +146,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_done"
-            android:onClick="@{()->viewModel.onClick(11)}"
             />
 
         <com.google.android.material.button.MaterialButton
@@ -161,7 +162,7 @@
             app:layout_constraintBottom_toBottomOf="@id/btn_cancel"
             app:layout_constraintStart_toEndOf="@id/btn_cancel"
 
-            android:onClick="@{()->viewModel.onClick(10)}"/>
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

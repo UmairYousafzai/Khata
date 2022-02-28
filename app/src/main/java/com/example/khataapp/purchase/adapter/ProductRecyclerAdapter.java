@@ -80,6 +80,11 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         }
     }
 
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+
     public boolean checkItemExists(Item item)
     {
         return itemList.contains(item);

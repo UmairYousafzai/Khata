@@ -2,9 +2,11 @@ package com.example.khataapp.utils;
 
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.InverseBindingAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,4 +24,6 @@ public class CustomBindingAdapter {
     {
         textView.setAdapter(adapter);
     }
+
+
 }

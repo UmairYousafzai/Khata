@@ -70,7 +70,11 @@
         <entry key="..\:/AndroidProjects/Khata/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.26944444444444443" />
         <entry key="..\:/AndroidProjects/Khata/app/src/main/res/menu/menu_main.xml" value="0.30625" />
         <entry key="..\:/umair folder/Khata/app/src/main/res/layout/activity_main.xml" value="0.2558876811594203" />
+        <entry key="..\:/umair folder/Khata/app/src/main/res/layout/custom_product_dialog.xml" value="0.24547101449275363" />
         <entry key="..\:/umair folder/Khata/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/umair folder/Khata/app/src/main/res/layout/fragment_purchase.xml" value="0.24547101449275363" />
+        <entry key="..\:/umair folder/Khata/app/src/main/res/layout/item_card.xml" value="0.25" />
+        <entry key="..\:/umair folder/Khata/app/src/main/res/layout/item_card_two.xml" value="0.33" />
       </map>
     </option>
   </component>
