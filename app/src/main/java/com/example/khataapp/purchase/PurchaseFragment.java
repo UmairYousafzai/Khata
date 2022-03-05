@@ -63,7 +63,11 @@ public class PurchaseFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
 
         mBinding.setViewModel(viewModel);
-
+        Calendar calendar = Calendar.getInstance();
+        int day= calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int year = calendar.get(Calendar.YEAR);
+        mBinding.tvDate.setText(year +"-" +month+"-" + day);
         getLiveData();
     }
 
@@ -71,6 +75,8 @@ public class PurchaseFragment extends Fragment {
     public void onStop() {
         super.onStop();
         viewModel.getBtnAction().setValue(0);
+        viewModel.getItemMutableLiveData().setValue(null);
+        viewModel.getToastMessage().setValue(null);
     }
 
     private void getLiveData() {

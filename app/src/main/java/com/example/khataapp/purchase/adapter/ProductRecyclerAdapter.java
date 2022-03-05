@@ -1,5 +1,7 @@
 package com.example.khataapp.purchase.adapter;
 
+import android.graphics.Color;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.khataapp.databinding.ItemCardBinding;
 import com.example.khataapp.databinding.ItemCardTwoBinding;
 import com.example.khataapp.models.Item;
+import com.example.khataapp.purchase.viewmodel.PurchaseViewModel;
 import com.example.khataapp.stock.adapter.ItemListAdapter;
 import com.example.khataapp.stock.viewmodel.StockViewModel;
 
@@ -20,10 +23,12 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
     private final List<Item> itemList ;
     private LayoutInflater layoutInflater;
+    private PurchaseViewModel viewModel;
 
-    public ProductRecyclerAdapter()
+    public ProductRecyclerAdapter(PurchaseViewModel viewModel)
     {
         itemList = new ArrayList<>();
+        this.viewModel= viewModel;
     }
 
     @NonNull
@@ -45,7 +50,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
         Item item = itemList.get(position);
 
-
+        holder.mBinding.setViewModel(viewModel);
         holder.mBinding.setItem(item);
         holder.mBinding.executePendingBindings();
 
@@ -80,6 +85,23 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         }
     }
 
+    public void removeItem(Item item)
+    {
+        if (item!=null)
+        {
+            double qty= Item.totalQty-item.getQty();
+            double amount = Item.totalAmount-item.getAmount();
+            Item.setTotalAmount(amount);
+            Item.setTotalQty(qty);
+            item.setQty(0);
+            item.setAmount(0);
+            viewModel.getTotalAmount().set(String.valueOf(Item.totalAmount));
+            viewModel.getTotalQty().set(String.valueOf(Item.totalQty));
+            itemList.remove(item);
+            notifyDataSetChanged();
+        }
+    }
+
     public List<Item> getItemList() {
         return itemList;
     }
@@ -97,6 +119,39 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             super(binding.getRoot());
 
             mBinding= binding;
+
+            mBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    mBinding.etCost.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    mBinding.etFreeQty.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    mBinding.etQty.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    mBinding.etCost.setFocusableInTouchMode(true);
+                    mBinding.etQty.setFocusableInTouchMode(true);
+                    mBinding.etFreeQty.setFocusableInTouchMode(true);
+                    mBinding.itemCardTwoCard.setCardBackgroundColor(Color.parseColor("#F2F2F2"));
+                    mBinding.btnDone.setVisibility(View.VISIBLE);
+                    mBinding.btnEdit.setVisibility(View.GONE);
+
+                }
+            });
+            mBinding.btnDone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    mBinding.etCost.setInputType(InputType.TYPE_NULL);
+                    mBinding.etFreeQty.setInputType(InputType.TYPE_NULL);
+                    mBinding.etQty.setInputType(InputType.TYPE_NULL);
+                    mBinding.etCost.setFocusableInTouchMode(false);
+                    mBinding.etQty.setFocusableInTouchMode(false);
+                    mBinding.etFreeQty.setFocusableInTouchMode(false);
+                    mBinding.itemCardTwoCard.setCardBackgroundColor(Color.WHITE);
+                    mBinding.btnEdit.setVisibility(View.VISIBLE);
+                    mBinding.btnDone.setVisibility(View.GONE);
+
+                }
+            });
         }
     }
 }

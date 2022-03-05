@@ -222,6 +222,14 @@ public class Item  extends BaseObservable implements Parcelable {
         }
     };
 
+    public static void setTotalQty(double totalQty) {
+        Item.totalQty = totalQty;
+    }
+
+    public static void setTotalAmount(double totalAmount) {
+        Item.totalAmount = totalAmount;
+    }
+
     public double getQty() {
         return qty;
     }

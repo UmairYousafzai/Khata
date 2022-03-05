@@ -55,7 +55,7 @@ public class PurchaseViewModel extends AndroidViewModel  {
         btnAction= new MutableLiveData<>();
         party = new MutableLiveData<>();
         itemMutableLiveData = new MutableLiveData<>();
-        adapter = new ProductRecyclerAdapter();
+        adapter = new ProductRecyclerAdapter(this);
         toastMessage= new MutableLiveData<>();
         date= new MutableLiveData<>();
         totalQty= new ObservableField<>("0");
@@ -74,14 +74,16 @@ public class PurchaseViewModel extends AndroidViewModel  {
 
     public void onClick(int key)
     {
-
-
-
             btnAction.setValue(key);
+    }
 
+    public void onClickRemove(Item item)
+    {
+        if (item!=null)
+        {
+            adapter.removeItem(item);
 
-
-
+        }
     }
 
     public ObservableField<String> getTotalAmount() {
