@@ -74,5 +74,6 @@
     <string name="rate">Rate</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
+    <string name="badNumber">bad number</string>
 
 </resources>

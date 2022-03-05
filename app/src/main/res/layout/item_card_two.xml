@@ -46,11 +46,11 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/et_qty"
+                    android:id="@+id/qty"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@={Converter.doubleToString(item.qty),default=QTY}"
+                    android:text="@={Converter.toString(qty,item.qty,item.qty)}"
                     android:textSize="16sp"
                     android:hint="@string/qty"
                     android:gravity="center"
@@ -59,38 +59,44 @@
                     />
 
                 <EditText
-                    android:id="@+id/et_free_qty"
+                    android:id="@+id/freeQty"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@={Converter.doubleToString(item.freeQty),default=Free}"
+                    android:text="@={Converter.toString(freeQty,item.freeQty,item.freeQty)}"
                     android:textSize="16sp"
                     android:hint="@string/free"
                     android:inputType="none"
                     android:focusableInTouchMode="false"
+                    android:selectAllOnFocus="true"
+                    android:gravity="center"
                     />
 
                 <EditText
-                    android:id="@+id/et_cost"
+                    android:id="@+id/etCost"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@={Converter.doubleToString(item.cost),default=Cost}"
+                    android:text="@={Converter.toString(etCost,item.cost,item.cost)}"
                     android:textSize="16sp"
                     android:hint="@string/cost"
                     android:inputType="none"
+                    android:gravity="center"
                     android:focusableInTouchMode="false"
+                    android:selectAllOnFocus="true"
+
                     />
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{@string/rs+String.valueOf(item.amount),default=RSamoun}"
+                    android:text="@{@string/rs+String.valueOf(item.amount),default=RSamodfdsdsdsddsdsdfddvdun}"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    android:gravity="center"
                     android:textColor="@android:color/holo_green_dark"/>
             </LinearLayout>
 

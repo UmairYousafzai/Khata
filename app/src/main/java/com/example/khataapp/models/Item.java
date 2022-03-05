@@ -237,8 +237,10 @@ public class Item  extends BaseObservable implements Parcelable {
     public void setQty(double qty) {
         if (this.qty!=qty)
         {
+            totalQty-=this.qty;
             this.qty = qty;
-            totalQty+=qty;
+            totalQty+=this.qty;
+            setAmount(qty*cost);
             notifyPropertyChanged(BR.qty);
         }
     }
@@ -280,8 +282,10 @@ public class Item  extends BaseObservable implements Parcelable {
     }
 
     public void setAmount(double amount) {
+        totalAmount-=this.amount;
+
         this.amount = amount;
-        totalAmount+=amount;
+        totalAmount+=this.amount;
     }
 
     public int getBtn_action() {

@@ -4,7 +4,9 @@ import static com.example.khataapp.utils.CONSTANTS.GET_DEPARTMENT;
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_PURCHASES;
 import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
+import static com.example.khataapp.utils.CONSTANTS.SAVE_PURCHASE_RESPONSE;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
+import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
 
 import android.util.Log;
 
@@ -14,6 +16,10 @@ import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.GetPurchaseResponse;
+import com.example.khataapp.models.Item;
+import com.example.khataapp.models.Purchase;
+import com.example.khataapp.models.SavePurchaseResponse;
+import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.network.ApiClient;
 
 import retrofit2.Call;
@@ -201,5 +207,56 @@ public class PurchaseRepository {
             }
         });
 
+    }
+
+
+    public void savePurchase(Purchase purchase)
+    {
+        Call<SavePurchaseResponse> call = ApiClient.getInstance().getApi().savePurchase(purchase);
+
+        call.enqueue(new Callback<SavePurchaseResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SavePurchaseResponse> call, @NonNull Response<SavePurchaseResponse> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body()!=null)
+                    {
+                        if (callBackListener!=null)
+                        {
+
+                                callBackListener.getServerResponse(response.body(),SAVE_PURCHASE_RESPONSE);
+
+
+
+
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    if (response.errorBody() != null) {
+                        if (callBackListener!=null)
+                        {
+                            callBackListener.getServerResponse(response.errorBody().toString(),SERVER_ERROR);
+
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SavePurchaseResponse> call, @NonNull Throwable t) {
+
+                if (callBackListener!=null)
+                {
+                    callBackListener.getServerResponse(t.getMessage(),SERVER_ERROR);
+
+                }
+            }
+        });
     }
 }

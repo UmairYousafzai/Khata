@@ -1,5 +1,6 @@
 package com.example.khataapp.purchase;
 
+import static com.example.khataapp.utils.CONSTANTS.CHECK_BOX_BTN;
 import static com.example.khataapp.utils.CONSTANTS.DATE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.ITEM;
 import static com.example.khataapp.utils.CONSTANTS.SEARCH_ITEMS_BTN;
@@ -8,11 +9,13 @@ import static com.example.khataapp.utils.CONSTANTS.SUPPLIER;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -93,18 +96,22 @@ public class PurchaseFragment extends Fragment {
                 {
                     mBinding.supplierSpinner.setFocusableInTouchMode(true);
                     mBinding.supplierSpinner.setInputType(InputType.TYPE_CLASS_TEXT);
+                    mBinding.supplierSpinner.setText("");
                     openKeyBoard(mBinding.supplierSpinner);
 
                 }  else if (action== SEARCH_ITEMS_BTN)
                 {
                     mBinding.itemSpinner.setFocusableInTouchMode(true);
                     mBinding.itemSpinner.setInputType(InputType.TYPE_CLASS_TEXT);
+                    mBinding.itemSpinner.setText("");
+
                     openKeyBoard(mBinding.itemSpinner);
                 }
                 else if (action== DATE_BTN)
                 {
                     openDateDialog();
                 }
+
             }
         });
 
@@ -127,6 +134,28 @@ public class PurchaseFragment extends Fragment {
                 {
                     Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        viewModel.getIsEdit().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isEdit) {
+
+                Drawable drawable;
+                if (isEdit)
+                {
+                    drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_done_24, null);
+
+                    mBinding.floatingActionButton.setText("Save");
+
+                }
+                else
+                {
+                    drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_add_24, null);
+
+                    mBinding.floatingActionButton.setText("ADD");
+                }
+                mBinding.floatingActionButton.setIcon(drawable);
             }
         });
 
@@ -193,6 +222,7 @@ public class PurchaseFragment extends Fragment {
                 alertDialog.dismiss();
 
                 viewModel.addItemToProductAdapter();
+                mBinding.itemSpinner.setText("");
             }
         });
 

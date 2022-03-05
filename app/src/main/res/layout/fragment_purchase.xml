@@ -273,6 +273,7 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:layout_weight="1"
+                    android:gravity="center"
 
                     />
 
@@ -284,6 +285,7 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:layout_weight="1"
+                    android:gravity="center"
 
                     />
 
@@ -295,6 +297,7 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:layout_weight="1"
+                    android:gravity="center"
 
                     />
 
@@ -306,6 +309,7 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:layout_weight="1"
+                    android:gravity="center"
 
                     />
 
@@ -317,6 +321,8 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:layout_weight="1"
+                    android:gravity="center"
+
                     />
             </LinearLayout>
 
@@ -360,13 +366,27 @@
                 android:id="@+id/tv_total_qty"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.totalQty,default=1234}"
+                android:text="@={viewModel.totalQty,default=1234}"
                 android:textSize="18sp"
 
                 app:layout_constraintTop_toTopOf="@id/tv_qty_heading"
                 app:layout_constraintBottom_toBottomOf="@id/tv_qty_heading"
                 app:layout_constraintStart_toEndOf="@id/tv_qty_heading"
                 app:layout_constraintEnd_toStartOf="@id/tv__sub_total_heading"
+                />
+
+            <CheckBox
+                android:id="@+id/gst_Check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GST"
+                android:textStyle="bold"
+                android:textColor="@color/app_theme_color"
+                android:buttonTint="@color/app_theme_color"
+                android:checked="@={viewModel.gstFlag}"
+                app:layout_constraintTop_toBottomOf="@id/tv_qty_heading"
+                app:layout_constraintStart_toStartOf="@id/tv_qty_heading"
+                app:layout_constraintEnd_toEndOf="@id/tv_qty_heading"
                 />
             <TextView
                 android:id="@+id/tv__sub_total_heading"
@@ -388,7 +408,7 @@
                 android:id="@+id/tv_sub_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.totalAmount,default=1234}"
+                android:text="@={viewModel.subTotalAmount,default=1234}"
                 android:textSize="18sp"
 
                 app:layout_constraintTop_toTopOf="@id/tv__sub_total_heading"
@@ -401,7 +421,7 @@
                 android:id="@+id/tv_tax_heading"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Tax: "
+                android:text="GST: "
                 android:textColor="@color/app_theme_color"
                 android:textStyle="bold"
                 android:textSize="18sp"
@@ -416,9 +436,8 @@
                 android:id="@+id/tv_tax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="1234"
+                android:text="@={viewModel.gstTax, default=123}"
                 android:textSize="18sp"
-
                 app:layout_constraintTop_toTopOf="@id/tv_tax_heading"
                 app:layout_constraintStart_toEndOf="@id/tv_tax_heading"
                 app:layout_constraintBottom_toBottomOf="@id/tv_tax_heading"
@@ -446,7 +465,7 @@
                 android:id="@+id/tv_all_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.totalAmount,default=1234}"
+                android:text="@={viewModel.totalAmount,default=1234}"
                 android:textSize="18sp"
 
                 app:layout_constraintTop_toTopOf="@id/tv_all_total_heading"
@@ -462,6 +481,7 @@
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/app_theme_color"
                 android:text="@string/save"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.SAVE_BTN)}"
                 app:icon="@drawable/ic_baseline_done_24"
                 android:textAlignment="center"
                 android:textColor="@color/white"

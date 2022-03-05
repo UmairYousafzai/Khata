@@ -15,6 +15,7 @@ public class CONSTANTS {
     public static final int GET_GROUP=6;
     public static final int SERVER_RESPONSE_GROUP=7;
     public static final int GET_PURCHASES=8;
+    public static final int SAVE_PURCHASE_RESPONSE=9;
 
 
 
@@ -28,6 +29,8 @@ public class CONSTANTS {
     public static  int SEARCH_SUPPLIER_BTN =8;
     public static  int SEARCH_ITEMS_BTN =9;
     public static  int DATE_BTN =10;
+    public static  int CHECK_BOX_BTN =11;
+    public static  int SAVE_BTN =12;
 
 
 }

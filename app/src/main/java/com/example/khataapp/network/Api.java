@@ -12,8 +12,10 @@ import com.example.khataapp.models.Item;
 import com.example.khataapp.models.LoginResponse;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.PostLocation;
+import com.example.khataapp.models.Purchase;
 import com.example.khataapp.models.SaveDepartmentResponse;
 import com.example.khataapp.models.SaveGroupResponse;
+import com.example.khataapp.models.SavePurchaseResponse;
 import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
 
@@ -49,6 +51,8 @@ public interface Api {
     @POST("api/Department/SaveDepartment")
     Call<SaveDepartmentResponse> saveDepartment(@Body Department department);
 
+
+
     @GET("api/Product/ProductData")
     Call<GetItemResponse> getProducts(@Query("BusinessId")String businessID);
 
@@ -63,4 +67,7 @@ public interface Api {
 
     @GET("api/Purchase/PurchaseData")
     Call<GetPurchaseResponse> getPurchasesList(@Query("BusinessId")String businessID);
+
+    @POST("api/Purchase/SavePurchase")
+    Call<SavePurchaseResponse> savePurchase(@Body Purchase purchase);
 }

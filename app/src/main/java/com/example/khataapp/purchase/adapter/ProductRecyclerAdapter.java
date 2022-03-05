@@ -2,6 +2,7 @@ package com.example.khataapp.purchase.adapter;
 
 import android.graphics.Color;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,6 @@ import com.example.khataapp.databinding.ItemCardBinding;
 import com.example.khataapp.databinding.ItemCardTwoBinding;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.purchase.viewmodel.PurchaseViewModel;
-import com.example.khataapp.stock.adapter.ItemListAdapter;
-import com.example.khataapp.stock.viewmodel.StockViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,14 +88,33 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     {
         if (item!=null)
         {
-            double qty= Item.totalQty-item.getQty();
-            double amount = Item.totalAmount-item.getAmount();
-            Item.setTotalAmount(amount);
-            Item.setTotalQty(qty);
+
             item.setQty(0);
             item.setAmount(0);
-            viewModel.getTotalAmount().set(String.valueOf(Item.totalAmount));
+            viewModel.getSubTotalAmount().set(String.valueOf(Item.totalAmount));
             viewModel.getTotalQty().set(String.valueOf(Item.totalQty));
+            try
+            {
+                if (viewModel.getGstFlag().get())
+                {
+                    double stAmount= Item.totalAmount;
+                    double gstPercentage= (17*stAmount)/100;
+                    double totalAmount= stAmount+gstPercentage;
+                    viewModel.getTotalAmount().set(String.valueOf(totalAmount));
+                    viewModel.getGstTax().set(String.valueOf(gstPercentage));
+
+                }
+                else
+                {
+                    viewModel.getTotalAmount().set(String.valueOf(Item.totalAmount));
+                }
+            }
+            catch (Exception e)
+            {
+                Log.e(ProductRecyclerAdapter.class.getSimpleName(),e.toString());
+            }
+
+
             itemList.remove(item);
             notifyDataSetChanged();
         }
@@ -112,7 +130,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         return itemList.contains(item);
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder
+    public  class ProductViewHolder extends RecyclerView.ViewHolder
     {
         ItemCardTwoBinding mBinding;
         public ProductViewHolder(@NonNull ItemCardTwoBinding binding) {
@@ -125,14 +143,16 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
                 public void onClick(View v) {
 
                     mBinding.etCost.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                    mBinding.etFreeQty.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                    mBinding.etQty.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    mBinding.freeQty.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    mBinding.qty.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     mBinding.etCost.setFocusableInTouchMode(true);
-                    mBinding.etQty.setFocusableInTouchMode(true);
-                    mBinding.etFreeQty.setFocusableInTouchMode(true);
+                    mBinding.qty.setFocusableInTouchMode(true);
+                    mBinding.freeQty.setFocusableInTouchMode(true);
                     mBinding.itemCardTwoCard.setCardBackgroundColor(Color.parseColor("#F2F2F2"));
                     mBinding.btnDone.setVisibility(View.VISIBLE);
                     mBinding.btnEdit.setVisibility(View.GONE);
+                    viewModel.getToastMessage().setValue("Edit Mode Enable");
+
 
                 }
             });
@@ -141,14 +161,37 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
                 public void onClick(View v) {
 
                     mBinding.etCost.setInputType(InputType.TYPE_NULL);
-                    mBinding.etFreeQty.setInputType(InputType.TYPE_NULL);
-                    mBinding.etQty.setInputType(InputType.TYPE_NULL);
+                    mBinding.freeQty.setInputType(InputType.TYPE_NULL);
+                    mBinding.qty.setInputType(InputType.TYPE_NULL);
                     mBinding.etCost.setFocusableInTouchMode(false);
-                    mBinding.etQty.setFocusableInTouchMode(false);
-                    mBinding.etFreeQty.setFocusableInTouchMode(false);
+                    mBinding.qty.setFocusableInTouchMode(false);
+                    mBinding.freeQty.setFocusableInTouchMode(false);
                     mBinding.itemCardTwoCard.setCardBackgroundColor(Color.WHITE);
                     mBinding.btnEdit.setVisibility(View.VISIBLE);
                     mBinding.btnDone.setVisibility(View.GONE);
+                    mBinding.setItem(itemList.get(getAdapterPosition()));
+
+                    viewModel.getToastMessage().setValue("Item Edit Successfully");
+                    viewModel.getSubTotalAmount().set(String.valueOf(Item.totalAmount));
+                    viewModel.getTotalQty().set(String.valueOf(Item.totalQty));
+                    try
+                    {
+                        if (viewModel.getGstFlag().get())
+                        {
+                            double gstPercentage= (17*Item.totalAmount)/100;
+                            viewModel.getGstTax().set(String.valueOf(gstPercentage));
+                            viewModel.getTotalAmount().set(String.valueOf(Item.totalAmount+gstPercentage));
+
+                        }
+                        else
+                        {
+                            viewModel.getTotalAmount().set(String.valueOf(Item.totalAmount));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Log.e(ProductRecyclerAdapter.class.getSimpleName(),e.toString());
+                    }
 
                 }
             });
