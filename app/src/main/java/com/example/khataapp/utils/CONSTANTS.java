@@ -5,6 +5,7 @@ public class CONSTANTS {
     public static final String BUSINESS_NAME="business name";
     public static final String SUPPLIER="supplier";
     public static final String ITEM="item";
+    public static final String PURCHASE="purchase";
     public static final String DATE_KEY="date";
     public static final int GET_DEPARTMENT=1;
     public static final int SERVER_RESPONSE=2;
@@ -16,6 +17,8 @@ public class CONSTANTS {
     public static final int SERVER_RESPONSE_GROUP=7;
     public static final int GET_PURCHASES=8;
     public static final int SAVE_PURCHASE_RESPONSE=9;
+    public static final int GET_PURCHASES_BY_CODE=10;
+
 
 
 
@@ -31,6 +34,7 @@ public class CONSTANTS {
     public static  int DATE_BTN =10;
     public static  int CHECK_BOX_BTN =11;
     public static  int SAVE_BTN =12;
+    public static  int NEW_BTN =13;
 
 
 }

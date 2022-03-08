@@ -21,7 +21,8 @@ public class PurchaseListViewModel extends AndroidViewModel {
 
     private final PurchaseRepository repository;
     private final PurchaseListAdapter adapter;
-    private MutableLiveData<String> toastMessage;
+    private final MutableLiveData<String> toastMessage;
+    private final MutableLiveData<Purchase> purchaseMutableLiveData;
 
 
     public PurchaseListViewModel(@NonNull Application application) {
@@ -29,11 +30,24 @@ public class PurchaseListViewModel extends AndroidViewModel {
         repository = new PurchaseRepository();
         adapter= new PurchaseListAdapter(this);
         toastMessage= new MutableLiveData<>();
+        purchaseMutableLiveData= new MutableLiveData<>();
     }
 
     public void onClick(Purchase purchase)
     {
+        if (purchase.getStatus().equals("Unauthorize"))
+        {
+            purchaseMutableLiveData.setValue(purchase);
 
+        }
+        else
+        {
+            toastMessage.setValue("Authorized Documents Cannot be Edit.");
+        }
+    }
+
+    public MutableLiveData<Purchase> getPurchaseMutableLiveData() {
+        return purchaseMutableLiveData;
     }
 
     public MutableLiveData<String> getToastMessage() {

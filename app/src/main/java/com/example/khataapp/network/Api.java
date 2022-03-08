@@ -6,6 +6,7 @@ import com.example.khataapp.models.GetGroupResponse;
 import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetLocationResponse;
 import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPurchaseByCode;
 import com.example.khataapp.models.GetPurchaseResponse;
 import com.example.khataapp.models.Group;
 import com.example.khataapp.models.Item;
@@ -67,6 +68,9 @@ public interface Api {
 
     @GET("api/Purchase/PurchaseData")
     Call<GetPurchaseResponse> getPurchasesList(@Query("BusinessId")String businessID);
+
+    @GET("api/Purchase/PurchaseByCode")
+    Call<GetPurchaseByCode> getPurchaseByCode(@Query("DocNo")String docNO);
 
     @POST("api/Purchase/SavePurchase")
     Call<SavePurchaseResponse> savePurchase(@Body Purchase purchase);

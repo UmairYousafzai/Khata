@@ -32,7 +32,7 @@
     <string name="add">Add</string>
     <string name="edit_business_name">Edit Business Name</string>
     <string name="enter_your_business_name">Enter your business name</string>
-    <string name="save">Save</string>
+    <string name="save">SAVE</string>
     <string name="create_new_khata_business">CREATE NEW KHATA BUSINESS</string>
     <string name="refresh">Refresh</string>
     <string name="sign_out">Sign Out</string>
@@ -75,5 +75,7 @@
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
     <string name="badNumber">bad number</string>
+    <string name="authorize">Authorize</string>
+    <string name="yyyy_mm_dd">yyyy-mm-dd</string>
 
 </resources>

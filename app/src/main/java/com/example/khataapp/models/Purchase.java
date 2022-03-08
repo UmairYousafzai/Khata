@@ -1,12 +1,15 @@
 package com.example.khataapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Purchase {
+public class Purchase implements Parcelable {
 
     @SerializedName("DocNo")
     @Expose
@@ -23,6 +26,9 @@ public class Purchase {
     @SerializedName("Supplier")
     @Expose
     private String supplier;
+    @SerializedName("SuplierName")
+    @Expose
+    private String supplierName;
     @SerializedName("Location")
     @Expose
     private String location;
@@ -55,6 +61,74 @@ public class Purchase {
     @SerializedName("DocumentDetail")
     @Expose
     private List<Item> items= new ArrayList<>();
+
+    public Purchase() {
+    }
+
+
+    protected Purchase(Parcel in) {
+        docNo = in.readString();
+        docNoBusinessWise = in.readString();
+        docDate = in.readString();
+        amount = in.readDouble();
+        supplier = in.readString();
+        supplierName = in.readString();
+        location = in.readString();
+        status = in.readString();
+        supplierCode = in.readString();
+        locationCode = in.readString();
+        totalDiscountAmount = in.readDouble();
+        totalAmount = in.readDouble();
+        userId = in.readString();
+        businessId = in.readString();
+        action = in.readString();
+        items = in.createTypedArrayList(Item.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(docNo);
+        dest.writeString(docNoBusinessWise);
+        dest.writeString(docDate);
+        dest.writeDouble(amount);
+        dest.writeString(supplier);
+        dest.writeString(supplierName);
+        dest.writeString(location);
+        dest.writeString(status);
+        dest.writeString(supplierCode);
+        dest.writeString(locationCode);
+        dest.writeDouble(totalDiscountAmount);
+        dest.writeDouble(totalAmount);
+        dest.writeString(userId);
+        dest.writeString(businessId);
+        dest.writeString(action);
+        dest.writeTypedList(items);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Purchase> CREATOR = new Creator<Purchase>() {
+        @Override
+        public Purchase createFromParcel(Parcel in) {
+            return new Purchase(in);
+        }
+
+        @Override
+        public Purchase[] newArray(int size) {
+            return new Purchase[size];
+        }
+    };
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
 
     public List<Item> getItems() {
         return items;
@@ -175,4 +249,5 @@ public class Purchase {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }

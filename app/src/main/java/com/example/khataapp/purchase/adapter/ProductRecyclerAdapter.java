@@ -124,6 +124,12 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         return itemList;
     }
 
+    public void clearList()
+    {
+        itemList.clear();
+        notifyDataSetChanged();
+    }
+
 
     public boolean checkItemExists(Item item)
     {

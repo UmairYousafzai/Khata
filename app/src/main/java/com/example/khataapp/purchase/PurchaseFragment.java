@@ -3,11 +3,14 @@ package com.example.khataapp.purchase;
 import static com.example.khataapp.utils.CONSTANTS.CHECK_BOX_BTN;
 import static com.example.khataapp.utils.CONSTANTS.DATE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.ITEM;
+import static com.example.khataapp.utils.CONSTANTS.NEW_BTN;
+import static com.example.khataapp.utils.CONSTANTS.PURCHASE;
 import static com.example.khataapp.utils.CONSTANTS.SEARCH_ITEMS_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SEARCH_SUPPLIER_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SUPPLIER;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -36,6 +39,7 @@ import com.example.khataapp.databinding.CustomProductDialogBinding;
 import com.example.khataapp.databinding.FragmentPurchaseBinding;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
+import com.example.khataapp.models.Purchase;
 import com.example.khataapp.purchase.viewmodel.PurchaseViewModel;
 
 import java.util.Calendar;
@@ -48,6 +52,7 @@ public class PurchaseFragment extends Fragment {
     private FragmentPurchaseBinding mBinding;
     private NavController navController;
     private PurchaseViewModel viewModel;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -62,16 +67,24 @@ public class PurchaseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Item.totalAmount=0;
+        Item.totalQty=0;
         viewModel= new ViewModelProvider(this).get(PurchaseViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
         mBinding.setViewModel(viewModel);
-        Calendar calendar = Calendar.getInstance();
-        int day= calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH)+1;
-        int year = calendar.get(Calendar.YEAR);
-        mBinding.tvDate.setText(year +"-" +month+"-" + day);
+        setUpProgressDialog();
+
         getLiveData();
+    }
+
+    private void setUpProgressDialog() {
+
+        progressDialog = new ProgressDialog(requireContext());
+        progressDialog.setTitle("Purchase");
+        progressDialog.setMessage("Saving");
+        progressDialog.setCancelable(false);
+
     }
 
     @Override
@@ -110,6 +123,10 @@ public class PurchaseFragment extends Fragment {
                 else if (action== DATE_BTN)
                 {
                     openDateDialog();
+                }  else if (action== NEW_BTN)
+                {
+                    viewModel.getActionMutableLiveData().setValue("INSERT");
+                    clearFields();
                 }
 
             }
@@ -141,23 +158,71 @@ public class PurchaseFragment extends Fragment {
             @Override
             public void onChanged(Boolean isEdit) {
 
-                Drawable drawable;
                 if (isEdit)
                 {
-                    drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_done_24, null);
-
-                    mBinding.floatingActionButton.setText("Save");
-
+                    mBinding.saveFab.setVisibility(View.VISIBLE);
+                    mBinding.newFab.setVisibility(View.GONE);
                 }
                 else
                 {
-                    drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_add_24, null);
+                    mBinding.newFab.setVisibility(View.VISIBLE);
+                    mBinding.saveFab.setVisibility(View.GONE);
 
-                    mBinding.floatingActionButton.setText("ADD");
                 }
-                mBinding.floatingActionButton.setIcon(drawable);
             }
         });
+
+        viewModel.getShowProgressDialog().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean showProgressDialog) {
+
+                if (showProgressDialog)
+                {
+                    progressDialog.show();
+                }
+                else
+                {
+                    progressDialog.dismiss();
+                }
+            }
+        });
+
+        if (navController.getCurrentBackStackEntry()!=null)
+        {
+            MutableLiveData<Purchase> purchaseLiveData= navController.getCurrentBackStackEntry()
+                    .getSavedStateHandle()
+                    .getLiveData(PURCHASE);
+
+            purchaseLiveData.observe(getViewLifecycleOwner(), new Observer<Purchase>() {
+                @Override
+                public void onChanged(Purchase purchase) {
+
+                    if (purchase!=null)
+                    {
+                        viewModel.getPurchaseByDocCode(purchase.getDocNo());
+                    }
+                }
+            });
+        }
+
+
+    }
+
+    private void clearFields() {
+
+        mBinding.tvDate.setText("yyyy-mm-dd");
+        mBinding.tvDocNumber.setText("---------");
+        mBinding.supplierSpinner.setText("");
+        mBinding.itemSpinner.setText("");
+        mBinding.tvTotalQty.setText("0");
+        mBinding.tvSubTotal.setText("0");
+        mBinding.tvAllTotal.setText("0");
+        mBinding.gstCheckBox.setChecked(false);
+        mBinding.tvTax.setText("0");
+        viewModel.clearItemList();
+        viewModel.getActionMutableLiveData().setValue("INSERT");
+        viewModel.getIsEdit().setValue(false);
+
 
     }
 
@@ -189,8 +254,8 @@ public class PurchaseFragment extends Fragment {
                     mDay = String.valueOf(dayOfMonth);
                 }
                 String date= year +"-"+ mMonth +"-" +mDay;
-                mBinding.tvDate.setText(date);
-                viewModel.getDate().setValue(date);
+                viewModel.getDate().set(date);
+                viewModel.getIsEdit().setValue(true);
             }
         },year,month,day);
         datePickerDialog.show();
