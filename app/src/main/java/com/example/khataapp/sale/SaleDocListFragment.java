@@ -1,4 +1,4 @@
-package com.example.khataapp.purchase;
+package com.example.khataapp.sale;
 
 import static com.example.khataapp.utils.CONSTANTS.DOCUMENT;
 
@@ -17,22 +17,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.khataapp.databinding.FragmentPurchaseListBinding;
+import com.example.khataapp.databinding.FragmentSaleDocListBinding;
 import com.example.khataapp.models.Document;
-import com.example.khataapp.purchase.viewmodel.PurchaseListViewModel;
+import com.example.khataapp.sale.viewModel.SaleDocListViewModel;
 
 
-public class PurchaseListFragment extends Fragment {
+public class SaleDocListFragment extends Fragment {
 
-    private FragmentPurchaseListBinding mBinding;
-    private PurchaseListViewModel viewModel;
+    private FragmentSaleDocListBinding mBinding;
+    private SaleDocListViewModel viewModel;
     private NavController navController ;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mBinding= FragmentPurchaseListBinding.inflate(inflater,container,false);
+        mBinding= FragmentSaleDocListBinding.inflate(inflater,container,false);
         return mBinding.getRoot();
     }
 
@@ -40,12 +40,12 @@ public class PurchaseListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel= new ViewModelProvider(this).get(PurchaseListViewModel.class);
+        viewModel= new ViewModelProvider(this).get(SaleDocListViewModel.class);
         navController= NavHostFragment.findNavController(this);
 
-        mBinding.setViewModel(viewModel);
+        mBinding.setSaleViewModel(viewModel);
 
-        viewModel.getPurchasesList();
+        viewModel.getDocument();
 
         getLiveData();
     }
@@ -63,7 +63,7 @@ public class PurchaseListFragment extends Fragment {
             }
         });
 
-        viewModel.getPurchaseMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Document>() {
+        viewModel.getDocumentMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Document>() {
             @Override
             public void onChanged(Document document) {
                 if (document !=null)

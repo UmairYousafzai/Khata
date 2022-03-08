@@ -12,7 +12,7 @@
             type="Integer" />
         <variable
             name="viewModel"
-            type="com.example.khataapp.purchase.viewmodel.PurchaseViewModel" />
+            type="com.example.khataapp.sale.viewModel.SaleDocViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

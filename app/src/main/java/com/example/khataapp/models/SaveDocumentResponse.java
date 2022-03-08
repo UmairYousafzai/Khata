@@ -3,7 +3,8 @@ package com.example.khataapp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GetPurchaseByCode extends ServerResponse{
+
+public class SaveDocumentResponse extends ServerResponse{
 
     @SerializedName("Data")
     @Expose

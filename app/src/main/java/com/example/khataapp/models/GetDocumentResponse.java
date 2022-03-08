@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GetPurchaseResponse {
+public class GetDocumentResponse {
     @SerializedName("Code")
     @Expose
     private int code;
@@ -14,7 +14,7 @@ public class GetPurchaseResponse {
     private String message;
     @SerializedName("Data")
     @Expose
-    private List<Purchase> purchaseList = null;
+    private List<Document> documentList = null;
 
     public int getCode() {
         return code;
@@ -32,11 +32,11 @@ public class GetPurchaseResponse {
         this.message = message;
     }
 
-    public List<Purchase> getPurchaseList() {
-        return purchaseList;
+    public List<Document> getPurchaseList() {
+        return documentList;
     }
 
-    public void setPurchaseList(List<Purchase> purchaseList) {
-        this.purchaseList = purchaseList;
+    public void setPurchaseList(List<Document> documentList) {
+        this.documentList = documentList;
     }
 }

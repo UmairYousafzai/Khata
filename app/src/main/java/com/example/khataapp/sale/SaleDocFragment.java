@@ -1,8 +1,8 @@
-package com.example.khataapp.purchase;
+package com.example.khataapp.sale;
 
 import static com.example.khataapp.utils.CONSTANTS.DATE_BTN;
-import static com.example.khataapp.utils.CONSTANTS.NEW_BTN;
 import static com.example.khataapp.utils.CONSTANTS.DOCUMENT;
+import static com.example.khataapp.utils.CONSTANTS.NEW_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SEARCH_ITEMS_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SEARCH_SUPPLIER_BTN;
 
@@ -31,19 +31,20 @@ import android.widget.Toast;
 
 import com.example.khataapp.R;
 import com.example.khataapp.databinding.CustomProductDialogBinding;
+import com.example.khataapp.databinding.CustomProductDialogSaleBinding;
 import com.example.khataapp.databinding.FragmentPurchaseBinding;
+import com.example.khataapp.databinding.FragmentSaleDocBinding;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.purchase.viewmodel.PurchaseViewModel;
+import com.example.khataapp.sale.viewModel.SaleDocViewModel;
 
 import java.util.Calendar;
 
-
-public class PurchaseFragment extends Fragment {
-
-    private FragmentPurchaseBinding mBinding;
+public class SaleDocFragment extends Fragment {
+    private FragmentSaleDocBinding mBinding;
+    private SaleDocViewModel viewModel;
     private NavController navController;
-    private PurchaseViewModel viewModel;
     private ProgressDialog progressDialog;
 
 
@@ -51,7 +52,7 @@ public class PurchaseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mBinding = FragmentPurchaseBinding.inflate(inflater,container,false);
+        mBinding = FragmentSaleDocBinding.inflate(inflater,container,false);
         return mBinding.getRoot();
     }
 
@@ -61,7 +62,7 @@ public class PurchaseFragment extends Fragment {
 
         Item.totalAmount=0;
         Item.totalQty=0;
-        viewModel= new ViewModelProvider(this).get(PurchaseViewModel.class);
+        viewModel= new ViewModelProvider(this).get(SaleDocViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
         mBinding.setViewModel(viewModel);
@@ -73,7 +74,7 @@ public class PurchaseFragment extends Fragment {
     private void setUpProgressDialog() {
 
         progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setTitle("Purchase");
+        progressDialog.setTitle("Sale");
         progressDialog.setMessage("Saving");
         progressDialog.setCancelable(false);
 
@@ -95,7 +96,7 @@ public class PurchaseFragment extends Fragment {
 
                 if (action==2)
                 {
-                    navController.navigate(R.id.action_purchaseFragment_to_purchaseListFragment);
+                    navController.navigate(R.id.action_saleDocFragment_to_saleDocListFragment);
                 }
                 else if (action== SEARCH_SUPPLIER_BTN)
                 {
@@ -255,9 +256,9 @@ public class PurchaseFragment extends Fragment {
 
     private void showProductDialog() {
 
-        CustomProductDialogBinding dialogBinding = CustomProductDialogBinding.inflate(getLayoutInflater());
+        CustomProductDialogSaleBinding dialogBinding = CustomProductDialogSaleBinding.inflate(getLayoutInflater());
 
-       AlertDialog  alertDialog= new AlertDialog.Builder(requireContext()).setView(dialogBinding.getRoot())
+        AlertDialog alertDialog= new AlertDialog.Builder(requireContext()).setView(dialogBinding.getRoot())
                 .setCancelable(false)
                 .create();
 

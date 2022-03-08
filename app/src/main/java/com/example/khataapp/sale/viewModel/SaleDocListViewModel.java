@@ -1,4 +1,4 @@
-package com.example.khataapp.purchase.viewmodel;
+package com.example.khataapp.sale.viewModel;
 
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
@@ -10,33 +10,34 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.khataapp.Interface.CallBackListener;
-import com.example.khataapp.models.GetDocumentResponse;
 import com.example.khataapp.models.Document;
+import com.example.khataapp.models.GetDocumentResponse;
 import com.example.khataapp.purchase.adapter.PurchaseListAdapter;
-import com.example.khataapp.purchase.repository.PurchaseRepository;
+import com.example.khataapp.sale.repository.SaleRepository;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
-public class PurchaseListViewModel extends AndroidViewModel {
+public class SaleDocListViewModel extends AndroidViewModel {
 
-    private final PurchaseRepository repository;
+
+    private final SaleRepository repository;
     private final PurchaseListAdapter adapter;
     private final MutableLiveData<String> toastMessage;
-    private final MutableLiveData<Document> purchaseMutableLiveData;
+    private final MutableLiveData<Document> documentMutableLiveData;
 
 
-    public PurchaseListViewModel(@NonNull Application application) {
+    public SaleDocListViewModel(@NonNull Application application) {
         super(application);
-        repository = new PurchaseRepository();
-        adapter= new PurchaseListAdapter(this,null,1);
+        repository = new SaleRepository();
+        adapter= new PurchaseListAdapter(null,this,2);
         toastMessage= new MutableLiveData<>();
-        purchaseMutableLiveData= new MutableLiveData<>();
+        documentMutableLiveData = new MutableLiveData<>();
     }
 
     public void onClick(Document document)
     {
         if (document.getStatus().equals("Unauthorize"))
         {
-            purchaseMutableLiveData.setValue(document);
+            documentMutableLiveData.setValue(document);
 
         }
         else
@@ -45,8 +46,8 @@ public class PurchaseListViewModel extends AndroidViewModel {
         }
     }
 
-    public MutableLiveData<Document> getPurchaseMutableLiveData() {
-        return purchaseMutableLiveData;
+    public MutableLiveData<Document> getDocumentMutableLiveData() {
+        return documentMutableLiveData;
     }
 
     public MutableLiveData<String> getToastMessage() {
@@ -57,11 +58,11 @@ public class PurchaseListViewModel extends AndroidViewModel {
         return adapter;
     }
 
-    public void getPurchasesList()
+    public void getDocument()
     {
         String businessID= SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
-        repository.getPurchases(businessID);
+        repository.getSaleDocs(2,businessID);
         getServerResponse();
     }
 

@@ -5,11 +5,17 @@
     <data>
         <import type="com.example.khataapp.utils.Converter"/>
         <variable
-            name="viewModel"
+            name="key"
+            type="Integer" />
+        <variable
+            name="purchaseViewModel"
             type="com.example.khataapp.purchase.viewmodel.PurchaseListViewModel" />
         <variable
-            name="purchase"
-            type="com.example.khataapp.models.Purchase" />
+            name="saleViewModel"
+            type="com.example.khataapp.sale.viewModel.SaleDocListViewModel" />
+        <variable
+            name="document"
+            type="com.example.khataapp.models.Document" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -19,7 +25,7 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
-        android:onClick="@{()->viewModel.onClick(purchase)}">
+        android:onClick="@{()-> key==1?purchaseViewModel.onClick(document):saleViewModel.onClick(document)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@{purchase.supplier,default=DocumentNAme}"
+                android:text="@{document.supplier,default=DocumentNAme}"
                 android:textColor="@color/app_theme_color"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -45,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@{purchase.location,default=LOcation}"
+                android:text="@{document.location,default=LOcation}"
                 app:layout_constraintBottom_toTopOf="@id/date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_supplier_name"
@@ -56,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@{Converter.StringToFormatDate(purchase.docDate),default=jan2022}"
+                android:text="@{Converter.StringToFormatDate(document.docDate),default=jan2022}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/location"
@@ -67,7 +73,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@{purchase.docNo,default=12345}"
+                android:text="@{document.docNo,default=12345}"
                 android:textColor="@color/app_theme_color"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -82,8 +88,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@{purchase.status,default=status}"
-                android:textColor="@{purchase.status.equals(@string/un_authorize)?@color/custom_red_color:@android:color/holo_green_dark}"
+                android:text="@{document.status,default=status}"
+                android:textColor="@{document.status.equals(@string/un_authorize)?@color/custom_red_color:@android:color/holo_green_dark}"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:gravity="end"
@@ -97,7 +103,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@{@string/rs+purchase.amount,default=amount}"
+                android:text="@{@string/rs+document.amount,default=amount}"
                 android:gravity="end"
                 android:textColor="@color/custom_red_color"
                 android:textSize="16sp"

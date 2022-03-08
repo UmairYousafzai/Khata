@@ -1,18 +1,15 @@
 package com.example.khataapp.purchase.repository;
 
-import static com.example.khataapp.utils.CONSTANTS.GET_PURCHASES;
 import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.network.ApiClient;
-import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import retrofit2.Call;
 import retrofit2.Callback;

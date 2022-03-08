@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.khataapp.utils.CONSTANTS" />
+
+        <variable
+            name="viewModel"
+            type="com.example.khataapp.sale.viewModel.SaleDocViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/tv_Retrieve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_background"
+                android:onClick="@{()-> viewModel.onClick(2)}"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="2dp"
+                android:text="@string/retrieve"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_Authorize"
+                app:layout_constraintEnd_toStartOf="@+id/tv_Authorize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_Authorize" />
+
+
+
+            <TextView
+                android:id="@+id/tv_Authorize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/tv_background"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="2dp"
+                android:text="@string/authorize"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_PDF"
+                app:layout_constraintStart_toEndOf="@id/tv_Retrieve"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            <TextView
+                android:id="@+id/tv_PDF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_background"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="2dp"
+                android:text="PDF"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_Authorize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_Authorize"
+                app:layout_constraintTop_toTopOf="@+id/tv_Authorize" />
+
+            <TextView
+                android:id="@+id/date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/date"
+                app:layout_constraintBottom_toTopOf="@+id/tv_date"
+                app:layout_constraintEnd_toEndOf="@id/tv_date"
+                app:layout_constraintStart_toStartOf="@+id/tv_date"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Authorize" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/seach_view_background"
+                android:drawablePadding="8dp"
+                android:elevation="5dp"
+                android:padding="8dp"
+                android:text="@={viewModel.date}"
+                android:textColor="@color/black"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.DATE_BTN)}"
+                android:textSize="16sp"
+                app:drawableLeftCompat="@drawable/ic_calendar_line"
+                app:drawableStartCompat="@drawable/ic_calendar_line"
+                app:drawableTint="@color/app_theme_color"
+                app:layout_constraintBottom_toTopOf="@id/spinner_select_customer_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date_title" />
+
+
+            <TextView
+                android:id="@+id/doc_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/doc_no"
+                app:layout_constraintBottom_toTopOf="@+id/tv_doc_number"
+                app:layout_constraintEnd_toEndOf="@id/tv_doc_number"
+                app:layout_constraintStart_toStartOf="@+id/tv_doc_number"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Authorize" />
+
+            <TextView
+                android:id="@+id/tv_doc_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/seach_view_background"
+                android:elevation="5dp"
+                android:padding="8dp"
+                android:text="@={viewModel.docNumber}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/spinner_select_customer_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/doc_title" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/spinner_select_customer_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:elevation="5dp"
+                android:hint="@string/select_supplier"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="@color/app_theme_color"
+                app:endIconTint="@color/app_theme_color"
+                app:layout_constraintBottom_toTopOf="@id/select_item_spinner"
+                app:layout_constraintEnd_toStartOf="@id/btn_search_supplier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_date"
+                android:layout_marginLeft="20dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/supplier_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"
+                    android:text="@={viewModel.selectedSupplierName}"
+                    app:setTextAdapter="@{viewModel.supplierAdapter}"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <ImageButton
+                android:id="@+id/btn_search_supplier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="5dp"
+                android:minHeight="50dp"
+                android:minWidth="50dp"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.SEARCH_SUPPLIER_BTN)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/spinner_select_customer_layout"
+                app:layout_constraintBottom_toBottomOf="@id/spinner_select_customer_layout"
+                app:layout_constraintStart_toEndOf="@id/spinner_select_customer_layout"
+                app:tint="@color/app_theme_color" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/select_item_spinner"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:elevation="5dp"
+                android:hint="@string/select_products"
+                app:boxBackgroundColor="@color/white"
+                app:hintTextColor="@color/app_theme_color"
+                app:endIconTint="@color/app_theme_color"
+                app:layout_constraintEnd_toStartOf="@id/btn_search_product"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_select_customer_layout"
+
+                android:layout_marginLeft="20dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/item_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"
+                    android:text="@={viewModel.selectedProductName}"
+                    app:setTextAdapter="@{viewModel.productAdapter}"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <ImageButton
+                android:id="@+id/btn_search_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="5dp"
+                android:minHeight="50dp"
+                android:minWidth="50dp"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.SEARCH_ITEMS_BTN)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/select_item_spinner"
+                app:layout_constraintBottom_toBottomOf="@id/select_item_spinner"
+                app:layout_constraintStart_toEndOf="@id/select_item_spinner"
+                app:tint="@color/app_theme_color" />
+
+
+            <LinearLayout
+                android:id="@+id/recycler_headings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/select_item_spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:weightSum="5"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CTN SIZE"
+                    android:textColor="@color/app_theme_color"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QTY"
+                    android:textColor="@color/app_theme_color"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FREE"
+                    android:textColor="@color/app_theme_color"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rate"
+                    android:textColor="@color/app_theme_color"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amount"
+                    android:textColor="@color/app_theme_color"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+
+                    />
+            </LinearLayout>
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list_purchase"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rv_background"
+                android:elevation="5dp"
+                android:padding="5dp"
+                app:setAdapter="@{viewModel.adapter}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycler_headings"
+                app:layout_constraintBottom_toTopOf="@id/tv__sub_total_heading"
+                tools:listitem="@layout/item_card_two" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_qty_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Total Qty: "
+                android:textColor="@color/app_theme_color"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/rv_list_purchase"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_total_qty"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="end"
+                />
+            <TextView
+                android:id="@+id/tv_total_qty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.totalQty,default=1234}"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toTopOf="@id/tv_qty_heading"
+                app:layout_constraintBottom_toBottomOf="@id/tv_qty_heading"
+                app:layout_constraintStart_toEndOf="@id/tv_qty_heading"
+                app:layout_constraintEnd_toStartOf="@id/tv__sub_total_heading"
+                />
+
+            <CheckBox
+                android:id="@+id/gst_Check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GST"
+                android:textStyle="bold"
+                android:textColor="@color/app_theme_color"
+                android:buttonTint="@color/app_theme_color"
+                android:checked="@={viewModel.gstFlag}"
+                app:layout_constraintTop_toBottomOf="@id/tv_qty_heading"
+                app:layout_constraintStart_toStartOf="@id/tv_qty_heading"
+                app:layout_constraintEnd_toEndOf="@id/tv_qty_heading"
+                />
+            <TextView
+                android:id="@+id/tv__sub_total_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Sub Total: "
+                android:textColor="@color/app_theme_color"
+                android:textStyle="bold"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toBottomOf="@id/rv_list_purchase"
+                app:layout_constraintStart_toEndOf="@id/tv_total_qty"
+                app:layout_constraintEnd_toStartOf="@id/tv_sub_total"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:gravity="end"
+                />
+            <TextView
+                android:id="@+id/tv_sub_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.subTotalAmount,default=1234}"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toTopOf="@id/tv__sub_total_heading"
+                app:layout_constraintStart_toEndOf="@id/tv__sub_total_heading"
+                app:layout_constraintBottom_toBottomOf="@id/tv__sub_total_heading"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                />
+            <TextView
+                android:id="@+id/tv_tax_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="GST: "
+                android:textColor="@color/app_theme_color"
+                android:textStyle="bold"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toBottomOf="@id/tv__sub_total_heading"
+                app:layout_constraintStart_toStartOf="@id/tv__sub_total_heading"
+                app:layout_constraintEnd_toStartOf="@id/tv_tax"
+                android:layout_marginTop="8dp"
+                android:gravity="end"
+                />
+            <TextView
+                android:id="@+id/tv_tax"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.gstTax, default=123}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toTopOf="@id/tv_tax_heading"
+                app:layout_constraintStart_toEndOf="@id/tv_tax_heading"
+                app:layout_constraintBottom_toBottomOf="@id/tv_tax_heading"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                />
+            <TextView
+                android:id="@+id/tv_all_total_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Total: "
+                android:textColor="@color/app_theme_color"
+                android:textStyle="bold"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toBottomOf="@id/tv_tax_heading"
+                app:layout_constraintStart_toStartOf="@id/tv_tax_heading"
+                app:layout_constraintEnd_toStartOf="@id/tv_all_total"
+                android:layout_marginTop="8dp"
+                android:gravity="end"
+                app:layout_constraintBottom_toTopOf="@+id/save_fab"
+                android:layout_marginBottom="30dp"
+                app:layout_constraintVertical_bias="0.0"
+                />
+            <TextView
+                android:id="@+id/tv_all_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.totalAmount,default=1234}"
+                android:textSize="18sp"
+
+                app:layout_constraintTop_toTopOf="@id/tv_all_total_heading"
+                app:layout_constraintStart_toEndOf="@id/tv_all_total_heading"
+                app:layout_constraintBottom_toTopOf="@id/new_fab"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginBottom="30dp"
+
+                />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/new_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/app_theme_color"
+                android:text="New"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.NEW_BTN)}"
+                app:icon="@drawable/ic_baseline_done_24"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/save_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/app_theme_color"
+                android:text="SAVE"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.SAVE_BTN)}"
+                app:icon="@drawable/ic_baseline_done_24"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>
+

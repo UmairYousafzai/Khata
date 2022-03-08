@@ -236,7 +236,7 @@
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.example.khataapp.stock.AddItemFragment"
-        android:label="fragment_add_item"
+        android:label="Add Item"
         tools:layout="@layout/fragment_add_item" >
         <argument
             android:name="item"
@@ -247,7 +247,7 @@
     <fragment
         android:id="@+id/itemListFragment"
         android:name="com.example.khataapp.stock.ItemListFragment"
-        android:label="ItemListFragment" >
+        android:label="Items" >
         <action
             android:id="@+id/action_itemListFragment_to_addItemFragment"
             app:destination="@id/addItemFragment"
@@ -263,11 +263,11 @@
     <fragment
         android:id="@+id/addDepartmentFragment"
         android:name="com.example.khataapp.department.AddDepartmentFragment"
-        android:label="AddDepartmentFragment" />
+        android:label="Department" />
     <fragment
         android:id="@+id/purchaseFragment"
         android:name="com.example.khataapp.purchase.PurchaseFragment"
-        android:label="PurchaseFragment" >
+        android:label="Purchase" >
         <action
             android:id="@+id/action_purchaseFragment_to_purchaseListFragment"
             app:destination="@id/purchaseListFragment"
@@ -293,7 +293,19 @@
     <fragment
         android:id="@+id/supplierListFragment"
         android:name="com.example.khataapp.purchase.SupplierListFragment"
-        android:label="SupplierListFragment" />
+        android:label="Suppliers" />
+    <fragment
+        android:id="@+id/saleDocFragment"
+        android:name="com.example.khataapp.sale.SaleDocFragment"
+        android:label="Sale" >
+        <action
+            android:id="@+id/action_saleDocFragment_to_saleDocListFragment"
+            app:destination="@id/saleDocListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/saleDocListFragment"
+        android:name="com.example.khataapp.sale.SaleDocListFragment"
+        android:label="Sale List" />
 
 
 </navigation>

@@ -59,7 +59,7 @@
     <string name="rs">Rs </string>
     <string name="stock">Stock</string>
     <string name="department">Department</string>
-    <string name="purchase">Purchase</string>
+    <string name="document">Purchase</string>
     <string name="doc_no">Doc.no.</string>
     <string name="select_customer">Select Customer</string>
     <string name="un_authorize">Unauthorize</string>
@@ -77,5 +77,6 @@
     <string name="badNumber">bad number</string>
     <string name="authorize">Authorize</string>
     <string name="yyyy_mm_dd">yyyy-mm-dd</string>
+    <string name="sale">Sale</string>
 
 </resources>

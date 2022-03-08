@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Purchase implements Parcelable {
+public class Document implements Parcelable {
 
     @SerializedName("DocNo")
     @Expose
@@ -62,11 +62,11 @@ public class Purchase implements Parcelable {
     @Expose
     private List<Item> items= new ArrayList<>();
 
-    public Purchase() {
+    public Document() {
     }
 
 
-    protected Purchase(Parcel in) {
+    protected Document(Parcel in) {
         docNo = in.readString();
         docNoBusinessWise = in.readString();
         docDate = in.readString();
@@ -110,15 +110,15 @@ public class Purchase implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Purchase> CREATOR = new Creator<Purchase>() {
+    public static final Creator<Document> CREATOR = new Creator<Document>() {
         @Override
-        public Purchase createFromParcel(Parcel in) {
-            return new Purchase(in);
+        public Document createFromParcel(Parcel in) {
+            return new Document(in);
         }
 
         @Override
-        public Purchase[] newArray(int size) {
-            return new Purchase[size];
+        public Document[] newArray(int size) {
+            return new Document[size];
         }
     };
 

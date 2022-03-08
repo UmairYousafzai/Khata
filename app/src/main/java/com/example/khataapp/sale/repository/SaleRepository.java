@@ -1,8 +1,8 @@
-package com.example.khataapp.purchase.repository;
+package com.example.khataapp.sale.repository;
 
-import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
+import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_DOCUMENT_RESPONSE;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
@@ -24,15 +24,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PurchaseRepository {
+public class SaleRepository {
+
     private CallBackListener callBackListener;
 
     public void setCallBackListener(CallBackListener callBackListener) {
         this.callBackListener = callBackListener;
     }
 
-    public void getPurchases(String businessID) {
-        Call<GetDocumentResponse> call = ApiClient.getInstance().getApi().getPurchasesList(businessID);
+    public void getSaleDocs(int docType ,String businessID) {
+        Call<GetDocumentResponse> call = ApiClient.getInstance().getApi().getSaleDocList(docType,businessID);
         call.enqueue(new Callback<GetDocumentResponse>() {
             @Override
             public void onResponse(@NonNull Call<GetDocumentResponse> call, @NonNull Response<GetDocumentResponse> response) {
@@ -170,8 +171,8 @@ public class PurchaseRepository {
     }
 
 
-    public void savePurchase(Document document) {
-        Call<SaveDocumentResponse> call = ApiClient.getInstance().getApi().savePurchase(document);
+    public void saveSaleDocument(Document document) {
+        Call<SaveDocumentResponse> call = ApiClient.getInstance().getApi().saveSaleDoc(document);
 
         call.enqueue(new Callback<SaveDocumentResponse>() {
             @Override
@@ -211,8 +212,8 @@ public class PurchaseRepository {
     }
 
 
-    public void getPurchaseByCode(String docCode) {
-        Call<GetPurchaseByCode> call = ApiClient.getInstance().getApi().getPurchaseByCode(docCode);
+    public void getSaleDocByCode(String docCode) {
+        Call<GetPurchaseByCode> call = ApiClient.getInstance().getApi().getSaleDocByCode(docCode);
 
         call.enqueue(new Callback<GetPurchaseByCode>() {
             @Override

@@ -1,6 +1,5 @@
 package com.example.khataapp.network;
 
-import com.example.khataapp.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,11 +23,11 @@ public class ApiClient {
             builder.readTimeout(30, TimeUnit.SECONDS);
             builder.connectTimeout(30, TimeUnit.SECONDS);
             builder.writeTimeout(30, TimeUnit.SECONDS);
-            if (BuildConfig.DEBUG) {
+
                 HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
                 interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                 builder.addInterceptor(interceptor);
-            }
+
 
                 retrofitClient =new Retrofit.Builder()
                         .client(builder.build())

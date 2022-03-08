@@ -7,25 +7,37 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khataapp.databinding.PurchaseCardBinding;
-import com.example.khataapp.models.Purchase;
+import com.example.khataapp.models.Document;
+import com.example.khataapp.purchase.viewmodel.PurchaseListViewModel;
+import com.example.khataapp.sale.viewModel.SaleDocListViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaseListAdapter extends RecyclerView.Adapter<PurchaseListAdapter.PurchaseListViewModel> {
+public class PurchaseListAdapter extends RecyclerView.Adapter<PurchaseListAdapter.PurchaseListViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private List<Purchase> purchaseList;
-    private com.example.khataapp.purchase.viewmodel.PurchaseListViewModel viewModel;
+    private List<Document> documentList;
+    private PurchaseListViewModel purchaseViewModel;
+    private SaleDocListViewModel saleViewModel;
+    private int key;
 
-    public PurchaseListAdapter(com.example.khataapp.purchase.viewmodel.PurchaseListViewModel viewModel) {
-        purchaseList = new ArrayList<>();
-        this.viewModel = viewModel;
+    public PurchaseListAdapter(PurchaseListViewModel purchaseViewModel,SaleDocListViewModel saleViewModel,int key) {
+        documentList = new ArrayList<>();
+        if (saleViewModel!=null)
+        {
+            this.saleViewModel= saleViewModel;
+        }
+        if (purchaseViewModel!=null)
+        {
+            this.purchaseViewModel=purchaseViewModel;
+        }
+        this.key= key;
     }
 
     @NonNull
     @Override
-    public PurchaseListViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PurchaseListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (layoutInflater==null)
         {
             layoutInflater= LayoutInflater.from(parent.getContext());
@@ -33,42 +45,53 @@ public class PurchaseListAdapter extends RecyclerView.Adapter<PurchaseListAdapte
 
         PurchaseCardBinding binding = PurchaseCardBinding.inflate(layoutInflater,parent,false);
 
-        return new PurchaseListViewModel(binding);
+        return new PurchaseListViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PurchaseListViewModel holder, int position) {
+    public void onBindViewHolder(@NonNull PurchaseListViewHolder holder, int position) {
 
-        Purchase purchase = new Purchase();
+        Document document = new Document();
 
-        purchase= purchaseList.get(position);
+        document = documentList.get(position);
 
-        holder.mBinding.setPurchase(purchase);
-        holder.mBinding.setViewModel(viewModel);
+        holder.mBinding.setDocument(document);
+        if (key==1)
+        {
+            holder.mBinding.setPurchaseViewModel(purchaseViewModel);
+        }
+        else
+        {
+            holder.mBinding.setSaleViewModel(saleViewModel);
+
+        }
+
+        holder.mBinding.setKey(key);
+
         holder.mBinding.executePendingBindings();
     }
 
     @Override
     public int getItemCount() {
-        return purchaseList.size();
+        return documentList.size();
     }
 
-    public void setPurchaseList(List<Purchase> list) {
-        purchaseList.clear();
+    public void setPurchaseList(List<Document> list) {
+        documentList.clear();
         if (list!=null && list.size()>0)
         {
-            purchaseList.addAll(list);
+            documentList.addAll(list);
         }
 
         notifyDataSetChanged();
 
     }
 
-    public static class PurchaseListViewModel extends RecyclerView.ViewHolder
+    public static class PurchaseListViewHolder extends RecyclerView.ViewHolder
     {
 
         PurchaseCardBinding mBinding;
-        public PurchaseListViewModel(@NonNull PurchaseCardBinding binding) {
+        public PurchaseListViewHolder(@NonNull PurchaseCardBinding binding) {
             super(binding.getRoot());
 
             mBinding = binding;

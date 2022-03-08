@@ -1,4 +1,4 @@
-package com.example.khataapp.purchase.viewmodel;
+package com.example.khataapp.sale.viewModel;
 
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
@@ -26,6 +26,7 @@ import com.example.khataapp.models.Party;
 import com.example.khataapp.models.SaveDocumentResponse;
 import com.example.khataapp.purchase.adapter.ProductRecyclerAdapter;
 import com.example.khataapp.purchase.repository.PurchaseRepository;
+import com.example.khataapp.sale.repository.SaleRepository;
 import com.example.khataapp.utils.Converter;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
@@ -33,9 +34,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PurchaseViewModel extends AndroidViewModel {
+public class SaleDocViewModel extends AndroidViewModel {
 
-    private final PurchaseRepository repository;
+
+    private final SaleRepository repository;
     private final MutableLiveData<Integer> btnAction;
     private final MutableLiveData<Party> party;
     private final MutableLiveData<Item> itemMutableLiveData;
@@ -62,17 +64,17 @@ public class PurchaseViewModel extends AndroidViewModel {
     private final MutableLiveData<String> actionMutableLiveData;
 
 
-    public PurchaseViewModel(@NonNull Application application) {
+    public SaleDocViewModel(@NonNull Application application) {
         super(application);
 
-        repository = new PurchaseRepository();
+        repository = new SaleRepository();
         btnAction = new MutableLiveData<>();
         party = new MutableLiveData<>();
         isEdit = new MutableLiveData<>();
         showProgressDialog = new MutableLiveData<>();
         itemMutableLiveData = new MutableLiveData<>();
         actionMutableLiveData = new MutableLiveData<>();
-        adapter = new ProductRecyclerAdapter(this,null,1);
+        adapter = new ProductRecyclerAdapter(null,this,2);
         toastMessage = new MutableLiveData<>();
         date = new ObservableField<>("yyyy-mm-dd");
         totalQty = new ObservableField<>("0");
@@ -97,7 +99,7 @@ public class PurchaseViewModel extends AndroidViewModel {
 
         if (key == SAVE_BTN) {
             showProgressDialog.setValue(true);
-            savePurchase();
+            saveSaleDocument();
         } else {
             btnAction.setValue(key);
         }
@@ -304,7 +306,7 @@ public class PurchaseViewModel extends AndroidViewModel {
 
     public void getPurchaseByDocCode(String docCode)
     {
-        repository.getPurchaseByCode(docCode);
+        repository.getSaleDocByCode(docCode);
         getServerResponse();
     }
     private void setFields(Document document)
@@ -325,7 +327,7 @@ public class PurchaseViewModel extends AndroidViewModel {
 
     }
 
-    private void savePurchase() {
+    private void saveSaleDocument() {
         if (!date.get().isEmpty()) {
             if (!supplierCode.isEmpty()) {
                 if (Item.totalAmount != 0) {
@@ -346,7 +348,7 @@ public class PurchaseViewModel extends AndroidViewModel {
                         document.setDocNo(docNumber.get());
                     }
 
-                    repository.savePurchase(document);
+                    repository.saveSaleDocument(document);
                     actionMutableLiveData.setValue("Update");
 
                 } else {

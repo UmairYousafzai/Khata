@@ -1,22 +1,22 @@
 package com.example.khataapp.network;
 
 import com.example.khataapp.models.Department;
+import com.example.khataapp.models.Document;
 import com.example.khataapp.models.GetDepartmentResponse;
 import com.example.khataapp.models.GetGroupResponse;
 import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetLocationResponse;
 import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.GetPurchaseByCode;
-import com.example.khataapp.models.GetPurchaseResponse;
+import com.example.khataapp.models.GetDocumentResponse;
 import com.example.khataapp.models.Group;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.LoginResponse;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.PostLocation;
-import com.example.khataapp.models.Purchase;
 import com.example.khataapp.models.SaveDepartmentResponse;
 import com.example.khataapp.models.SaveGroupResponse;
-import com.example.khataapp.models.SavePurchaseResponse;
+import com.example.khataapp.models.SaveDocumentResponse;
 import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
 
@@ -67,11 +67,20 @@ public interface Api {
     Call<SaveGroupResponse> saveGroup(@Body Group group);
 
     @GET("api/Purchase/PurchaseData")
-    Call<GetPurchaseResponse> getPurchasesList(@Query("BusinessId")String businessID);
+    Call<GetDocumentResponse> getPurchasesList(@Query("BusinessId")String businessID);
 
     @GET("api/Purchase/PurchaseByCode")
     Call<GetPurchaseByCode> getPurchaseByCode(@Query("DocNo")String docNO);
 
     @POST("api/Purchase/SavePurchase")
-    Call<SavePurchaseResponse> savePurchase(@Body Purchase purchase);
+    Call<SaveDocumentResponse> savePurchase(@Body Document document);
+
+    @GET("api/Sale/SaleData")
+    Call<GetDocumentResponse> getSaleDocList(@Query("DocType")int docType, @Query("BusinessId")String businessID);
+
+    @GET("api/Sale/SaleByCode")
+    Call<GetPurchaseByCode> getSaleDocByCode(@Query("DocNo")String docNO);
+
+    @POST("api/Sale/SaveSale")
+    Call<SaveDocumentResponse> saveSaleDoc(@Body Document document);
 }

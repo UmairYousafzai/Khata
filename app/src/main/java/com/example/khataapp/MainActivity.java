@@ -197,6 +197,9 @@ public class MainActivity extends AppCompatActivity {
         }   else if (item.getItemId()==R.id.action_purchase)
         {
             navController.navigate(R.id.purchaseFragment);
+        }  else if (item.getItemId()==R.id.action_sale)
+        {
+            navController.navigate(R.id.saleDocFragment);
         }
 
         return super.onOptionsItemSelected(item);
