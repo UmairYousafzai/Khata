@@ -58,13 +58,15 @@ public class Document implements Parcelable {
     @SerializedName("Action")
     @Expose
     private String action;
+    @SerializedName("DocType")
+    @Expose
+    private String docType;
     @SerializedName("DocumentDetail")
     @Expose
     private List<Item> items= new ArrayList<>();
 
     public Document() {
     }
-
 
     protected Document(Parcel in) {
         docNo = in.readString();
@@ -82,6 +84,7 @@ public class Document implements Parcelable {
         userId = in.readString();
         businessId = in.readString();
         action = in.readString();
+        docType = in.readString();
         items = in.createTypedArrayList(Item.CREATOR);
     }
 
@@ -102,6 +105,7 @@ public class Document implements Parcelable {
         dest.writeString(userId);
         dest.writeString(businessId);
         dest.writeString(action);
+        dest.writeString(docType);
         dest.writeTypedList(items);
     }
 
@@ -121,6 +125,14 @@ public class Document implements Parcelable {
             return new Document[size];
         }
     };
+
+    public String getDocType() {
+        return docType;
+    }
+
+    public void setDocType(String docType) {
+        this.docType = docType;
+    }
 
     public String getSupplierName() {
         return supplierName;

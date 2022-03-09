@@ -73,7 +73,7 @@ public class SaleDocViewModel extends AndroidViewModel {
         isEdit = new MutableLiveData<>();
         showProgressDialog = new MutableLiveData<>();
         itemMutableLiveData = new MutableLiveData<>();
-        actionMutableLiveData = new MutableLiveData<>();
+        actionMutableLiveData = new MutableLiveData<>("Insert");
         adapter = new ProductRecyclerAdapter(null,this,2);
         toastMessage = new MutableLiveData<>();
         date = new ObservableField<>("yyyy-mm-dd");
@@ -338,6 +338,7 @@ public class SaleDocViewModel extends AndroidViewModel {
                     document.setAction(actionMutableLiveData.getValue());
                     document.setBusinessId(businessID);
                     document.setLocationCode("01");
+                    document.setDocType("2");
                     document.setSupplierCode(supplierCode);
                     document.setTotalAmount(Double.parseDouble(totalAmount.get()));
                     document.setUserId(userID);
