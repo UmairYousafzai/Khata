@@ -13,6 +13,7 @@ import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.models.GetDocumentResponse;
 import com.example.khataapp.purchase.adapter.PurchaseListAdapter;
+import com.example.khataapp.sale.adapter.SaleDocListListAdapter;
 import com.example.khataapp.sale.repository.SaleRepository;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
@@ -20,7 +21,7 @@ public class SaleDocListViewModel extends AndroidViewModel {
 
 
     private final SaleRepository repository;
-    private final PurchaseListAdapter adapter;
+    private final SaleDocListListAdapter adapter;
     private final MutableLiveData<String> toastMessage;
     private final MutableLiveData<Document> documentMutableLiveData;
 
@@ -28,7 +29,7 @@ public class SaleDocListViewModel extends AndroidViewModel {
     public SaleDocListViewModel(@NonNull Application application) {
         super(application);
         repository = new SaleRepository();
-        adapter= new PurchaseListAdapter(null,this,2);
+        adapter= new SaleDocListListAdapter(this);
         toastMessage= new MutableLiveData<>();
         documentMutableLiveData = new MutableLiveData<>();
     }
@@ -54,15 +55,15 @@ public class SaleDocListViewModel extends AndroidViewModel {
         return toastMessage;
     }
 
-    public PurchaseListAdapter getAdapter() {
+    public SaleDocListListAdapter getAdapter() {
         return adapter;
     }
 
-    public void getDocument()
+    public void getDocument(int type)
     {
         String businessID= SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
-        repository.getSaleDocs(2,businessID);
+        repository.getSaleDocs(type,businessID);
         getServerResponse();
     }
 

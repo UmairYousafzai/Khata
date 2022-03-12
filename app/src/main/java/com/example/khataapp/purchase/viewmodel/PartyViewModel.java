@@ -1,6 +1,6 @@
 package com.example.khataapp.purchase.viewmodel;
 
-import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
+import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 
 import android.app.Application;
@@ -14,7 +14,6 @@ import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.purchase.adapter.PartyRecyclerAdapter;
 import com.example.khataapp.purchase.repository.PartyRepository;
-import com.example.khataapp.utils.CONSTANTS;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
 public class PartyViewModel extends AndroidViewModel {
@@ -78,7 +77,7 @@ public class PartyViewModel extends AndroidViewModel {
             public void getServerResponse(Object object, int key) {
                 if (object!=null)
                 {
-                    if (key== GET_SUPPLIER)
+                    if (key== GET_PARTY)
                     {
                         GetPartyServerResponse partyServerResponse = (GetPartyServerResponse) object;
 

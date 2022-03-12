@@ -2,14 +2,13 @@ package com.example.khataapp.stock.viewmodel;
 
 import static com.example.khataapp.utils.CONSTANTS.GET_DEPARTMENT;
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
-import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
+import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
@@ -21,7 +20,6 @@ import com.example.khataapp.models.Party;
 import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.stock.adapter.ItemListAdapter;
 import com.example.khataapp.stock.repository.StockRepository;
-import com.example.khataapp.utils.CONSTANTS;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import java.util.ArrayList;
@@ -165,7 +163,7 @@ public class StockViewModel extends AndroidViewModel {
                         String error = (String) object;
 
                         serverErrorLiveData.setValue(error);
-                    }else if (key == GET_SUPPLIER) {
+                    }else if (key == GET_PARTY) {
 
                         List<Party> partyList= (List<Party>) object;
                         partyMutableLiveData.setValue(partyList);

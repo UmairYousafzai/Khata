@@ -10,7 +10,7 @@ public class CONSTANTS {
     public static final int GET_DEPARTMENT=1;
     public static final int SERVER_RESPONSE=2;
     public static final int SERVER_ERROR=0;
-    public static final int GET_SUPPLIER=3;
+    public static final int GET_PARTY =3;
     public static final int GET_ITEMS=4;
     public static final int SERVER_RESPONSE_DEPARTMENT=5;
     public static final int GET_GROUP=6;

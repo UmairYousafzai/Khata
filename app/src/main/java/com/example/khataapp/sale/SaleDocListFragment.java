@@ -45,12 +45,16 @@ public class SaleDocListFragment extends Fragment {
 
         mBinding.setSaleViewModel(viewModel);
 
-        viewModel.getDocument();
+
 
         getLiveData();
     }
 
     private void getLiveData() {
+        if (getArguments()!=null)
+        {
+            viewModel.getDocument(SaleDocListFragmentArgs.fromBundle(getArguments()).getDocType());
+        }
 
         viewModel.getToastMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

@@ -30,20 +30,21 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.example.khataapp.R;
-import com.example.khataapp.databinding.CustomProductDialogBinding;
 import com.example.khataapp.databinding.CustomProductDialogSaleBinding;
-import com.example.khataapp.databinding.FragmentPurchaseBinding;
+import com.example.khataapp.databinding.CustomProductDialogSaleReturnBinding;
 import com.example.khataapp.databinding.FragmentSaleDocBinding;
+import com.example.khataapp.databinding.FragmentSaleDocReturnBinding;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.models.Item;
-import com.example.khataapp.purchase.viewmodel.PurchaseViewModel;
 import com.example.khataapp.sale.viewModel.SaleDocViewModel;
+import com.example.khataapp.sale.viewModel.SaleReturnDocViewModel;
 
 import java.util.Calendar;
 
-public class SaleDocFragment extends Fragment {
-    private FragmentSaleDocBinding mBinding;
-    private SaleDocViewModel viewModel;
+public class SaleReturnDocFragment extends Fragment {
+
+    private FragmentSaleDocReturnBinding mBinding;
+    private SaleReturnDocViewModel viewModel;
     private NavController navController;
     private ProgressDialog progressDialog;
 
@@ -52,7 +53,7 @@ public class SaleDocFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mBinding = FragmentSaleDocBinding.inflate(inflater,container,false);
+        mBinding = FragmentSaleDocReturnBinding.inflate(inflater,container,false);
         return mBinding.getRoot();
     }
 
@@ -62,7 +63,7 @@ public class SaleDocFragment extends Fragment {
 
         Item.totalAmount=0;
         Item.totalQty=0;
-        viewModel= new ViewModelProvider(this).get(SaleDocViewModel.class);
+        viewModel= new ViewModelProvider(this).get(SaleReturnDocViewModel.class);
         navController = NavHostFragment.findNavController(this);
 
         mBinding.setViewModel(viewModel);
@@ -96,10 +97,11 @@ public class SaleDocFragment extends Fragment {
 
                 if (action==2)
                 {
-                    SaleDocFragmentDirections.ActionSaleDocFragmentToSaleDocListFragment navAction=
-                            SaleDocFragmentDirections.actionSaleDocFragmentToSaleDocListFragment();
-                    navAction.setDocType(2);
-                    navController.navigate(navAction);                }
+                    SaleReturnDocFragmentDirections.ActionSaleReturnDocFragmentToSaleDocListFragment navAction=
+                            SaleReturnDocFragmentDirections.actionSaleReturnDocFragmentToSaleDocListFragment();
+                    navAction.setDocType(3);
+                    navController.navigate(navAction);
+                }
                 else if (action== SEARCH_SUPPLIER_BTN)
                 {
                     mBinding.customerSpinner.setFocusableInTouchMode(true);
@@ -258,7 +260,7 @@ public class SaleDocFragment extends Fragment {
 
     private void showProductDialog() {
 
-        CustomProductDialogSaleBinding dialogBinding = CustomProductDialogSaleBinding.inflate(getLayoutInflater());
+        CustomProductDialogSaleReturnBinding dialogBinding = CustomProductDialogSaleReturnBinding.inflate(getLayoutInflater());
 
         AlertDialog alertDialog= new AlertDialog.Builder(requireContext()).setView(dialogBinding.getRoot())
                 .setCancelable(false)

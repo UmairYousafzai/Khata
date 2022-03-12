@@ -1,6 +1,6 @@
 package com.example.khataapp.purchase.repository;
 
-import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
+import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 
 import android.util.Log;
@@ -39,7 +39,7 @@ public class PartyRepository {
                         {
                             if (callBackListener!=null)
                             {
-                                callBackListener.getServerResponse(response.body(), GET_SUPPLIER);
+                                callBackListener.getServerResponse(response.body(), GET_PARTY);
 
                             }
                         }

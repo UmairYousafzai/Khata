@@ -4,13 +4,11 @@
 
     <data>
         <import type="com.example.khataapp.utils.Converter"/>
-        <variable
-            name="key"
-            type="Integer" />
-        <variable
-            name="purchaseViewModel"
-            type="com.example.khataapp.purchase.viewmodel.PurchaseListViewModel" />
 
+
+        <variable
+            name="saleViewModel"
+            type="com.example.khataapp.sale.viewModel.SaleDocListViewModel" />
         <variable
             name="document"
             type="com.example.khataapp.models.Document" />
@@ -23,7 +21,7 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
-        android:onClick="@{()-> purchaseViewModel.onClick(document)}">
+        android:onClick="@{()-> saleViewModel.onClick(document)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

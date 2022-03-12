@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        dataViewModel= new ViewModelProvider(this).get(DataViewModel.class);
+        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
 
         if (navHostFragment != null) {
-            navController= navHostFragment.getNavController();
+            navController = navHostFragment.getNavController();
         }
 
 
@@ -65,42 +65,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable @org.jetbrains.annotations.Nullable Bundle arguments) {
 
-                if (destination.getId()==R.id.homeFragment)
-                {
+                if (destination.getId() == R.id.homeFragment) {
                     mainBinding.bottomView.setVisibility(View.VISIBLE);
-                    mainBinding.bottomView.show(1,true);
-                }
-                else if (destination.getId()==R.id.moneyFragment)
-                {
+                    mainBinding.bottomView.show(1, true);
+                } else if (destination.getId() == R.id.moneyFragment) {
                     mainBinding.bottomView.setVisibility(View.VISIBLE);
-                    mainBinding.bottomView.show(2,true);
+                    mainBinding.bottomView.show(2, true);
 
 
-                }
-                else if (destination.getId()==R.id.moreFragment)
-                {
+                } else if (destination.getId() == R.id.moreFragment) {
                     mainBinding.bottomView.setVisibility(View.VISIBLE);
-                    mainBinding.bottomView.show(3,true);
+                    mainBinding.bottomView.show(3, true);
 
-                }
-                else
-                {
+                } else {
                     mainBinding.bottomView.setVisibility(View.GONE);
                 }
 
-                if (destination.getId()==R.id.splashScreenFragment)
-                {
+                if (destination.getId() == R.id.splashScreenFragment) {
                     mainBinding.toolbar.setVisibility(View.GONE);
-                }
-                else  if (destination.getId()==R.id.loginFragment)
-                {
+                } else if (destination.getId() == R.id.loginFragment) {
                     mainBinding.toolbar.setVisibility(View.GONE);
-                }
-                else  if (destination.getId()==R.id.signUpFragment)
-                {
+                } else if (destination.getId() == R.id.signUpFragment) {
                     mainBinding.toolbar.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     mainBinding.toolbar.setVisibility(View.VISIBLE);
                 }
             }
@@ -109,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(R.id.homeFragment,R.id.moneyFragment,R.id.moreFragment).build();
+                new AppBarConfiguration.Builder(R.id.homeFragment, R.id.moneyFragment, R.id.moreFragment).build();
         Toolbar toolbar = mainBinding.toolbar;
 
         setSupportActionBar(toolbar);
@@ -120,39 +107,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     private void bottomNavigationListener() {
 
 
-
-                    NavOptions navOptions = new NavOptions.Builder()
-                            .setEnterAnim(R.anim.slide_in_right)
-                            .setExitAnim(R.anim.slide_out_left)
-                            .setPopEnterAnim(R.anim.slide_in_left)
-                            .setPopExitAnim(R.anim.slide_out_right)
-                            .build();
+        NavOptions navOptions = new NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .build();
 
 
         mainBinding.bottomView.setOnClickMenuListener((MeowBottomNavigation.Model model) -> {
 
-            switch (model.getId())
-            {
-                case 1:
-                {
-                    navController.navigate(R.id.homeFragment,null,navOptions);
+            switch (model.getId()) {
+                case 1: {
+                    navController.navigate(R.id.homeFragment, null, navOptions);
                     break;
                 }
-                case 2:
-                {
-                    navController.navigate(R.id.moneyFragment,null,navOptions);
+                case 2: {
+                    navController.navigate(R.id.moneyFragment, null, navOptions);
                     break;
                 }
-                case 3:
-                {
-                    navController.navigate(R.id.moreFragment,null,navOptions);
+                case 3: {
+                    navController.navigate(R.id.moreFragment, null, navOptions);
                     break;
                 }
             }
@@ -163,14 +141,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpBottomNavigation() {
 
-        mainBinding.bottomView.add(new MeowBottomNavigation.Model(1,R.drawable.ic_homepage));
-        mainBinding.bottomView.add(new MeowBottomNavigation.Model(2,R.drawable.ic_money_bag));
-        mainBinding.bottomView.add(new MeowBottomNavigation.Model(3,R.drawable.ic_more));
+        mainBinding.bottomView.add(new MeowBottomNavigation.Model(1, R.drawable.ic_homepage));
+        mainBinding.bottomView.add(new MeowBottomNavigation.Model(2, R.drawable.ic_money_bag));
+        mainBinding.bottomView.add(new MeowBottomNavigation.Model(3, R.drawable.ic_more));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
         menu.findItem(R.id.action_refresh).setVisible(false);
         menu.findItem(R.id.action_edit).setVisible(false);
@@ -183,23 +161,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId()==R.id.action_signout)
-        {
+        if (item.getItemId() == R.id.action_signout) {
             dataViewModel.deleteParties();
             SharedPreferenceHelper.getInstance(this).setIsLogin(false);
             SharedPreferenceHelper.getInstance(this).setBUSINESS_ID("");
             SharedPreferenceHelper.getInstance(this).setUserID("");
             navController.navigate(R.id.splashScreenFragment);
-        }
-        else if (item.getItemId()==R.id.action_department)
-        {
+        } else if (item.getItemId() == R.id.action_department) {
             navController.navigate(R.id.addDepartmentFragment);
-        }   else if (item.getItemId()==R.id.action_purchase)
-        {
+        } else if (item.getItemId() == R.id.action_purchase) {
             navController.navigate(R.id.purchaseFragment);
-        }  else if (item.getItemId()==R.id.action_sale)
-        {
+        } else if (item.getItemId() == R.id.action_sale) {
             navController.navigate(R.id.saleDocFragment);
+        } else if (item.getItemId() == R.id.action_sale_return) {
+            navController.navigate(R.id.saleReturnDocFragment);
         }
 
         return super.onOptionsItemSelected(item);

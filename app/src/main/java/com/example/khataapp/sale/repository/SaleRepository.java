@@ -3,7 +3,7 @@ package com.example.khataapp.sale.repository;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
-import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
+import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_DOCUMENT_RESPONSE;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 
@@ -83,7 +83,7 @@ public class SaleRepository {
                     if (response.body() != null) {
                         if (response.body().getCode() == 200) {
                             if (callBackListener != null) {
-                                callBackListener.getServerResponse(response.body(), GET_SUPPLIER);
+                                callBackListener.getServerResponse(response.body(), GET_PARTY);
 
                             }
                         } else {

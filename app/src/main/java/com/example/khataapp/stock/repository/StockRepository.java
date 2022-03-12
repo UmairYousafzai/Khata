@@ -2,13 +2,12 @@ package com.example.khataapp.stock.repository;
 
 import static com.example.khataapp.utils.CONSTANTS.GET_DEPARTMENT;
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
-import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
+import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -21,7 +20,6 @@ import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.network.ApiClient;
-import com.example.khataapp.utils.CONSTANTS;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -162,7 +160,7 @@ public class StockRepository {
                             {
                                 if (callBackListener!=null)
                                 {
-                                    callBackListener.getServerResponse(getPartyServerResponse.getPartyList(),GET_SUPPLIER);
+                                    callBackListener.getServerResponse(getPartyServerResponse.getPartyList(), GET_PARTY);
 
                                 }
 

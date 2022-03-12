@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.example.khataapp.utils.Converter" />
+        <variable
+            name="key"
+            type="Integer" />
+
+        <variable
+            name="item"
+            type="com.example.khataapp.models.Item" />
+        <variable
+            name="saleReturnViewModel"
+            type="com.example.khataapp.sale.viewModel.SaleReturnDocViewModel"
+            />
+        <variable
+            name="saleViewModel"
+            type="com.example.khataapp.sale.viewModel.SaleDocViewModel"
+            />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/item_card_two_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="5dp">
+
+            <LinearLayout
+                android:id="@+id/header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/item_image">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(item.ctnPcs),default=CTNPCS}"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/qty"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@={Converter.toString(qty,item.qty,item.qty)}"
+                    android:textSize="16sp"
+                    android:hint="@string/qty"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    />
+
+                <EditText
+                    android:id="@+id/freeQty"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@={Converter.toString(freeQty,item.freeQty,item.freeQty)}"
+                    android:textSize="16sp"
+                    android:hint="@string/free"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    android:selectAllOnFocus="true"
+                    android:gravity="center"
+                    />
+
+                <EditText
+                    android:id="@+id/etCost"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@={Converter.toString(etCost,item.cost,item.cost)}"
+                    android:textSize="16sp"
+                    android:hint="@string/cost"
+                    android:inputType="none"
+                    android:gravity="center"
+                    android:focusableInTouchMode="false"
+                    android:selectAllOnFocus="true"
+
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{@string/rs+String.valueOf(item.amount),default=RSamodfdsdsdsddsdsdfddvdun}"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@android:color/holo_green_dark"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/customer_background"
+                app:layout_constraintTop_toBottomOf="@id/header_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/view"
+                app:layout_constraintEnd_toStartOf="@id/tv_item_name"
+                />
+            <TextView
+                android:id="@+id/tv_item_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.description,default=name}"
+                android:textColor="@color/app_theme_color"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="@id/item_image"
+                app:layout_constraintEnd_toStartOf="@id/btn_cancel"
+                app:layout_constraintStart_toEndOf="@id/item_image"
+                app:layout_constraintBottom_toBottomOf="@id/item_image"
+                android:padding="5dp"
+                android:paddingStart="10dp"
+                android:gravity="center"
+                />
+
+            <ImageButton
+
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_close_24"
+                android:tint="@color/custom_red_color"
+                android:background="@color/white"
+                android:minWidth="50dp"
+                android:maxHeight="50dp"
+                android:onClick="@{()-> key==1?saleReturnViewModel.onClickRemove(item):saleViewModel.onClickRemove(item)}"
+                app:layout_constraintEnd_toStartOf="@id/btn_edit"
+                app:layout_constraintTop_toTopOf="@id/tv_item_name"
+                app:layout_constraintBottom_toBottomOf="@id/tv_item_name"
+                app:layout_constraintStart_toEndOf="@id/tv_item_name"
+                />
+            <ImageButton
+
+                android:id="@+id/btn_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit_24"
+                android:tint="@color/app_theme_color"
+                android:background="@color/white"
+                android:minWidth="50dp"
+                android:maxHeight="50dp"
+
+                app:layout_constraintEnd_toStartOf="@id/btn_done"
+                app:layout_constraintTop_toTopOf="@id/tv_item_name"
+                app:layout_constraintBottom_toBottomOf="@id/tv_item_name"
+                app:layout_constraintStart_toEndOf="@id/btn_cancel"
+                />
+
+            <ImageButton
+
+                android:id="@+id/btn_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_done_24"
+                android:tint="@android:color/holo_green_dark"
+                android:background="@color/white"
+                android:minWidth="50dp"
+                android:maxHeight="50dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_item_name"
+                app:layout_constraintBottom_toBottomOf="@id/tv_item_name"
+                app:layout_constraintStart_toEndOf="@id/btn_edit"
+                />
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintTop_toBottomOf="@id/item_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -1,7 +1,7 @@
 package com.example.khataapp.sale.viewModel;
 
-import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
+import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_DOCUMENT_RESPONSE;
@@ -33,7 +33,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SaleDocViewModel extends AndroidViewModel {
+public class SaleReturnDocViewModel extends AndroidViewModel {
+
 
 
     private final SaleRepository repository;
@@ -63,7 +64,7 @@ public class SaleDocViewModel extends AndroidViewModel {
     private final MutableLiveData<String> actionMutableLiveData;
 
 
-    public SaleDocViewModel(@NonNull Application application) {
+    public SaleReturnDocViewModel(@NonNull Application application) {
         super(application);
 
         repository = new SaleRepository();
@@ -73,7 +74,7 @@ public class SaleDocViewModel extends AndroidViewModel {
         showProgressDialog = new MutableLiveData<>();
         itemMutableLiveData = new MutableLiveData<>();
         actionMutableLiveData = new MutableLiveData<>("INSERT");
-        adapter = new ProductSaleRecyclerAdapter(null,this,2);
+        adapter = new ProductSaleRecyclerAdapter(this,null,1);
         toastMessage = new MutableLiveData<>();
         date = new ObservableField<>("yyyy-mm-dd");
         totalQty = new ObservableField<>("0");
@@ -337,7 +338,7 @@ public class SaleDocViewModel extends AndroidViewModel {
                     document.setAction(actionMutableLiveData.getValue());
                     document.setBusinessId(businessID);
                     document.setLocationCode("01");
-                    document.setDocType("2");
+                    document.setDocType("3");
                     document.setPartyCode(customerCode);
                     document.setTotalAmount(Double.parseDouble(totalAmount.get()));
                     document.setUserId(userID);
@@ -381,7 +382,6 @@ public class SaleDocViewModel extends AndroidViewModel {
                     } else if (key == SERVER_ERROR) {
                         toastMessage.setValue((String) object);
                         actionMutableLiveData.setValue("INSERT");
-
                     } else if (key == SAVE_DOCUMENT_RESPONSE) {
                         SaveDocumentResponse saveDocumentResponse = (SaveDocumentResponse) object;
                         if (saveDocumentResponse.getCode() == 200) {

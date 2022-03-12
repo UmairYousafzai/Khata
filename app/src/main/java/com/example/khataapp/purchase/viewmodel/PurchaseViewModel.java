@@ -2,7 +2,7 @@ package com.example.khataapp.purchase.viewmodel;
 
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
-import static com.example.khataapp.utils.CONSTANTS.GET_SUPPLIER;
+import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_DOCUMENT_RESPONSE;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
@@ -367,7 +367,7 @@ public class PurchaseViewModel extends AndroidViewModel {
             @Override
             public void getServerResponse(Object object, int key) {
                 if (object != null) {
-                    if (key == GET_SUPPLIER) {
+                    if (key == GET_PARTY) {
                         GetPartyServerResponse partyServerResponse = (GetPartyServerResponse) object;
                         setUpSupplierSpinner(partyServerResponse.getPartyList());
 

@@ -27,7 +27,7 @@ public class PurchaseListViewModel extends AndroidViewModel {
     public PurchaseListViewModel(@NonNull Application application) {
         super(application);
         repository = new PurchaseRepository();
-        adapter= new PurchaseListAdapter(this,null,1);
+        adapter= new PurchaseListAdapter(this);
         toastMessage= new MutableLiveData<>();
         purchaseMutableLiveData= new MutableLiveData<>();
     }

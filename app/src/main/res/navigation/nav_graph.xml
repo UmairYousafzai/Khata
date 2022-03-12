@@ -300,12 +300,33 @@
         android:label="Sale" >
         <action
             android:id="@+id/action_saleDocFragment_to_saleDocListFragment"
-            app:destination="@id/saleDocListFragment" />
+            app:destination="@id/saleDocListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/saleDocListFragment"
         android:name="com.example.khataapp.sale.SaleDocListFragment"
-        android:label="Sale List" />
+        android:label="Sale List" >
+        <argument
+            android:name="docType"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/saleReturnDocFragment"
+        android:name="com.example.khataapp.sale.SaleReturnDocFragment"
+        android:label="SaleReturnDocFragment" >
+        <action
+            android:id="@+id/action_saleReturnDocFragment_to_saleDocListFragment"
+            app:destination="@id/saleDocListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 
 
 </navigation>

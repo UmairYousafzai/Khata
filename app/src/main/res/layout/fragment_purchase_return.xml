@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.khataapp.sale.viewModel.SaleDocViewModel" />
+            type="com.example.khataapp.purchase.viewmodel.PurchaseViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -141,7 +141,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:elevation="5dp"
-                android:hint="@string/select_customer"
+                android:hint="@string/select_supplier"
                 app:boxBackgroundColor="@color/white"
                 app:hintTextColor="@color/app_theme_color"
                 app:endIconTint="@color/app_theme_color"
@@ -152,13 +152,13 @@
                 android:layout_marginLeft="20dp">
 
                 <AutoCompleteTextView
-                    android:id="@+id/customer_spinner"
+                    android:id="@+id/supplier_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="false"
                     android:inputType="none"
-                    android:text="@={viewModel.selectedCustomerName}"
-                    app:setTextAdapter="@{viewModel.customerAdapter}"
+                    android:text="@={viewModel.selectedSupplierName}"
+                    app:setTextAdapter="@{viewModel.supplierAdapter}"
                     />
             </com.google.android.material.textfield.TextInputLayout>
             <ImageButton
