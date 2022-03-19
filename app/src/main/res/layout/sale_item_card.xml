@@ -14,11 +14,11 @@
             type="com.example.khataapp.models.Item" />
         <variable
             name="saleReturnViewModel"
-            type="com.example.khataapp.sale.viewModel.SaleReturnDocViewModel"
+            type="com.example.khataapp.views.sale.viewModel.SaleReturnDocViewModel"
             />
         <variable
             name="saleViewModel"
-            type="com.example.khataapp.sale.viewModel.SaleDocViewModel"
+            type="com.example.khataapp.views.sale.viewModel.SaleDocViewModel"
             />
 
     </data>

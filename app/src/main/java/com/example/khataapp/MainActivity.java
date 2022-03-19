@@ -175,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.saleDocFragment);
         } else if (item.getItemId() == R.id.action_sale_return) {
             navController.navigate(R.id.saleReturnDocFragment);
+        } else if (item.getItemId() == R.id.action_purchase_return) {
+            navController.navigate(R.id.purchaseReturnFragment);
         }
 
         return super.onOptionsItemSelected(item);

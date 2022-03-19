@@ -32,6 +32,11 @@
         android:title="@string/document"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_purchase_return"
+        android:orderInCategory="2"
+        android:title="@string/document_purchase_return"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_sale"
         android:orderInCategory="2"
         android:title="@string/sale"

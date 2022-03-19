@@ -6,7 +6,7 @@
   <data>
     <variable
         name="viewModel"
-        type="com.example.khataapp.purchase.viewmodel.PurchaseListViewModel" />
+        type="com.example.khataapp.views.purchase.viewmodel.PurchaseListViewModel" />
   </data>
 
   <LinearLayout

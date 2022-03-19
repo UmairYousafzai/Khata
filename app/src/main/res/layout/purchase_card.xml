@@ -9,7 +9,7 @@
             type="Integer" />
         <variable
             name="purchaseViewModel"
-            type="com.example.khataapp.purchase.viewmodel.PurchaseListViewModel" />
+            type="com.example.khataapp.views.purchase.viewmodel.PurchaseListViewModel" />
 
         <variable
             name="document"

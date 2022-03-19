@@ -8,14 +8,14 @@
         <import type="com.example.khataapp.utils.CONSTANTS"/>
         <variable
             name="viewModel"
-            type="com.example.khataapp.department.DepartmentViewModel" />
+            type="com.example.khataapp.views.department.DepartmentViewModel" />
 
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".department.AddDepartmentFragment">
+        tools:context=".views.department.AddDepartmentFragment">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

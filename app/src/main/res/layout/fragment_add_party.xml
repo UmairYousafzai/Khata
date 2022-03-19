@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:xmnls="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddPartyFragment"
+    tools:context=".views.party.AddPartyFragment"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout

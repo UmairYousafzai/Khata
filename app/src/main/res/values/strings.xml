@@ -79,5 +79,6 @@
     <string name="yyyy_mm_dd">yyyy-mm-dd</string>
     <string name="sale">Sale</string>
     <string name="sale_return">Sale Return</string>
+    <string name="document_purchase_return">Purchase Return</string>
 
 </resources>

@@ -8,7 +8,7 @@
 
         <variable
             name="saleViewModel"
-            type="com.example.khataapp.sale.viewModel.SaleDocListViewModel" />
+            type="com.example.khataapp.views.sale.viewModel.SaleDocListViewModel" />
         <variable
             name="document"
             type="com.example.khataapp.models.Document" />

@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.khataapp.sale.viewModel.SaleDocViewModel" />
+            type="com.example.khataapp.views.sale.viewModel.SaleDocViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.khataapp.stock.viewmodel.StockViewModel" />
+            type="com.example.khataapp.views.stock.viewmodel.StockViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".stock.ItemListFragment"
+        tools:context=".views.stock.ItemListFragment"
 
         android:background="@color/background_gray_color">
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

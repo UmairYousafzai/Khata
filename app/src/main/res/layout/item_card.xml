@@ -8,7 +8,7 @@
             type="com.example.khataapp.models.Item" />
         <variable
             name="viewmodel"
-            type="com.example.khataapp.stock.viewmodel.StockViewModel" />
+            type="com.example.khataapp.views.stock.viewmodel.StockViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

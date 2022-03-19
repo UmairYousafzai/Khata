@@ -8,7 +8,7 @@
             type="com.example.khataapp.models.Party" />
         <variable
             name="viewModel"
-            type="com.example.khataapp.purchase.viewmodel.PartyViewModel" />
+            type="com.example.khataapp.views.purchase.viewmodel.PartyViewModel" />
     </data>
 
 
