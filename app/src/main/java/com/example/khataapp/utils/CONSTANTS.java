@@ -15,11 +15,10 @@ public class CONSTANTS {
     public static final int SERVER_RESPONSE_DEPARTMENT=5;
     public static final int GET_GROUP=6;
     public static final int SERVER_RESPONSE_GROUP=7;
-    public static final int GET_DOCUMENT =8;
+    public static final int GET_DOCUMENT = 8;
     public static final int SAVE_DOCUMENT_RESPONSE =9;
     public static final int GET_DOCUMENT_BY_CODE =10;
-
-
+    public static final int PERMISSION_REQUEST_CODE = 1;
 
 
     public static  int THEME_KEY=1;

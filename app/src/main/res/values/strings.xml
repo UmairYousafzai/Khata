@@ -80,5 +80,8 @@
     <string name="sale">Sale</string>
     <string name="sale_return">Sale Return</string>
     <string name="document_purchase_return">Purchase Return</string>
+    <string name="add_image">Add Image</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="select_from_gallery">Select From Gallery</string>
 
 </resources>

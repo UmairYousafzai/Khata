@@ -245,6 +245,7 @@ public class Item  extends BaseObservable implements Parcelable {
         }
     }
 
+
     public double getFreeQty() {
         return freeQty;
     }

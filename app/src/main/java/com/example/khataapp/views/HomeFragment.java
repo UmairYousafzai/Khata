@@ -1,6 +1,7 @@
 package com.example.khataapp.views;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -27,6 +28,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -157,6 +159,10 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
+
+        mBinding.searchView.clearFocus();
+        closeKeyBoard();
+
     }
 
     private void setupRecyclerView() {
@@ -189,6 +195,7 @@ public class HomeFragment extends Fragment {
                     mBinding.imageViewAddParty.setVisibility(View.VISIBLE);
                 }
                 progressDialog.dismiss();
+                closeKeyBoard();
             }
         });
     }
@@ -214,7 +221,7 @@ public class HomeFragment extends Fragment {
                     mBinding.imageViewAddParty.setVisibility(View.VISIBLE);
                 }
                 progressDialog.dismiss();
-
+                closeKeyBoard();
             }
 
         });
@@ -503,6 +510,20 @@ public class HomeFragment extends Fragment {
         } else {
             return "break";
         }
+
+    }
+
+    public void closeKeyBoard()
+    {
+        View view = requireActivity().getCurrentFocus();
+
+        if (view!=null)
+        {
+            InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+
+        }
+
 
     }
 }

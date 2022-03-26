@@ -1,14 +1,27 @@
 package com.example.khataapp.views.stock;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +29,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.khataapp.databinding.FragmentAddItemBinding;
+import com.example.khataapp.databinding.ImageSelectDialogBinding;
 import com.example.khataapp.models.Department;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.ServerResponse;
+import com.example.khataapp.utils.ImageUtil;
+import com.example.khataapp.utils.Permission;
 import com.example.khataapp.views.stock.viewmodel.StockViewModel;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
@@ -32,12 +48,14 @@ public class AddItemFragment extends Fragment {
 
     private FragmentAddItemBinding mBinding;
     private StockViewModel stockViewModel;
-    private HashMap<String, String> departmentHashMapForID = new HashMap<>();
-    private HashMap<String, String> supplierHashMapForID = new HashMap<>();
-    private ArrayList<String> supplierNameList = new ArrayList<>();
-    private ArrayList<String> departmentNameList = new ArrayList<>();
+    private final HashMap<String, String> departmentHashMapForID = new HashMap<>();
+    private final HashMap<String, String> supplierHashMapForID = new HashMap<>();
+    private final ArrayList<String> supplierNameList = new ArrayList<>();
+    private final ArrayList<String> departmentNameList = new ArrayList<>();
     private ProgressDialog progressDialog;
     private Item item= new Item();
+    private Bitmap selectedImage=null;
+
 
 
     @Override
@@ -69,39 +87,29 @@ public class AddItemFragment extends Fragment {
 
     private void btnListener() {
 
-        mBinding.btnDepartment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mBinding.btnDepartment.setOnClickListener(v -> {
 
-                if (mBinding.btnDepartment.isChecked()) {
-                    mBinding.departmentSpinnerLayout.setVisibility(View.VISIBLE);
-                } else {
-                    mBinding.departmentSpinnerLayout.setVisibility(View.GONE);
+            if (mBinding.btnDepartment.isChecked()) {
+                mBinding.departmentSpinnerLayout.setVisibility(View.VISIBLE);
+            } else {
+                mBinding.departmentSpinnerLayout.setVisibility(View.GONE);
 
-                }
             }
         });
 
-        mBinding.btnSupplier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mBinding.btnSupplier.setOnClickListener(v -> {
 
-                if (mBinding.btnSupplier.isChecked()) {
-                    mBinding.supplierSpinnerLayout.setVisibility(View.VISIBLE);
-                } else {
-                    mBinding.supplierSpinnerLayout.setVisibility(View.GONE);
+            if (mBinding.btnSupplier.isChecked()) {
+                mBinding.supplierSpinnerLayout.setVisibility(View.VISIBLE);
+            } else {
+                mBinding.supplierSpinnerLayout.setVisibility(View.GONE);
 
-                }
             }
         });
 
-        mBinding.btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mBinding.btnSave.setOnClickListener(v -> saveItem());
 
-                saveItem();
-            }
-        });
+        mBinding.imageName.setOnClickListener(view -> { showSelectImageDialog();});
     }
 
     private void saveItem() {
@@ -180,6 +188,10 @@ public class AddItemFragment extends Fragment {
                             item.setUserID(SharedPreferenceHelper.getInstance(requireContext()).getUserID());
                             item.setBusinessID(SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID());
 
+                            if (selectedImage!=null)
+                            {
+                                item.setProductImage(ImageUtil.getInstance().getBytesFromBitmap(selectedImage));
+                            }
                             saveCall(item);
                         } else {
                             mBinding.etSalePriceLayout.setError("Please Enter valid sale price");
@@ -267,4 +279,106 @@ public class AddItemFragment extends Fragment {
 
         mBinding.departmentSpinner.setAdapter(adapter);
     }
+
+    private void showSelectImageDialog()
+    {
+        Permission permission = new Permission(requireContext(),requireActivity());
+
+        ImageSelectDialogBinding dialogBinding = ImageSelectDialogBinding.inflate(getLayoutInflater());
+        AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
+                .setView(dialogBinding.getRoot())
+                .setCancelable(false).create();
+        alertDialog.show();
+
+        dialogBinding.takePhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    permission.getCameraPermission();
+                } else {
+
+                    Intent cameraIntent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    if (cameraIntent.resolveActivity(requireContext().getPackageManager())!=null)
+                    {
+                        startActivityForResult(cameraIntent,0);
+                    }
+
+                }
+                alertDialog.dismiss();
+
+            }
+        });
+
+        dialogBinding.selectFromGalleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    permission.getStoragePermission();
+
+                } else {
+                    Intent galleryIntent= new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                    startActivityForResult(galleryIntent,1);
+                }
+                alertDialog.dismiss();
+
+
+            }
+        });
+        dialogBinding.cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+
+
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode!=RESULT_CANCELED)
+        {
+            switch (requestCode)
+            {
+                case 0:
+                    if (resultCode==RESULT_OK&&data!=null)
+                    {
+                        selectedImage= (Bitmap) data.getExtras().get("data");
+                        mBinding.itemImage.setImageBitmap(selectedImage);
+                    }
+                    break;
+
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImageUri =  data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                            Cursor cursor = requireActivity().getContentResolver().query(selectedImageUri,
+                                    filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+                                selectedImage= BitmapFactory.decodeFile(picturePath);
+                                mBinding.itemImage.setImageBitmap(selectedImage);
+                                cursor.close();
+                            }
+
+
+                    }
+                    break;
+            }
+
+        }
+    }
+
+
 }

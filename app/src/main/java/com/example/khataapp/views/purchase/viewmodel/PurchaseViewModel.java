@@ -345,6 +345,11 @@ public class PurchaseViewModel extends AndroidViewModel {
                     {
                         document.setDocNo(docNumber.get());
                     }
+                    else
+                    {
+                        document.setDocNo("");
+
+                    }
 
                     repository.savePurchase(document);
                     actionMutableLiveData.setValue("Update");

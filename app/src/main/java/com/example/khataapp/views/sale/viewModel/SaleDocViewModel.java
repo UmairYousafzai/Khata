@@ -347,6 +347,11 @@ public class SaleDocViewModel extends AndroidViewModel {
                     {
                         document.setDocNo(docNumber.get());
                     }
+                    else
+                    {
+                        document.setDocNo("");
+
+                    }
 
                     repository.saveSaleDocument(document);
                     actionMutableLiveData.setValue("Update");
