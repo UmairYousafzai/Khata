@@ -45,7 +45,6 @@ public class PurchaseListFragment extends Fragment {
 
         mBinding.setViewModel(viewModel);
 
-        viewModel.getPurchasesList();
 
         getLiveData();
     }

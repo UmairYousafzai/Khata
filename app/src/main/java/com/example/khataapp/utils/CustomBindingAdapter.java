@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.khataapp.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class CustomBindingAdapter {
 
     @BindingAdapter("setAdapter")
@@ -35,7 +37,7 @@ public class CustomBindingAdapter {
     }
 
     @BindingAdapter("imageUrl")
-    public static void loadImage(ImageView view, String url) {
+    public static void loadImage(CircleImageView view, String url) {
 
 
             Bitmap bmp = null;

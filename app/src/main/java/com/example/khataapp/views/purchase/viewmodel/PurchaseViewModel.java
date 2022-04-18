@@ -71,7 +71,7 @@ public class PurchaseViewModel extends AndroidViewModel {
         isEdit = new MutableLiveData<>();
         showProgressDialog = new MutableLiveData<>();
         itemMutableLiveData = new MutableLiveData<>();
-        actionMutableLiveData = new MutableLiveData<>();
+        actionMutableLiveData = new MutableLiveData<>("INSERT");
         adapter = new ProductRecyclerAdapter(this,null,1);
         toastMessage = new MutableLiveData<>();
         date = new ObservableField<>("yyyy-mm-dd");

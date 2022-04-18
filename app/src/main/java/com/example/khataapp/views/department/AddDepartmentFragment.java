@@ -43,7 +43,6 @@ public class AddDepartmentFragment extends Fragment {
 
     private void getLiveData() {
         ProgressDialog progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setTitle("Department");
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -51,11 +50,14 @@ public class AddDepartmentFragment extends Fragment {
 
         viewModel.getDepartmentList();
 
-        viewModel.getProgressMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        viewModel.getProgressMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Integer check) {
+            public void onChanged(Boolean check) {
 
-                if (check==1)
+                if (check)
+                {
+                    progressDialog.show();
+                }else
                 {
                     progressDialog.dismiss();
                 }
@@ -82,13 +84,25 @@ public class AddDepartmentFragment extends Fragment {
                     mBinding.departmentSpinner.setAdapter(stringArrayAdapter);
                 }
             }
-        });        viewModel.getGroupAdapterMutableLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayAdapter<String>>() {
+        });
+
+        viewModel.getGroupAdapterMutableLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayAdapter<String>>() {
             @Override
             public void onChanged(ArrayAdapter<String> stringArrayAdapter) {
 
                 if (stringArrayAdapter!=null)
                 {
                     mBinding.groupSpinner.setAdapter(stringArrayAdapter);
+                }
+            }
+        });
+        viewModel.getSubGroupAdapterMutableLiveData().observe(getViewLifecycleOwner(), new Observer<ArrayAdapter<String>>() {
+            @Override
+            public void onChanged(ArrayAdapter<String> stringArrayAdapter) {
+
+                if (stringArrayAdapter!=null)
+                {
+                    mBinding.subGroupSpinner.setAdapter(stringArrayAdapter);
                 }
             }
         });

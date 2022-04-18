@@ -9,6 +9,7 @@ import com.example.khataapp.models.GetLocationResponse;
 import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.GetDocumentByCode;
 import com.example.khataapp.models.GetDocumentResponse;
+import com.example.khataapp.models.GetSubGroup;
 import com.example.khataapp.models.Group;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.LoginResponse;
@@ -17,8 +18,11 @@ import com.example.khataapp.models.PostLocation;
 import com.example.khataapp.models.SaveDepartmentResponse;
 import com.example.khataapp.models.SaveGroupResponse;
 import com.example.khataapp.models.SaveDocumentResponse;
+import com.example.khataapp.models.SaveSubGroupResponse;
 import com.example.khataapp.models.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
+import com.example.khataapp.models.SubGroup;
+import com.example.khataapp.models.Voucher;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -45,7 +49,7 @@ public interface Api {
     /****************************   Party **********************/
 
 
-    @POST("api/Party/Party")
+    @POST("api/Party/SaveParty")
     Call<ServerResponse> saveParty(@Body Party party);
 
     @GET("api/Party/PartyData")
@@ -64,8 +68,15 @@ public interface Api {
     @GET("api/Group/GroupData")
     Call<GetGroupResponse> getGroupList(@Query("BusinessId")String businessID, @Query("DepartmentCode")String departmentCode);
 
-    @POST("api/SubGroup/SaveSubGroup")
+    @POST("api/Group/SaveGroup")
     Call<SaveGroupResponse> saveGroup(@Body Group group);
+
+    @POST("api/SubGroup/SaveSubGroup")
+    Call<SaveSubGroupResponse> saveSubGroup(@Body SubGroup subGroup);
+
+    @GET("api/SubGroup/SubGroupData")
+    Call<GetSubGroup> getSubGroupList(@Query("BusinessId")String businessID, @Query("DepartmentCode")String departmentCode, @Query("GroupCode")String groupCode);
+
 
     /****************************   Items **********************/
 
@@ -109,4 +120,7 @@ public interface Api {
 
     @POST("api/Sale/SaveSale")
     Call<SaveDocumentResponse> saveSaleDoc(@Body Document document);
+
+    @POST("api/Party/SavePartyVoucher")
+    Call<ServerResponse> saveVoucher(@Body Voucher voucher);
 }

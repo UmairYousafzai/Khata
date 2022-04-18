@@ -1,135 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F6F1E2"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/amount_card_layout"
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.example.khataapp.viewModel.AddAmountViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="6dp"
-        app:cardBackgroundColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        >
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:background="#F6F1E2">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/amount_card_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="5dp"
+            app:layout_constraintBottom_toTopOf="@id/et_details"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/et_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@color/white"
+                    android:drawableStart="@drawable/ic_pakistan_rupee"
+                    android:drawableLeft="@drawable/ic_pakistan_rupee"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/custom_blue"
+                    android:hint="@string/enter_amount"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="@={viewModel.amountLiveData}"
+                    android:textColor="@color/app_theme_color"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@color/gray_custom"
+                    android:visibility="@{viewModel.amountDetailVisibilityLiveData?View.VISIBLE:View.GONE}"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/tv_amount_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="4"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:scrollbars="vertical"
+                        android:text="@{viewModel.amountDetailLiveData}"
+                        android:visibility="@{viewModel.amountDetailVisibilityLiveData?View.VISIBLE:View.GONE}" />
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_amount_result"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="3"-->
+<!--                        android:maxLines="4"-->
+<!--                        android:paddingHorizontal="10dp"-->
+<!--                        android:paddingVertical="5dp"-->
+<!--                        android:scrollbars="vertical"-->
+<!--                        android:text="@{viewModel.amountResultLiveData}"-->
+<!--                        android:visibility="@{viewModel.amountDetailVisibilityLiveData?View.VISIBLE:View.GONE}" />-->
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <EditText
+            android:id="@+id/et_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/text_view_background_1"
+            android:elevation="5dp"
+            android:hint="@string/enter_details_item_name_bill_no_quantity"
+            android:maxLines="5"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:textSize="16sp"
+            android:text="@={viewModel.remarksLiveData}"
+            app:layout_constraintBottom_toTopOf="@id/btn_date"
+            app:layout_constraintEnd_toEndOf="@id/amount_card_layout"
+            app:layout_constraintStart_toStartOf="@id/amount_card_layout"
+            app:layout_constraintTop_toBottomOf="@id/amount_card_layout"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tv_add_bill_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:text="@string/add_bill_no"
+            android:textColor="@color/app_theme_color"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@id/et_details"
+            app:layout_constraintTop_toBottomOf="@id/et_details"
+
+            />
+
+        <EditText
+            android:id="@+id/et_bill_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_bill_no"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:background="@color/white"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="@id/btn_attach_bill"
+            app:layout_constraintStart_toStartOf="@id/btn_attach_bill"
+            app:layout_constraintTop_toBottomOf="@id/tv_add_bill_no"
+            android:visibility="gone"
+            android:text="@={viewModel.billNumLiveData}"
+
+
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_attach_bill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/attach_bills"
+            android:textColor="@color/font_color_dark"
+            android:textSize="11sp"
+            app:backgroundTint="@color/white"
+            app:icon="@drawable/ic_baseline_photo_camera_24"
+            app:iconTint="@color/app_theme_color"
+            app:layout_constraintBottom_toTopOf="@id/btn_save"
+            app:layout_constraintEnd_toEndOf="@id/tv_add_bill_no"
+            app:layout_constraintTop_toBottomOf="@id/et_bill_num"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/image_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/btn_save"
+            app:layout_constraintEnd_toEndOf="@id/tv_add_bill_no"
+            app:layout_constraintTop_toBottomOf="@id/et_bill_num"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
             >
-            <EditText
-                android:id="@+id/et_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:background="@color/white"
-                android:drawableStart="@drawable/ic_pakistan_rupee"
-                android:drawableEnd="@drawable/ic_outline_backspace_24"
-                android:drawablePadding="10dp"
-                android:drawableTint="@color/custom_blue"
-                android:hint="Enter Amount"
-                android:paddingVertical="10dp"
-                android:paddingHorizontal="10dp"
-                android:textSize="18sp"
-                android:drawableRight="@drawable/ic_outline_backspace_24"
-                android:drawableLeft="@drawable/ic_pakistan_rupee" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_custom"
-                android:layout_marginHorizontal="10dp"
-                android:visibility="gone"
-
-                />
             <TextView
-                android:id="@+id/tv_amount_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="mjdjkfsdfd"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:visibility="gone"
 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/attached_bill"
+                android:background="@color/white"
+                android:textColor="@color/app_theme_color"
+                android:padding="5dp"
                 />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/bill_image_view"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_baseline_photo_camera_24"
+                android:layout_marginTop="5dp"
+                />
+
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <EditText
-        android:id="@+id/et_details"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/text_view_background_1"
-        android:elevation="5dp"
-        android:hint="@string/enter_details_item_name_bill_no_quantity"
-        android:maxLines="5"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="10dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/amount_card_layout"
-        app:layout_constraintStart_toStartOf="@id/amount_card_layout"
-        app:layout_constraintTop_toBottomOf="@id/amount_card_layout"
-        android:layout_marginTop="5dp"
-        />
-    <TextView
-        android:id="@+id/tv_add_bill_no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_bill_no"
-        android:textSize="15sp"
-        android:textColor="@color/app_theme_color"
-        android:background="@android:color/transparent"
-        app:layout_constraintTop_toBottomOf="@id/et_details"
-        app:layout_constraintEnd_toEndOf="@id/et_details"
-        android:layout_marginTop="12dp"
-
-        />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_attach_bill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/attach_bills"
-        android:textSize="11sp"
-        android:textColor="@color/font_color_dark"
-        app:backgroundTint="@color/white"
-        app:icon="@drawable/ic_baseline_photo_camera_24"
-        app:iconTint="@color/app_theme_color"
-        app:layout_constraintTop_toBottomOf="@id/tv_add_bill_no"
-        app:layout_constraintEnd_toEndOf="@id/tv_add_bill_no"
-       />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/date"
-        android:textSize="11sp"
-        android:textColor="@color/font_color_dark"
-        app:backgroundTint="@color/white"
-        app:icon="@drawable/ic_calendar_line_blue"
-        app:iconSize="18dp"
-        app:iconTint="@color/app_theme_color"
-        app:layout_constraintTop_toTopOf="@id/btn_attach_bill"
-        app:layout_constraintBottom_toBottomOf="@id/btn_attach_bill"
-        app:layout_constraintStart_toStartOf="@id/et_details"
-        app:layout_constraintEnd_toStartOf="@id/btn_attach_bill"
-        app:layout_constraintHorizontal_bias="0.0"
-         />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textColor="@color/font_color_dark"
+            android:textSize="11sp"
+            app:backgroundTint="@color/white"
+            app:icon="@drawable/ic_calendar_line_blue"
+            app:iconSize="18dp"
+            app:iconTint="@color/app_theme_color"
+            app:layout_constraintBottom_toBottomOf="@id/btn_attach_bill"
+            app:layout_constraintEnd_toStartOf="@id/btn_attach_bill"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/et_details"
+            app:layout_constraintTop_toTopOf="@id/btn_attach_bill" />
 
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -139,419 +229,28 @@
             android:elevation="5dp"
             android:paddingVertical="10dp"
             android:text="Save"
-            android:textStyle="bold"
             android:textColor="@color/white"
+            android:textStyle="bold"
             app:cornerRadius="5dp"
+            app:layout_constraintBottom_toTopOf="@id/keyboard_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/keyboard_layout"
-             />
+            app:layout_constraintTop_toBottomOf="@id/btn_date"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-    <include
-        android:id="@+id/keyboard_layout"
-        layout="@layout/custom_keyboard_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        <include
+            android:id="@+id/keyboard_layout"
+            layout="@layout/custom_keyboard_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_save"
+            app:viewModel="@{viewModel}"
 
-        />
+            />
 
-
-
-
-
-
-<!--    <GridLayout android:id="@+id/Gl_keyboard"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:columnCount="4"-->
-<!--        android:rowCount="6"-->
-<!--        android:elevation="5dp"-->
-<!--        android:layout_marginStart="10dp"-->
-<!--        android:layout_marginEnd="10dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_AC"-->
-<!--            android:layout_row="0"-->
-<!--            android:layout_column="0"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="AC"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_M_Plus"-->
-<!--            android:layout_row="0"-->
-<!--            android:layout_column="1"-->
-<!--            android:layout_columnWeight="1"-->
-
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="M+"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_M_Minus"-->
-<!--            android:layout_row="0"-->
-<!--            android:layout_column="2"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="M-"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_Back"-->
-<!--            android:layout_row="0"-->
-<!--            android:layout_column="3"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:drawablePadding="4dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            app:icon="@drawable/ic_outline_backspace_24"-->
-<!--            app:iconGravity="textStart"-->
-<!--            app:iconTint="@color/black"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_modulas"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="1"-->
-<!--            android:layout_column="0"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="%"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_divide"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="1"-->
-<!--            android:layout_column="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="/"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_Multiply"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="1"-->
-<!--            android:layout_column="2"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="×"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_minus"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="1"-->
-<!--            android:layout_column="3"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="-"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_7"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="2"-->
-<!--            android:layout_column="0"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="7"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_8"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="2"-->
-<!--            android:layout_column="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="8"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_9"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="2"-->
-<!--            android:layout_column="2"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="9"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_Plus"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="2"-->
-<!--            android:layout_rowSpan="2"-->
-<!--            android:layout_column="3"-->
-<!--            android:layout_gravity="fill_vertical"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="+"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_4"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="3"-->
-<!--            android:layout_column="0"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="4"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_5"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="3"-->
-<!--            android:layout_column="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="5"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_6"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="3"-->
-<!--            android:layout_column="2"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="6"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_1"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="4"-->
-<!--            android:layout_column="0"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="1"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="4"-->
-<!--            android:layout_column="1"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="2"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_3"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="4"-->
-<!--            android:layout_column="2"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="3"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_equals"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="42dp"-->
-<!--            android:layout_row="4"-->
-<!--            android:layout_column="3"-->
-<!--            android:layout_rowSpan="2"-->
-<!--            android:layout_gravity="fill_vertical"-->
-<!--            android:layout_rowWeight="2"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="="-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/gray_custom"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_0"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="5"-->
-<!--            android:layout_column="0"-->
-<!--            android:layout_columnSpan="2"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="0"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_dot"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_row="5"-->
-<!--            android:layout_column="2"-->
-<!--            android:layout_columnWeight="1"-->
-<!--            android:layout_gravity="fill_horizontal"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:elevation="5dp"-->
-<!--            android:paddingVertical="10dp"-->
-<!--            android:text="."-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="18sp"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            app:cornerRadius="5dp"-->
-<!--            android:layout_marginLeft="5dp" />-->
-
-
-<!--    </GridLayout>-->
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

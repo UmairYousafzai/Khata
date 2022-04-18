@@ -173,8 +173,13 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     }
 
     public List<Item> getItemList() {
-        return itemList;
-    }
+        List<Item> list= new ArrayList<>();
+        for (Item model:itemList)
+        {
+            model.setProductImage("");
+            list.add(model);
+        }
+        return list;    }
 
     public void clearList()
     {

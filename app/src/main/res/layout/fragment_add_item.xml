@@ -90,6 +90,7 @@
                         android:text="@{item.description}"
                         android:singleLine="true"
                         android:textColor="@color/black"
+                        android:selectAllOnFocus="true"
                         android:textColorHint="@color/app_theme_color" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -122,6 +123,8 @@
                         android:text="@{String.valueOf(item.unitSize)}"
                         android:inputType="numberDecimal"
                         android:textColor="@color/black"
+                        android:selectAllOnFocus="true"
+
                         android:textColorHint="@color/app_theme_color" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -152,6 +155,8 @@
                         android:singleLine="true"
                         android:text="@{String.valueOf(item.ctnPcs)}"
                         android:inputType="numberDecimal"
+                        android:selectAllOnFocus="true"
+
                         android:textColor="@color/font_color_dark" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -182,6 +187,7 @@
                         android:singleLine="true"
                         android:inputType="numberDecimal"
                         android:text="@{String.valueOf(item.unitCost)}"
+                        android:selectAllOnFocus="true"
 
                         android:textColor="@color/black"
                         android:textColorHint="@color/app_theme_color" />
@@ -216,6 +222,7 @@
                         android:singleLine="true"
                         android:inputType="number"
                         android:text="@{String.valueOf(item.unitRetail)}"
+                        android:selectAllOnFocus="true"
 
                         android:textColor="@color/font_color_dark" />
 
@@ -260,11 +267,11 @@
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/item_image"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/ic_placeholder"
+                        app:imageUrl="@{item.productImage}"
                         app:layout_constraintTop_toBottomOf="@id/supplier_spinner_layout"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/image_name"
@@ -272,24 +279,26 @@
                         android:layout_marginStart="15dp"
 
 
-                        />
+                        android:layout_marginLeft="15dp"
+                        android:contentDescription="@string/item_image" />
                     <TextView
                         android:id="@+id/image_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Image"
+                        android:text="@string/select_image"
                         android:textSize="18sp"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:drawableTint="@color/black"
                         app:layout_constraintTop_toTopOf="@id/item_image"
                         app:layout_constraintBottom_toBottomOf="@id/item_image"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/item_image"
                         android:layout_marginEnd="15dp"
-                        android:drawableStart="@drawable/ic_baseline_add_24"
-                        />
+                        android:layout_marginRight="15dp"
+                        app:drawableStartCompat="@drawable/ic_baseline_add_24"
+                        app:drawableLeftCompat="@drawable/ic_baseline_add_24"
+                        app:drawableTint="@color/black" />
 
 
 

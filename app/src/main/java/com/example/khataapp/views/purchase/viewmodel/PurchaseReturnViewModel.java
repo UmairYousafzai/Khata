@@ -75,7 +75,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         actionMutableLiveData = new MutableLiveData<>("INSERT");
         adapter = new ProductRecyclerAdapter(null,this,2);
         toastMessage = new MutableLiveData<>();
-        date = new ObservableField<>("yyyy-mm-dd");
+        date = new ObservableField<>("");
         totalQty = new ObservableField<>("0");
         subTotalAmount = new ObservableField<>("0");
         supplierAdapter = new ObservableField<>();
@@ -351,13 +351,18 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                     actionMutableLiveData.setValue("Update");
 
                 } else {
+                    showProgressDialog.setValue(false);
                     toastMessage.setValue("Please Enter Products");
                 }
             } else {
                 toastMessage.setValue("Please select Supplier");
+                showProgressDialog.setValue(false);
+
             }
         } else {
             toastMessage.setValue("Please select Date");
+            showProgressDialog.setValue(false);
+
         }
 
     }

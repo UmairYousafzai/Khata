@@ -53,7 +53,6 @@ public class AddItemFragment extends Fragment {
     private final ArrayList<String> supplierNameList = new ArrayList<>();
     private final ArrayList<String> departmentNameList = new ArrayList<>();
     private ProgressDialog progressDialog;
-    private Item item= new Item();
     private Bitmap selectedImage=null;
 
 
@@ -75,7 +74,7 @@ public class AddItemFragment extends Fragment {
 
         if (getArguments()!=null)
         {
-            item = AddItemFragmentArgs.fromBundle(getArguments()).getItem();
+            Item item = AddItemFragmentArgs.fromBundle(getArguments()).getItem();
             mBinding.setItem(item);
         }
 
@@ -164,7 +163,7 @@ public class AddItemFragment extends Fragment {
                                 item.setUnitRetail(Double.parseDouble(mBinding.etSalePrice.getText().toString()));
                             }
 
-                            if (departmentNameList != null) {
+                            if (departmentNameList != null&& departmentNameList.size()!=0) {
                                 String name = departmentNameList.get(0);
                                 item.setDepartmentCode(departmentHashMapForID.get(name));
                                 item.setGroupCode(departmentHashMapForID.get(name));

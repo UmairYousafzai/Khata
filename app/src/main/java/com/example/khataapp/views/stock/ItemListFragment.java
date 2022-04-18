@@ -2,6 +2,7 @@ package com.example.khataapp.views.stock;
 
 import static com.example.khataapp.utils.CONSTANTS.ITEM;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class ItemListFragment extends Fragment {
     private StockViewModel viewModel;
     private NavController navController;
     private int key=0;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -49,6 +51,11 @@ public class ItemListFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(StockViewModel.class);
 
         mBinding.setViewModel(viewModel);
+
+        progressDialog = new ProgressDialog(requireContext());
+        progressDialog.setTitle("Items");
+        progressDialog.setMessage("Loading");
+
 
         viewModel.getItemsList();
 
@@ -131,6 +138,21 @@ public class ItemListFragment extends Fragment {
                 if (s!=null)
                 {
                     mBinding.btnSelect.setText(s);
+                }
+            }
+        });
+
+        viewModel.getShowProgressDialog().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean show) {
+
+                if (show)
+                {
+                    progressDialog.show();
+                }
+                else
+                {
+                    progressDialog.dismiss();
                 }
             }
         });

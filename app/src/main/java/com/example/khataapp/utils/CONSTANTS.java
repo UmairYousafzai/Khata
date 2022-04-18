@@ -18,6 +18,9 @@ public class CONSTANTS {
     public static final int GET_DOCUMENT = 8;
     public static final int SAVE_DOCUMENT_RESPONSE =9;
     public static final int GET_DOCUMENT_BY_CODE =10;
+    public static final int GET_SUB_GROUP=11;
+    public static final int SERVER_RESPONSE_SUB_GROUP=12;
+
     public static final int PERMISSION_REQUEST_CODE = 1;
 
 
@@ -34,6 +37,8 @@ public class CONSTANTS {
     public static  int CHECK_BOX_BTN =11;
     public static  int SAVE_BTN =12;
     public static  int NEW_BTN =13;
-
+    public static  int ADD_SUB_GROUP_BTN =14;
+    public static  int EDIT_SUB_GROUP_BTN =15;
+    public static  int SAVE_SUB_GROUP_BTN =16;
 
 }

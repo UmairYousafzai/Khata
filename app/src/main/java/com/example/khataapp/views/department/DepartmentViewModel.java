@@ -1,11 +1,14 @@
 package com.example.khataapp.views.department;
 
 import static com.example.khataapp.utils.CONSTANTS.ADD_GROUP_BTN;
+import static com.example.khataapp.utils.CONSTANTS.ADD_SUB_GROUP_BTN;
 import static com.example.khataapp.utils.CONSTANTS.GET_DEPARTMENT;
 import static com.example.khataapp.utils.CONSTANTS.GET_GROUP;
+import static com.example.khataapp.utils.CONSTANTS.GET_SUB_GROUP;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE_DEPARTMENT;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE_GROUP;
+import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE_SUB_GROUP;
 
 import android.app.Application;
 import android.widget.ArrayAdapter;
@@ -20,9 +23,12 @@ import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.models.Department;
 import com.example.khataapp.models.GetDepartmentResponse;
 import com.example.khataapp.models.GetGroupResponse;
+import com.example.khataapp.models.GetSubGroup;
 import com.example.khataapp.models.Group;
 import com.example.khataapp.models.SaveDepartmentResponse;
 import com.example.khataapp.models.SaveGroupResponse;
+import com.example.khataapp.models.SaveSubGroupResponse;
+import com.example.khataapp.models.SubGroup;
 import com.example.khataapp.utils.CONSTANTS;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
@@ -42,9 +48,10 @@ public class DepartmentViewModel extends AndroidViewModel {
     private final MutableLiveData<ArrayAdapter<String>> departmentAdapterMutableLiveData;
     private final MutableLiveData<ArrayAdapter<String>> groupAdapterMutableLiveData;
     private final MutableLiveData<ArrayAdapter<String>> subGroupAdapterMutableLiveData;
-    private final MutableLiveData<Integer> progressMutableLiveData;
+    private final MutableLiveData<Boolean> progressMutableLiveData;
     private List<Department> departmentList = new ArrayList<>();
     private List<Group> groupList = new ArrayList<>();
+    private List<SubGroup> subGroupList = new ArrayList<>();
     private ObservableField<String> selectedDepartmentName;
     private ObservableField<String> editDepartmentName;
     private ObservableField<Boolean> departmentEditTextVisibility;
@@ -94,6 +101,18 @@ public class DepartmentViewModel extends AndroidViewModel {
     }
 
 
+    public ObservableField<String> getSelectedSubGroupName() {
+
+        subGroupName = selectedSubGroupName.get();
+        subGroupID = subGroupHashMap.get(subGroupName);
+        subGroupEditTextVisibility.set(false);
+        return selectedSubGroupName;
+    }
+
+    public void setSelectedSubGroupName(ObservableField<String> selectedSubGroupName) {
+        this.selectedSubGroupName = selectedSubGroupName;
+    }
+
     public MutableLiveData<ArrayAdapter<String>> getSubGroupAdapterMutableLiveData() {
         return subGroupAdapterMutableLiveData;
     }
@@ -121,6 +140,9 @@ public class DepartmentViewModel extends AndroidViewModel {
         groupName = selectedGroupName.get();
         groupID = groupHashMap.get(groupName);
         groupEditTextVisibility.set(false);
+        selectedSubGroupName.set("");
+
+        getSubGroupList();
         return selectedGroupName;
     }
 
@@ -180,6 +202,7 @@ public class DepartmentViewModel extends AndroidViewModel {
         departmentName = selectedDepartmentName.get();
         departmentID = departmentHashMap.get(departmentName);
         departmentEditTextVisibility.set(false);
+        selectedGroupName.set("");
         getGroupList();
         return selectedDepartmentName;
 
@@ -191,22 +214,7 @@ public class DepartmentViewModel extends AndroidViewModel {
 
     }
 
-    private void getGroupList() {
-        if (departmentID != null) {
 
-            String businessId = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
-
-            DepartmentRepository.getInstance().getGroupFromServer(businessId, departmentID);
-
-        }
-    }
-
-    public void getDepartmentList() {
-        String businessId = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
-        getServerResponse();
-
-        DepartmentRepository.getInstance().getDepartmentFromServer(businessId);
-    }
 
     public MutableLiveData<ArrayAdapter<String>> getDepartmentAdapter() {
         return departmentAdapterMutableLiveData;
@@ -217,7 +225,7 @@ public class DepartmentViewModel extends AndroidViewModel {
         return serverErrorMutableLiveData;
     }
 
-    public MutableLiveData<Integer> getProgressMutableLiveData() {
+    public MutableLiveData<Boolean> getProgressMutableLiveData() {
         return progressMutableLiveData;
     }
 
@@ -254,6 +262,19 @@ public class DepartmentViewModel extends AndroidViewModel {
         groupAdapter = new ArrayAdapter<>(getApplication(), android.R.layout.simple_spinner_dropdown_item, groupNameList);
 
         groupAdapterMutableLiveData.setValue(groupAdapter);
+    }
+
+    private void setupSubGroupSpinner(List<SubGroup> groupList) {
+
+        List<String> subGroupNameList = new ArrayList<>();
+        for (SubGroup model : subGroupList) {
+            subGroupNameList.add(model.getSubGroupName());
+            subGroupHashMap.put(model.getSubGroupName(), model.getSubGroupCode());
+        }
+
+        subGroupAdapter = new ArrayAdapter<>(getApplication(), android.R.layout.simple_spinner_dropdown_item, subGroupNameList);
+
+        subGroupAdapterMutableLiveData.setValue(subGroupAdapter);
     }
 
 
@@ -338,7 +359,93 @@ public class DepartmentViewModel extends AndroidViewModel {
 
 
 
+        }   else if (key == ADD_SUB_GROUP_BTN) {
+            if (!departmentID.isEmpty()&& !groupID.isEmpty())
+            {
+                subGroupEditTextVisibility.set(true);
+                editSubGroupName.set("");
+                subGroupName = "";
+                subGroupID = "";
+                subGroupAction = "INSERT";
+            }
+            else
+            {
+                toastMessage.setValue("Please select Group First");
+            }
+
         }
+        else if (key == CONSTANTS.EDIT_SUB_GROUP_BTN) {
+            if (departmentID!=null&&!departmentID.isEmpty()&&
+                    groupID!=null&&!groupID.isEmpty())
+            {
+                subGroupEditTextVisibility.set(true);
+                editSubGroupName.set(subGroupName);
+                subGroupAction = "UPDATE";
+            }
+            else
+            {
+                toastMessage.setValue("Please select Group First");
+            }
+
+        } else if (key == CONSTANTS.SAVE_SUB_GROUP_BTN) {
+            if (departmentID!=null&&!departmentID.isEmpty()&&
+                    groupID!=null&&!groupID.isEmpty())
+            {
+                String name = editSubGroupName.get();
+                if (name != null && !name.isEmpty()) {
+                    subGroupEditTextVisibility.set(false);
+                    saveSubGroup();
+                    editSubGroupName.set("");
+                    if (subGroupAction.equals("UPDATE")) {
+                        subGroupHashMap.remove(subGroupName);
+                    }
+
+                } else {
+                    toastMessage.setValue("Please enter Sub Group Name");
+                    departmentError.set("Please enter Sub Group Name\"");
+                    observableBoolean.set(true);
+                }
+            }
+            else
+            {
+                toastMessage.setValue("Please select Group First");
+            }
+
+
+
+        }
+
+    }
+
+    private void getSubGroupList() {
+        if (groupID != null&&departmentID!=null) {
+
+            String businessId = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
+
+            DepartmentRepository.getInstance().getSubGroupFromServer(businessId, departmentID,groupID);
+
+            progressMutableLiveData.setValue(true);
+            getServerResponse();
+        }
+    }
+
+    private void getGroupList() {
+        if (departmentID != null) {
+
+            String businessId = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
+
+            DepartmentRepository.getInstance().getGroupFromServer(businessId, departmentID);
+
+            progressMutableLiveData.setValue(true);
+        }
+    }
+
+    public void getDepartmentList() {
+        String businessId = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
+        getServerResponse();
+
+        DepartmentRepository.getInstance().getDepartmentFromServer(businessId);
+        progressMutableLiveData.setValue(true);
 
     }
 
@@ -356,6 +463,32 @@ public class DepartmentViewModel extends AndroidViewModel {
 
             DepartmentRepository.getInstance().saveGroup(group);
             getServerResponse();
+            progressMutableLiveData.setValue(false);
+
+
+
+        } else {
+            toastMessage.setValue("Please Select Action\n Edit or Add");
+        }
+    }
+
+    private void saveSubGroup() {
+        if (!subGroupAction.isEmpty()) {
+            String userID = SharedPreferenceHelper.getInstance(getApplication()).getUserID();
+            String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
+            SubGroup subGroup= new SubGroup();
+            subGroup.setGroupCode(groupID);
+            subGroup.setSubGroupName(editSubGroupName.get());
+            subGroup.setBusinessId(businessID);
+            subGroup.setDepartmentCode(departmentID);
+            subGroup.setUserId(userID);
+            subGroup.setAction(subGroupAction);
+            subGroup.setSubGroupCode(subGroupID);
+
+            DepartmentRepository.getInstance().saveSubGroup(subGroup);
+            getServerResponse();
+            progressMutableLiveData.setValue(false);
+
 
 
         } else {
@@ -374,6 +507,8 @@ public class DepartmentViewModel extends AndroidViewModel {
             department.setUserID(userID);
             department.setAction(departmentAction);
             DepartmentRepository.getInstance().saveDepartment(department);
+            progressMutableLiveData.setValue(true);
+
         } else {
             toastMessage.setValue("Please Select Action\n Edit or Add");
         }
@@ -394,7 +529,7 @@ public class DepartmentViewModel extends AndroidViewModel {
                         departmentList = getDepartmentResponse.getDepartmentList();
 
                         setUpDepartmentSpinner(departmentList);
-                        progressMutableLiveData.setValue(1);
+                        progressMutableLiveData.setValue(false);
 
                     } else if (key == GET_GROUP) {
 
@@ -402,13 +537,21 @@ public class DepartmentViewModel extends AndroidViewModel {
                         groupList = getGroupResponse.getGroupList();
 
                         setupGroupSpinner(groupList);
-                        progressMutableLiveData.setValue(1);
+                        progressMutableLiveData.setValue(false);
+
+                    } else if (key == GET_SUB_GROUP) {
+
+                        GetSubGroup getGroupResponse = (GetSubGroup) object;
+                        subGroupList = getGroupResponse.getSubGroupList();
+
+                        setupSubGroupSpinner(subGroupList);
+                        progressMutableLiveData.setValue(false);
 
                     } else if (key == SERVER_ERROR) {
                         String error = (String) object;
 
                         serverErrorMutableLiveData.setValue(error);
-                        progressMutableLiveData.setValue(1);
+                        progressMutableLiveData.setValue(false);
                         departmentAction = "";
 
                     } else if (key == SERVER_RESPONSE_DEPARTMENT) {
@@ -422,6 +565,9 @@ public class DepartmentViewModel extends AndroidViewModel {
                         departmentHashMap.put(department.getDepartmentName(), department.getDepartmentCode());
                         setUpDepartmentSpinner(departmentList);
                         getGroupList();
+                        progressMutableLiveData.setValue(false);
+                        toastMessage.setValue(departmentResponse.getMessage());
+
 
                     }else if (key == SERVER_RESPONSE_GROUP) {
 
@@ -433,7 +579,24 @@ public class DepartmentViewModel extends AndroidViewModel {
                         selectedGroupName.set(groupName);
                         groupHashMap.put(group.getGroupName(), group.getGroupCode());
                         setupGroupSpinner(groupList);
-//                        getGroupList();
+                        progressMutableLiveData.setValue(false);
+                        toastMessage.setValue(saveGroupResponse.getMessage());
+
+                        getSubGroupList();
+
+                    }else if (key == SERVER_RESPONSE_SUB_GROUP) {
+
+                        SaveSubGroupResponse saveSubGroupResponse = (SaveSubGroupResponse) object;
+                        SubGroup subGroup = saveSubGroupResponse.getSubGroup();
+                        subGroupList.add(subGroup);
+                        subGroupID = subGroup.getSubGroupCode();
+                        subGroupName = subGroup.getSubGroupName();
+                        selectedSubGroupName.set(groupName);
+                        subGroupHashMap.put(subGroup.getSubGroupName(), subGroup.getSubGroupCode());
+                        setupSubGroupSpinner(subGroupList);
+                        progressMutableLiveData.setValue(false);
+                        toastMessage.setValue(saveSubGroupResponse.getMessage());
+
 
                     }
                 }

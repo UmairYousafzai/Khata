@@ -257,7 +257,9 @@
                     android:id="@+id/sub_group_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapSentences" />
+                    android:inputType="textCapSentences"
+                    android:text="@={viewModel.selectedSubGroupName}"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
@@ -269,6 +271,7 @@
                 android:contentDescription="Add New Sub Group"
                 android:minWidth="48dp"
                 android:src="@drawable/ic_baseline_add_24"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.ADD_SUB_GROUP_BTN)}"
                 app:layout_constraintBottom_toBottomOf="@id/sub_group_spinner_layout"
                 app:layout_constraintEnd_toStartOf="@+id/btn_edit_sub_group"
                 app:layout_constraintStart_toEndOf="@id/sub_group_spinner_layout"
@@ -284,6 +287,7 @@
                 android:contentDescription="Edit Sub Group"
                 android:minWidth="48dp"
                 android:src="@drawable/ic_edit_24"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.ADD_SUB_GROUP_BTN)}"
                 app:layout_constraintBottom_toBottomOf="@id/sub_group_spinner_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btn_add_sub_group"
@@ -306,12 +310,15 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@id/sub_group_spinner_layout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="@{viewModel.subGroupEditTextVisibility?View.VISIBLE:View.GONE}"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_sub_group"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.editSubGroupName}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -321,6 +328,7 @@
                 android:text="@string/save"
                 android:layout_marginTop="10dp"
                 app:cornerRadius="10dp"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.SAVE_SUB_GROUP_BTN)}"
                 app:layout_constraintTop_toBottomOf="@id/et_new_sub_group_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

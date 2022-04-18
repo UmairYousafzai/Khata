@@ -45,8 +45,8 @@ public class PartyFullInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        mBinding = FragmentPartyFullInfoBinding.inflate(inflater,container,false);
-       return  mBinding.getRoot();
+        mBinding = FragmentPartyFullInfoBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
@@ -56,9 +56,8 @@ public class PartyFullInfoFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         navBackStackEntry = navController.getBackStackEntry(R.id.partyFullInfoFragment);
 
-        if (getArguments()!=null)
-        {
-            party= PartyFullInfoFragmentArgs.fromBundle(getArguments()).getParty();
+        if (getArguments() != null) {
+            party = PartyFullInfoFragmentArgs.fromBundle(getArguments()).getParty();
         }
 
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(party.getPartyName());
@@ -77,7 +76,10 @@ public class PartyFullInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                navController.navigate(R.id.action_partyFullInfoFragment_to_addAmountFragment);
+                PartyFullInfoFragmentDirections.ActionPartyFullInfoFragmentToAddAmountFragment action =
+                        PartyFullInfoFragmentDirections.actionPartyFullInfoFragmentToAddAmountFragment(party);
+
+                navController.navigate(action);
             }
         });
     }
@@ -88,12 +90,12 @@ public class PartyFullInfoFragment extends Fragment {
         observer = (source, event) -> {
             if (event.equals(Lifecycle.Event.ON_RESUME) && navBackStackEntry.getSavedStateHandle().contains(DATE_KEY)) {
 
-                date = "Collection Date: "+navBackStackEntry.getSavedStateHandle().get(DATE_KEY);
+                date = "Collection Date: " + navBackStackEntry.getSavedStateHandle().get(DATE_KEY);
 
                 mBinding.tvDialogOpener.setText(date);
                 mBinding.tvDialogOpener1.setText("");
-                Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.ic_baseline_arrow_forward_blue,null);
-                mBinding.tvDialogOpener1.setCompoundDrawables(null,null,drawable,null);
+                Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_arrow_forward_blue, null);
+                mBinding.tvDialogOpener1.setCompoundDrawables(null, null, drawable, null);
 
             }
         };
@@ -110,7 +112,6 @@ public class PartyFullInfoFragment extends Fragment {
     }
 
 
-
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -123,8 +124,7 @@ public class PartyFullInfoFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId()==R.id.action_edit)
-        {
+        if (item.getItemId() == R.id.action_edit) {
             PartyFullInfoFragmentDirections.ActionPartyFullInfoToAddPartyFragment action = PartyFullInfoFragmentDirections.actionPartyFullInfoToAddPartyFragment();
             action.setParty(party);
 

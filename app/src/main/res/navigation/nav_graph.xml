@@ -231,9 +231,15 @@
         tools:layout="@layout/fragment_set_reminder_bottom_sheet_dialog" />
     <fragment
         android:id="@+id/addAmountFragment"
-        android:name="com.example.khataapp.views.party.addAmountFragment"
-        android:label="addAmountFragment"
-        tools:layout="@layout/fragment_add_amount"/>
+        android:name="com.example.khataapp.views.party.AddAmountFragment"
+        android:label="Add Amount"
+        tools:layout="@layout/fragment_add_amount">
+
+
+        <argument
+            android:name="party"
+            app:argType="com.example.khataapp.models.Party" />
+    </fragment>
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.example.khataapp.views.stock.AddItemFragment"
