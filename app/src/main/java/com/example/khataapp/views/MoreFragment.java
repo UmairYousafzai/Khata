@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.khataapp.MainActivity;
 import com.example.khataapp.R;
 import com.example.khataapp.databinding.FragmentMoneyBinding;
 import com.example.khataapp.databinding.FragmentMoreBinding;
@@ -47,6 +48,11 @@ public class MoreFragment extends Fragment {
 
                 navController.navigate(R.id.action_moreFragment_to_itemListFragment);
             }
+        });
+        mBinding.btnLogout.setOnClickListener(view -> {
+
+
+            ((MainActivity) requireActivity()).signOut();
         });
     }
 }

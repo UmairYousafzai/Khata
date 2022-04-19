@@ -50,10 +50,7 @@ import java.util.Calendar;
 public class AddAmountFragment extends Fragment {
 
     private FragmentAddAmountBinding mBinding;
-    private double numberOne, numberTwo;
-    private boolean isNumberOne = true, isNumberTwo = false;
     private AddAmountViewModel viewModel;
-    private Bitmap selectedImage;
     private boolean imageSelected = false;
     private AlertDialog progressDialog;
 
@@ -275,6 +272,7 @@ public class AddAmountFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode != RESULT_CANCELED) {
+            Bitmap selectedImage;
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {

@@ -1,10 +1,11 @@
 package com.example.khataapp.models;
 
+import com.example.khataapp.models.response.ServerResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class SaveDocumentResponse extends ServerResponse{
+public class SaveDocumentResponse extends ServerResponse {
 
     @SerializedName("Data")
     @Expose

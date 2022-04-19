@@ -1,4 +1,4 @@
-package com.example.khataapp.models;
+package com.example.khataapp.models.request;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -18,7 +18,7 @@ import com.example.khataapp.models.GetDepartmentResponse;
 import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Item;
-import com.example.khataapp.models.ServerResponse;
+import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.network.ApiClient;
 
 import retrofit2.Call;

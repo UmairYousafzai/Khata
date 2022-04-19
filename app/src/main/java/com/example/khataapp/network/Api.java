@@ -19,10 +19,11 @@ import com.example.khataapp.models.SaveDepartmentResponse;
 import com.example.khataapp.models.SaveGroupResponse;
 import com.example.khataapp.models.SaveDocumentResponse;
 import com.example.khataapp.models.SaveSubGroupResponse;
-import com.example.khataapp.models.ServerResponse;
+import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
 import com.example.khataapp.models.SubGroup;
-import com.example.khataapp.models.Voucher;
+import com.example.khataapp.models.request.Voucher;
+import com.example.khataapp.models.response.voucher.VoucherResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -123,4 +124,8 @@ public interface Api {
 
     @POST("api/Party/SavePartyVoucher")
     Call<ServerResponse> saveVoucher(@Body Voucher voucher);
+
+    @GET("api/Party/PartyVoucherHistory")
+    Call<VoucherResponse> getVoucherDetail(@Query("partyCode")String partyCode,@Query("businessId")String businessId);
+
 }

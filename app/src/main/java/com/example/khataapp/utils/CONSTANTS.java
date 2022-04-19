@@ -20,6 +20,7 @@ public class CONSTANTS {
     public static final int GET_DOCUMENT_BY_CODE =10;
     public static final int GET_SUB_GROUP=11;
     public static final int SERVER_RESPONSE_SUB_GROUP=12;
+    public static final int VOUCHER_RESPONSE=13;
 
     public static final int PERMISSION_REQUEST_CODE = 1;
 

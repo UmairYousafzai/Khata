@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.khataapp.viewModel.PartyViewModel" />
+        <variable
+            name="voucherDetail"
+            type="com.example.khataapp.models.response.voucher.VoucherDetail" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-    android:layout_marginVertical="1dp"
+        android:layout_marginVertical="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-    >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,11 +32,12 @@
                 android:id="@+id/tv_title_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@{voucherDetail.voucherNo,default=voucherNumber}"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,11 +45,13 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cost : "
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Cost :"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title_card" />
 
@@ -46,23 +59,27 @@
                 android:id="@+id/tv_cost_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rs.100"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                android:textColor="#ECB069"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="3dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_card"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@{String.valueOf(voucherDetail.totalAmount)}"
+                android:textAllCaps="false"
+                android:textColor="#ECB069"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
-                app:layout_constraintStart_toEndOf="@+id/textView5" />
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_card" />
 
             <TextView
                 android:id="@+id/tv_quantity_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:layout_marginTop="10dp"
+                android:text="@{String.valueOf(voucherDetail.debitAmount),default=debitAmount}"
                 app:layout_constraintEnd_toStartOf="@+id/tv_amount_card"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toEndOf="@+id/tv_title_card"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,11 +87,13 @@
                 android:id="@+id/tv_amount_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
+                android:text="@{String.valueOf(voucherDetail.creditAmount),default=creditAmount}"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_quantity_card"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+</layout>

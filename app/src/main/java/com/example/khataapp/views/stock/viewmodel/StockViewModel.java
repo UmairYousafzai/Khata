@@ -17,7 +17,7 @@ import com.example.khataapp.models.Department;
 import com.example.khataapp.models.GetDepartmentResponse;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
-import com.example.khataapp.models.ServerResponse;
+import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.views.stock.adapter.ItemListAdapter;
 import com.example.khataapp.views.stock.repository.StockRepository;
 import com.example.khataapp.utils.SharedPreferenceHelper;

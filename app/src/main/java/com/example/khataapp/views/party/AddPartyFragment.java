@@ -19,15 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.khataapp.databinding.FragmentAddPartyBinding;
-import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Party;
-import com.example.khataapp.models.ServerResponse;
+import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.models.User;
 import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.DataViewModel;
-import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import java.util.List;
 

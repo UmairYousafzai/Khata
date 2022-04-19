@@ -1,4 +1,4 @@
-package com.example.khataapp.models;
+package com.example.khataapp.models.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,10 +7,10 @@ public class ServerResponse {
 
     @SerializedName("Code")
     @Expose
-    private Integer code;
+    protected Integer code;
     @SerializedName("Message")
     @Expose
-    private String message;
+    protected String message;
 
 
     public Integer getCode() {

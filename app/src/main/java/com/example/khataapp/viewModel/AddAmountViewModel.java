@@ -1,30 +1,20 @@
 package com.example.khataapp.viewModel;
 
-import static com.example.khataapp.utils.CONSTANTS.GET_DEPARTMENT;
-import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
-import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 
-import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.Repository.PartyRepository;
-import com.example.khataapp.models.Department;
-import com.example.khataapp.models.GetDepartmentResponse;
-import com.example.khataapp.models.Item;
-import com.example.khataapp.models.Party;
-import com.example.khataapp.models.ServerResponse;
-import com.example.khataapp.models.Voucher;
+import com.example.khataapp.models.response.ServerResponse;
+import com.example.khataapp.models.request.Voucher;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;

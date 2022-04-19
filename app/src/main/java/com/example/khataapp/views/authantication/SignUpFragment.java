@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.khataapp.R;
 import com.example.khataapp.adapter.LocationListAdapter;
 import com.example.khataapp.databinding.CustomAddLocationDialogBinding;
@@ -31,7 +30,7 @@ import com.example.khataapp.models.GetPartyServerResponse;
 import com.example.khataapp.models.Location;
 import com.example.khataapp.models.LoginResponse;
 import com.example.khataapp.models.PostLocation;
-import com.example.khataapp.models.ServerResponse;
+import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
 import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.DataViewModel;

@@ -33,7 +33,7 @@ import com.example.khataapp.databinding.ImageSelectDialogBinding;
 import com.example.khataapp.models.Department;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
-import com.example.khataapp.models.ServerResponse;
+import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.utils.ImageUtil;
 import com.example.khataapp.utils.Permission;
 import com.example.khataapp.views.stock.viewmodel.StockViewModel;

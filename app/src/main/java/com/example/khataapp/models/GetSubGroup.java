@@ -1,11 +1,11 @@
 package com.example.khataapp.models;
 
+import com.example.khataapp.models.response.ServerResponse;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class GetSubGroup extends ServerResponse{
+public class GetSubGroup extends ServerResponse {
 
     @SerializedName("Data")
     private List<SubGroup> subGroupList;

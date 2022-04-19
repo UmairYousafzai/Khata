@@ -13,6 +13,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -27,6 +29,7 @@ import android.view.ViewGroup;
 import com.example.khataapp.R;
 import com.example.khataapp.databinding.FragmentPartyFullInfoBinding;
 import com.example.khataapp.models.Party;
+import com.example.khataapp.viewModel.PartyViewModel;
 
 
 import java.util.Objects;
@@ -39,6 +42,7 @@ public class PartyFullInfoFragment extends Fragment {
     private NavBackStackEntry navBackStackEntry;
     private LifecycleEventObserver observer;
     private String date;
+    private PartyViewModel viewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -55,15 +59,31 @@ public class PartyFullInfoFragment extends Fragment {
 
         navController = NavHostFragment.findNavController(this);
         navBackStackEntry = navController.getBackStackEntry(R.id.partyFullInfoFragment);
+        viewModel = new ViewModelProvider(this).get(PartyViewModel.class);
+        mBinding.setViewModel(viewModel);
+
 
         if (getArguments() != null) {
             party = PartyFullInfoFragmentArgs.fromBundle(getArguments()).getParty();
+            if (party != null) {
+                viewModel.voucherDetail(party.getPartyCode());
+            }
         }
 
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(party.getPartyName());
 
         getDataFromDialog();
         btnClickListener();
+        liveDataObservers();
+    }
+
+    private void liveDataObservers() {
+
+        viewModel.getShowProgressDialog().observe(getViewLifecycleOwner(), flag -> {
+
+        });
+
+
     }
 
     private void btnClickListener() {

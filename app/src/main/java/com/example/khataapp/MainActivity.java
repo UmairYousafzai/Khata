@@ -162,11 +162,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.action_signout) {
-            dataViewModel.deleteParties();
-            SharedPreferenceHelper.getInstance(this).setIsLogin(false);
-            SharedPreferenceHelper.getInstance(this).setBUSINESS_ID("");
-            SharedPreferenceHelper.getInstance(this).setUserID("");
-            navController.navigate(R.id.splashScreenFragment);
+            signOut();
         } else if (item.getItemId() == R.id.action_department) {
             navController.navigate(R.id.addDepartmentFragment);
         } else if (item.getItemId() == R.id.action_purchase) {
@@ -181,5 +177,13 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
 
+    }
+
+    public void signOut() {
+        dataViewModel.deleteParties();
+        SharedPreferenceHelper.getInstance(this).setIsLogin(false);
+        SharedPreferenceHelper.getInstance(this).setBUSINESS_ID("");
+        SharedPreferenceHelper.getInstance(this).setUserID("");
+        navController.navigate(R.id.splashScreenFragment);
     }
 }

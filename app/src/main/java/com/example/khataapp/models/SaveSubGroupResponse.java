@@ -1,8 +1,9 @@
 package com.example.khataapp.models;
 
+import com.example.khataapp.models.response.ServerResponse;
 import com.google.gson.annotations.SerializedName;
 
-public class SaveSubGroupResponse extends ServerResponse{
+public class SaveSubGroupResponse extends ServerResponse {
 
     @SerializedName("Data")
     private SubGroup subGroup;

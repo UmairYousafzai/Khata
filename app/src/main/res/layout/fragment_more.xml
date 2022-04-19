@@ -254,7 +254,7 @@
             app:layout_constraintTop_toBottomOf="@id/btn_help_support" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_view_result"
+            android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/logout"
