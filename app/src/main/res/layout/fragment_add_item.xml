@@ -267,38 +267,54 @@
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/item_image"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        app:imageUrl="@{item.productImage}"
-                        app:layout_constraintTop_toBottomOf="@id/supplier_spinner_layout"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/image_name"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="15dp"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/item_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@string/item_image"
+                    app:imageUrl="@{item.productImage}"
+                    app:layout_constraintEnd_toStartOf="@id/image_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/image_name"
+                    app:layout_constraintBottom_toBottomOf="@id/image_name"/>
 
-
-                        android:layout_marginLeft="15dp"
-                        android:contentDescription="@string/item_image" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/item_image2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@string/item_image"
+                    android:src="@drawable/ic_placeholder"
+                    app:layout_constraintEnd_toStartOf="@id/image_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/image_name"
+                    app:layout_constraintBottom_toBottomOf="@id/image_name"/>
                     <TextView
                         android:id="@+id/image_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/select_image"
                         android:textSize="18sp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/app_theme_color"
                         android:textStyle="bold"
                         android:gravity="center"
-                        app:layout_constraintTop_toTopOf="@id/item_image"
-                        app:layout_constraintBottom_toBottomOf="@id/item_image"
+                      android:layout_marginTop="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/item_image"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/supplier_spinner_layout"
                         android:layout_marginEnd="15dp"
                         android:layout_marginRight="15dp"
                         app:drawableStartCompat="@drawable/ic_baseline_add_24"
                         app:drawableLeftCompat="@drawable/ic_baseline_add_24"
-                        app:drawableTint="@color/black" />
+                        app:drawableTint="@color/app_theme_color"
+                        app:layout_constraintVertical_bias="0.0"
+                        />
 
 
 

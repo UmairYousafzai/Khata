@@ -63,11 +63,6 @@ public class SignUpFragment extends Fragment {
 
         mBinding= FragmentSignUpBinding.inflate(inflater,container,false);
 
-//        MeowBottomNavigation navBar = requireActivity().findViewById(R.id.bottom_view);
-//        if (navBar!=null)
-//        {
-//            navBar.setVisibility(View.GONE);
-//        }
 
 
         return mBinding.getRoot();
@@ -225,23 +220,29 @@ public class SignUpFragment extends Fragment {
         }
 
 
-             Call<ServerResponse> call = ApiClient.getInstance().getApi().saveUser(signUpUser);
-             call.enqueue(new Callback<ServerResponse>() {
+             Call<LoginResponse> call = ApiClient.getInstance().getApi().saveUser(signUpUser);
+        String finalPassword = password;
+        String finalUsername = username;
+        call.enqueue(new Callback<LoginResponse>() {
                  @Override
-                 public void onResponse(@NotNull Call<ServerResponse> call, @NotNull Response<ServerResponse> response) {
+                 public void onResponse(@NotNull Call<LoginResponse> call, @NotNull Response<LoginResponse> response) {
 
                      if (response.isSuccessful())
                      {
                          if (response.body()!=null)
                          {
-                             ServerResponse serverResponse = response.body();
-                             if (serverResponse.getCode()==200)
+                             LoginResponse loginResponse = response.body();
+                             if (loginResponse.getCode()==200)
                              {
-                                 getUser();
-//                             navController.navigate(R.id.action_signUpFragment_to_homeFragment);
+                                 SharedPreferenceHelper.getInstance(requireContext()).setUserID(loginResponse.getUser().getUserId());
+                                 SharedPreferenceHelper.getInstance(requireContext()).setBUSINESS_ID(loginResponse.getUser().getBusinessId());
+                                 SharedPreferenceHelper.getInstance(requireContext()).setIsLogin(true);
+                                 dataViewModel.insertUser(loginResponse.getUser());
+                                 login(finalUsername, finalPassword);
+                                 //                             navController.navigate(R.id.action_signUpFragment_to_homeFragment);
 
                              }
-                             Toast.makeText(requireContext(), ""+serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                             Toast.makeText(requireContext(), ""+loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -261,7 +262,7 @@ public class SignUpFragment extends Fragment {
                  }
 
                  @Override
-                 public void onFailure(@NotNull Call<ServerResponse> call, @NotNull Throwable t) {
+                 public void onFailure(@NotNull Call<LoginResponse> call, @NotNull Throwable t) {
                      progressDialog.dismiss();
                      Toast.makeText(requireContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
                  }
@@ -463,7 +464,7 @@ public class SignUpFragment extends Fragment {
     private void login(String username, String password) {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading...");
-        progressDialog.setTitle("Login");
+        progressDialog.setTitle("Redirecting");
         progressDialog.show();
 
         Call<LoginResponse> call = ApiClient.getInstance().getApi().login(username,password);
@@ -561,7 +562,7 @@ public class SignUpFragment extends Fragment {
                 if (type.equals("s"))
                 {
                     progressDialog.dismiss();
-                    navController.navigate(R.id.action_loginFragment_to_homeFragment);
+                    navController.navigate(R.id.action_signUpFragment_to_homeFragment);
 
                 }
             }

@@ -1,6 +1,7 @@
 package com.example.khataapp.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
@@ -24,6 +25,15 @@ public class ImageUtil {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
         return Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
+    }
+
+    public Bitmap getBitmapFromBase64String(String imageString)
+    {
+        // decode base64 string
+        byte[] bytes=Base64.decode(imageString,Base64.DEFAULT);
+        // Initialize bitmap
+        Bitmap bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        return bitmap;
     }
 
 }

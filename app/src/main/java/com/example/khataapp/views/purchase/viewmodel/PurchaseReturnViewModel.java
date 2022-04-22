@@ -25,6 +25,7 @@ import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.SaveDocumentResponse;
 import com.example.khataapp.utils.Converter;
+import com.example.khataapp.utils.DateUtil;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 import com.example.khataapp.views.purchase.adapter.ProductRecyclerAdapter;
 import com.example.khataapp.views.purchase.repository.PurchaseRepository;
@@ -75,7 +76,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         actionMutableLiveData = new MutableLiveData<>("INSERT");
         adapter = new ProductRecyclerAdapter(null,this,2);
         toastMessage = new MutableLiveData<>();
-        date = new ObservableField<>("");
+        date = new ObservableField<>(DateUtil.getInstance().getDate());
         totalQty = new ObservableField<>("0");
         subTotalAmount = new ObservableField<>("0");
         supplierAdapter = new ObservableField<>();

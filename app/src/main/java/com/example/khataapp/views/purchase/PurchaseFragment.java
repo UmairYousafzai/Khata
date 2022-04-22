@@ -271,6 +271,8 @@ public class PurchaseFragment extends Fragment {
         dialogBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewModel.getSelectedProductName().set("");
+
                 alertDialog.dismiss();
             }
         });

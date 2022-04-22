@@ -24,12 +24,15 @@ import com.example.khataapp.models.GetDocumentByCode;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.SaveDocumentResponse;
+import com.example.khataapp.utils.DateUtil;
 import com.example.khataapp.views.purchase.adapter.ProductRecyclerAdapter;
 import com.example.khataapp.views.purchase.repository.PurchaseRepository;
 import com.example.khataapp.utils.Converter;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,7 +77,7 @@ public class PurchaseViewModel extends AndroidViewModel {
         actionMutableLiveData = new MutableLiveData<>("INSERT");
         adapter = new ProductRecyclerAdapter(this,null,1);
         toastMessage = new MutableLiveData<>();
-        date = new ObservableField<>("yyyy-mm-dd");
+        date = new ObservableField<>(DateUtil.getInstance().getDate());
         totalQty = new ObservableField<>("0");
         subTotalAmount = new ObservableField<>("0");
         supplierAdapter = new ObservableField<>();
@@ -175,6 +178,7 @@ public class PurchaseViewModel extends AndroidViewModel {
     public ObservableField<String> getDate() {
         return date;
     }
+
 
 
     public void addItemToProductAdapter() {

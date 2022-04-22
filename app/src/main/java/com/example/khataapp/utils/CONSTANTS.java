@@ -21,6 +21,8 @@ public class CONSTANTS {
     public static final int GET_SUB_GROUP=11;
     public static final int SERVER_RESPONSE_SUB_GROUP=12;
     public static final int VOUCHER_RESPONSE=13;
+    public static final int LOGIN_RESPONSE=14;
+    public static final int LOGIN_RESPONSE_ERROR=15;
 
     public static final int PERMISSION_REQUEST_CODE = 1;
 
@@ -41,5 +43,7 @@ public class CONSTANTS {
     public static  int ADD_SUB_GROUP_BTN =14;
     public static  int EDIT_SUB_GROUP_BTN =15;
     public static  int SAVE_SUB_GROUP_BTN =16;
+    public static  int LOGIN_BTN =17;
+    public static  int NAVIGATE_SIGNUP_BTN =18;
 
 }

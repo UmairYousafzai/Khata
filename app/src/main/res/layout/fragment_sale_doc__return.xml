@@ -95,7 +95,6 @@
                 android:padding="8dp"
                 android:text="@={viewModel.date}"
                 android:textColor="@color/black"
-                android:onClick="@{()-> viewModel.onClick(CONSTANTS.DATE_BTN)}"
                 android:textSize="16sp"
                 app:drawableLeftCompat="@drawable/ic_calendar_line"
                 app:drawableStartCompat="@drawable/ic_calendar_line"

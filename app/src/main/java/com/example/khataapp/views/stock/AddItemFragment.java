@@ -49,12 +49,17 @@ public class AddItemFragment extends Fragment {
     private FragmentAddItemBinding mBinding;
     private StockViewModel stockViewModel;
     private final HashMap<String, String> departmentHashMapForID = new HashMap<>();
+    private final HashMap<String, String> departmentHashMapForName = new HashMap<>();
     private final HashMap<String, String> supplierHashMapForID = new HashMap<>();
+    private final HashMap<String, String> supplierHashMapForName = new HashMap<>();
     private final ArrayList<String> supplierNameList = new ArrayList<>();
     private final ArrayList<String> departmentNameList = new ArrayList<>();
     private ProgressDialog progressDialog;
-    private Bitmap selectedImage=null;
-
+    private Bitmap selectedImage = null;
+    private boolean isEdit = false;
+    private Item editedItem;
+    private String saveAction = "INSERT";
+    private String departmentCode = "", supplierCode = "",barcode="",uan="";
 
 
     @Override
@@ -72,16 +77,34 @@ public class AddItemFragment extends Fragment {
 
         stockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
 
-        if (getArguments()!=null)
-        {
-            Item item = AddItemFragmentArgs.fromBundle(getArguments()).getItem();
-            mBinding.setItem(item);
-        }
 
         getDepartment();
         getSupplier();
         btnListener();
 
+        getDepartmentFromArgument();
+
+    }
+
+    private void getDepartmentFromArgument() {
+        if (getArguments() != null) {
+            editedItem = AddItemFragmentArgs.fromBundle(getArguments()).getItem();
+            if (editedItem != null) {
+                mBinding.setItem(editedItem);
+                mBinding.itemImage2.setVisibility(View.GONE);
+                isEdit = true;
+                saveAction = "UPDATE";
+                departmentCode = editedItem.getDepartmentCode();
+                String departmentName = departmentHashMapForName.get(departmentCode);
+                mBinding.departmentSpinner.setText(departmentName);
+                supplierCode = editedItem.getSupplierCode();
+                String supplierName = supplierHashMapForName.get(supplierCode);
+                mBinding.supplierSpinner.setText(supplierName);
+                barcode=editedItem.getBarcode();
+                uan=editedItem.getUan();
+            }
+
+        }
     }
 
     private void btnListener() {
@@ -108,7 +131,9 @@ public class AddItemFragment extends Fragment {
 
         mBinding.btnSave.setOnClickListener(v -> saveItem());
 
-        mBinding.imageName.setOnClickListener(view -> { showSelectImageDialog();});
+        mBinding.imageName.setOnClickListener(view -> {
+            showSelectImageDialog();
+        });
     }
 
     private void saveItem() {
@@ -163,18 +188,24 @@ public class AddItemFragment extends Fragment {
                                 item.setUnitRetail(Double.parseDouble(mBinding.etSalePrice.getText().toString()));
                             }
 
-                            if (departmentNameList != null&& departmentNameList.size()!=0) {
-                                String name = departmentNameList.get(0);
-                                item.setDepartmentCode(departmentHashMapForID.get(name));
+                            if (departmentNameList.size() != 0) {
+                                String name = mBinding.departmentSpinner.getText().toString();
+                                departmentCode = departmentHashMapForID.get(name);
+                                item.setDepartmentCode(departmentCode);
                                 item.setGroupCode(departmentHashMapForID.get(name));
                                 item.setSubGroupCode(departmentHashMapForID.get(name));
 
+                            } else {
+                                item.setDepartmentCode("");
+                                item.setGroupCode("");
+                                item.setSubGroupCode("");
                             }
 
 
                             if (mBinding.supplierSpinner.getText() != null && mBinding.supplierSpinner.getText().toString().length() > 0) {
                                 String name = mBinding.supplierSpinner.getText().toString();
-                                item.setSupplierCode(supplierHashMapForID.get(name));
+                                supplierCode = supplierHashMapForID.get(name);
+                                item.setSupplierCode(supplierCode);
 
                             } else {
                                 item.setSupplierCode("000001");
@@ -183,14 +214,22 @@ public class AddItemFragment extends Fragment {
                             item.setDescription(mBinding.etItemName.getText().toString());
                             item.setStatus("a");
                             item.setProductType("P");
-                            item.setAction("INSERT");
+                            item.setAction(saveAction);
+                            item.setBarcode(barcode);
+                            item.setUan(uan);
                             item.setUserID(SharedPreferenceHelper.getInstance(requireContext()).getUserID());
                             item.setBusinessID(SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID());
 
-                            if (selectedImage!=null)
-                            {
+                            if (selectedImage != null) {
                                 item.setProductImage(ImageUtil.getInstance().getBytesFromBitmap(selectedImage));
+
+                            } else {
+                                if (isEdit) {
+                                    item.setProductImage(editedItem.getProductImage());
+
+                                }
                             }
+
                             saveCall(item);
                         } else {
                             mBinding.etSalePriceLayout.setError("Please Enter valid sale price");
@@ -246,6 +285,7 @@ public class AddItemFragment extends Fragment {
         for (Party model : list) {
             supplierNameList.add(model.getPartyName());
             supplierHashMapForID.put(model.getPartyName(), model.getPartyCode());
+            supplierHashMapForName.put(model.getPartyCode(), model.getPartyName());
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, supplierNameList);
@@ -271,6 +311,7 @@ public class AddItemFragment extends Fragment {
 
         for (Department model : list) {
             departmentHashMapForID.put(model.getDepartmentName(), model.getDepartmentCode());
+            departmentHashMapForName.put(model.getDepartmentCode(), model.getDepartmentName());
             departmentNameList.add(model.getDepartmentName());
         }
 
@@ -279,9 +320,8 @@ public class AddItemFragment extends Fragment {
         mBinding.departmentSpinner.setAdapter(adapter);
     }
 
-    private void showSelectImageDialog()
-    {
-        Permission permission = new Permission(requireContext(),requireActivity());
+    private void showSelectImageDialog() {
+        Permission permission = new Permission(requireContext(), requireActivity());
 
         ImageSelectDialogBinding dialogBinding = ImageSelectDialogBinding.inflate(getLayoutInflater());
         AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
@@ -296,11 +336,10 @@ public class AddItemFragment extends Fragment {
                     permission.getCameraPermission();
                 } else {
 
-                    Intent cameraIntent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                    if (cameraIntent.resolveActivity(requireContext().getPackageManager())!=null)
-                    {
-                        startActivityForResult(cameraIntent,0);
+                    if (cameraIntent.resolveActivity(requireContext().getPackageManager()) != null) {
+                        startActivityForResult(cameraIntent, 0);
                     }
 
                 }
@@ -317,9 +356,9 @@ public class AddItemFragment extends Fragment {
                     permission.getStoragePermission();
 
                 } else {
-                    Intent galleryIntent= new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                    startActivityForResult(galleryIntent,1);
+                    startActivityForResult(galleryIntent, 1);
                 }
                 alertDialog.dismiss();
 
@@ -334,42 +373,41 @@ public class AddItemFragment extends Fragment {
         });
 
 
-
     }
-
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode!=RESULT_CANCELED)
-        {
-            switch (requestCode)
-            {
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
                 case 0:
-                    if (resultCode==RESULT_OK&&data!=null)
-                    {
-                        selectedImage= (Bitmap) data.getExtras().get("data");
-                        mBinding.itemImage.setImageBitmap(selectedImage);
+                    if (resultCode == RESULT_OK && data != null) {
+                        selectedImage = (Bitmap) data.getExtras().get("data");
+                        mBinding.itemImage2.setImageBitmap(selectedImage);
+                        mBinding.itemImage2.setVisibility(View.VISIBLE);
+                        mBinding.itemImage.setVisibility(View.GONE);
                     }
                     break;
 
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImageUri =  data.getData();
+                        Uri selectedImageUri = data.getData();
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                            Cursor cursor = requireActivity().getContentResolver().query(selectedImageUri,
-                                    filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
+                        Cursor cursor = requireActivity().getContentResolver().query(selectedImageUri,
+                                filePathColumn, null, null, null);
+                        if (cursor != null) {
+                            cursor.moveToFirst();
 
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-                                selectedImage= BitmapFactory.decodeFile(picturePath);
-                                mBinding.itemImage.setImageBitmap(selectedImage);
-                                cursor.close();
-                            }
+                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                            String picturePath = cursor.getString(columnIndex);
+                            selectedImage = BitmapFactory.decodeFile(picturePath);
+                            mBinding.itemImage2.setImageBitmap(selectedImage);
+                            mBinding.itemImage2.setVisibility(View.VISIBLE);
+                            mBinding.itemImage.setVisibility(View.GONE);
+                            cursor.close();
+                        }
 
 
                     }

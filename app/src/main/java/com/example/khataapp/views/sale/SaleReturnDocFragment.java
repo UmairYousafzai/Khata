@@ -266,22 +266,18 @@ public class SaleReturnDocFragment extends Fragment {
 
         alertDialog.show();
 
-        dialogBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
+        dialogBinding.btnCancel.setOnClickListener(v -> {
+            viewModel.getSelectedProductName().set("");
+
+            alertDialog.dismiss();
         });
 
-        dialogBinding.btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        dialogBinding.btnDone.setOnClickListener(v -> {
 
-                alertDialog.dismiss();
+            alertDialog.dismiss();
 
-                viewModel.addItemToProductAdapter();
-                mBinding.itemSpinner.setText("");
-            }
+            viewModel.addItemToProductAdapter();
+            mBinding.itemSpinner.setText("");
         });
 
 

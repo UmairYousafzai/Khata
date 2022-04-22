@@ -181,9 +181,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void signOut() {
         dataViewModel.deleteParties();
+        dataViewModel.deleteUser();
         SharedPreferenceHelper.getInstance(this).setIsLogin(false);
         SharedPreferenceHelper.getInstance(this).setBUSINESS_ID("");
         SharedPreferenceHelper.getInstance(this).setUserID("");
         navController.navigate(R.id.splashScreenFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        int currentFragmentID= navController.getCurrentDestination().getId();
+
+        if (currentFragmentID==R.id.loginFragment)
+        {
+            finish();
+        }
+
+
     }
 }

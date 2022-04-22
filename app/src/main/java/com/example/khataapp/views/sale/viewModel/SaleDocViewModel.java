@@ -24,6 +24,7 @@ import com.example.khataapp.models.GetDocumentByCode;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.SaveDocumentResponse;
+import com.example.khataapp.utils.DateUtil;
 import com.example.khataapp.views.sale.adapter.ProductSaleRecyclerAdapter;
 import com.example.khataapp.views.sale.repository.SaleRepository;
 import com.example.khataapp.utils.Converter;
@@ -75,7 +76,7 @@ public class SaleDocViewModel extends AndroidViewModel {
         actionMutableLiveData = new MutableLiveData<>("INSERT");
         adapter = new ProductSaleRecyclerAdapter(null,this,2);
         toastMessage = new MutableLiveData<>();
-        date = new ObservableField<>("yyyy-mm-dd");
+        date = new ObservableField<>(DateUtil.getInstance().getDate());
         totalQty = new ObservableField<>("0");
         subTotalAmount = new ObservableField<>("0");
         customerAdapter = new ObservableField<>();

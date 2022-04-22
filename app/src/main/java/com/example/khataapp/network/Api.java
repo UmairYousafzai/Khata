@@ -44,7 +44,7 @@ public interface Api {
     Call<ServerResponse> saveLocation(@Body PostLocation postLocation);
 
     @POST("api/Account/SignUP")
-    Call<ServerResponse> saveUser(@Body SignUpUser signUpUser);
+    Call<LoginResponse> saveUser(@Body SignUpUser signUpUser);
 
 
     /****************************   Party **********************/
