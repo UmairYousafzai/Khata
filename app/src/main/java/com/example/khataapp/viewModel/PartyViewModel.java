@@ -97,8 +97,14 @@ public class PartyViewModel extends BaseViewModel {
                 else if (key==VOUCHER_RESPONSE)
                 {
                     VoucherResponse voucherResponse = (VoucherResponse) object;
-                    totalAmount.set(String.valueOf(voucherResponse.getVoucherData().getVoucherSummary().getTotalAmount()));
-                    adapter.setVoucherDetailList(voucherResponse.getVoucherData().getDetail());
+                    if(voucherResponse.getVoucherData()!=null&& voucherResponse.getVoucherData().getVoucherSummary()!=null)
+                    {
+                        totalAmount.set(String.valueOf(voucherResponse.getVoucherData().getVoucherSummary().getTotalAmount()));
+
+                    }
+                    if (voucherResponse.getVoucherData() != null) {
+                        adapter.setVoucherDetailList(voucherResponse.getVoucherData().getDetail());
+                    }
                     toastMessage.setValue(voucherResponse.getMessage());
                     setShowProgressDialog(false);
                 }

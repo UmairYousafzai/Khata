@@ -484,6 +484,7 @@ public class SignUpFragment extends Fragment {
                             SharedPreferenceHelper.getInstance(requireContext()).setUserID(loginResponse.getUser().getUserId());
                             SharedPreferenceHelper.getInstance(requireContext()).setBUSINESS_ID(loginResponse.getUser().getBusinessId());
                             SharedPreferenceHelper.getInstance(requireContext()).setIsLogin(true);
+                            SharedPreferenceHelper.getInstance(requireContext()).setBusinessName(loginResponse.getUser().getBusinessName());
 
                             dataViewModel.insertUser(loginResponse.getUser());
                             Toast.makeText(requireContext(), "" + loginResponse.getUser().getUserName(), Toast.LENGTH_LONG).show();

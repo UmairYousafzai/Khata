@@ -11,6 +11,7 @@ public class SharedPreferenceHelper {
     private static final String BUSINESS_ID = "business id";
     private static final String  userID = "User ID";
     private static final String  IS_Login = "login";
+    private static final String  BUSINESS_NAME = "business name";
 
     private static SharedPreferenceHelper helperInstance = null;
     private  static SharedPreferences sharedPreferences;
@@ -49,6 +50,15 @@ public class SharedPreferenceHelper {
     }
     public String getUserID() {
         return sharedPreferences.getString(userID,"0");
+    }
+
+    public void setBusinessName(String name)
+    {
+        sharedPreferences.edit().putString(BUSINESS_NAME, name).apply();;
+
+    }
+    public String getBusinessName() {
+        return sharedPreferences.getString(BUSINESS_NAME,"");
     }
  public void setIsLogin(boolean isLogin)
     {

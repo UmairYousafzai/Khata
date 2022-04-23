@@ -22,7 +22,7 @@ public class DateUtil {
     {
         Date date= Calendar.getInstance().getTime();
 
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
 
         return dateFormat.format(date);
 

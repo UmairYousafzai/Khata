@@ -80,7 +80,9 @@ public class LoginFragment extends Fragment {
             if (user != null) {
                 SharedPreferenceHelper.getInstance(requireContext()).setUserID(user.getUserId());
                 SharedPreferenceHelper.getInstance(requireContext()).setBUSINESS_ID(user.getBusinessId());
+                SharedPreferenceHelper.getInstance(requireContext()).setBusinessName(user.getBusinessName());
                 SharedPreferenceHelper.getInstance(requireContext()).setIsLogin(true);
+
                 viewModel.insertUser(user);
 
             }

@@ -88,5 +88,6 @@
     <string name="loading">Loading</string>
     <string name="enter_amount">Enter Amount</string>
     <string name="attached_bill">Attached Bill</string>
+    <string name="item">Item</string>
 
 </resources>

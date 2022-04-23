@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import com.example.khataapp.R;
 import com.example.khataapp.databinding.FragmentMoneyBinding;
 import com.example.khataapp.utils.CONSTANTS;
+import com.example.khataapp.utils.SharedPreferenceHelper;
 
 public class MoneyFragment extends Fragment {
 
@@ -65,8 +66,16 @@ public class MoneyFragment extends Fragment {
                 }
             }
         });
+        setBusinessName();
         btnListener();
         getDataFromDialog();
+    }
+
+    private void setBusinessName() {
+        String businessName=SharedPreferenceHelper.getInstance(requireContext()).getBusinessName();
+
+        mBinding.etBusinessName.setText(businessName);
+
     }
 
     private void getDataFromDialog() {

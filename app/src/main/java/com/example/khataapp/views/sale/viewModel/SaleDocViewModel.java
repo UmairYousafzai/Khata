@@ -355,7 +355,6 @@ public class SaleDocViewModel extends AndroidViewModel {
                     }
 
                     repository.saveSaleDocument(document);
-                    actionMutableLiveData.setValue("Update");
 
                 } else {
                     toastMessage.setValue("Please Enter Products");
@@ -394,7 +393,7 @@ public class SaleDocViewModel extends AndroidViewModel {
                             isEdit.setValue(false);
                         }
                         showProgressDialog.setValue(false);
-
+                        actionMutableLiveData.setValue("Update");
                         toastMessage.setValue(saveDocumentResponse.getMessage());
                     }else if (key == GET_DOCUMENT_BY_CODE) {
                         GetDocumentByCode purchaseByCode = (GetDocumentByCode) object;

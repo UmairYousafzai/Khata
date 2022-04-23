@@ -173,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.saleReturnDocFragment);
         } else if (item.getItemId() == R.id.action_purchase_return) {
             navController.navigate(R.id.purchaseReturnFragment);
+        }else if (item.getItemId() == R.id.action_item) {
+            navController.navigate(R.id.itemListFragment);
         }
 
         return super.onOptionsItemSelected(item);
@@ -194,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
         int currentFragmentID= navController.getCurrentDestination().getId();
 
-        if (currentFragmentID==R.id.loginFragment)
+        if (currentFragmentID==R.id.splashScreenFragment)
         {
             finish();
         }

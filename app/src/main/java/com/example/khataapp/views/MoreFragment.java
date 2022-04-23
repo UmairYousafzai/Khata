@@ -16,6 +16,7 @@ import com.example.khataapp.MainActivity;
 import com.example.khataapp.R;
 import com.example.khataapp.databinding.FragmentMoneyBinding;
 import com.example.khataapp.databinding.FragmentMoreBinding;
+import com.example.khataapp.utils.SharedPreferenceHelper;
 
 public class MoreFragment extends Fragment {
 
@@ -38,8 +39,15 @@ public class MoreFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
 
         btListener();
+        setBusinessName();
     }
 
+    private void setBusinessName() {
+        String businessName= SharedPreferenceHelper.getInstance(requireContext()).getBusinessName();
+
+        mBinding.etBusinessName.setText(businessName);
+
+    }
     private void btListener() {
 
         mBinding.stockCard.setOnClickListener(new View.OnClickListener() {

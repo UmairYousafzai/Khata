@@ -5,6 +5,7 @@ import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
 import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_DOCUMENT_RESPONSE;
+import static com.example.khataapp.utils.CONSTANTS.SAVE_PURCHASE_RETURN_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 
 import android.app.Application;
@@ -77,7 +78,8 @@ public class PurchaseViewModel extends AndroidViewModel {
         actionMutableLiveData = new MutableLiveData<>("INSERT");
         adapter = new ProductRecyclerAdapter(this,null,1);
         toastMessage = new MutableLiveData<>();
-        date = new ObservableField<>(DateUtil.getInstance().getDate());
+        String formatDate=DateUtil.getInstance().getDate();
+        date = new ObservableField<>(formatDate);
         totalQty = new ObservableField<>("0");
         subTotalAmount = new ObservableField<>("0");
         supplierAdapter = new ObservableField<>();
@@ -339,7 +341,7 @@ public class PurchaseViewModel extends AndroidViewModel {
                     document.setItems(adapter.getItemList());
                     document.setAction(actionMutableLiveData.getValue());
                     document.setBusinessId(businessID);
-                    document.setLocationCode("01");
+                    document.setLocationCode("000001");
                     document.setSupplierCode(supplierCode);
                     document.setTotalAmount(Double.parseDouble(totalAmount.get()));
                     document.setUserId(userID);
@@ -356,7 +358,6 @@ public class PurchaseViewModel extends AndroidViewModel {
                     }
 
                     repository.savePurchase(document);
-                    actionMutableLiveData.setValue("Update");
 
                 } else {
                     toastMessage.setValue("Please Enter Products");
@@ -387,13 +388,14 @@ public class PurchaseViewModel extends AndroidViewModel {
 
                     } else if (key == SERVER_ERROR) {
                         toastMessage.setValue((String) object);
-                    } else if (key == SAVE_DOCUMENT_RESPONSE) {
+
+                    }else if (key == SAVE_DOCUMENT_RESPONSE) {
                         SaveDocumentResponse saveDocumentResponse = (SaveDocumentResponse) object;
                         if (saveDocumentResponse.getCode() == 200) {
                             isEdit.setValue(false);
                         }
                         showProgressDialog.setValue(false);
-
+                        actionMutableLiveData.setValue("Update");
                         toastMessage.setValue(saveDocumentResponse.getMessage());
                     }else if (key == GET_DOCUMENT_BY_CODE) {
                         GetDocumentByCode purchaseByCode = (GetDocumentByCode) object;

@@ -129,14 +129,14 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/rate"
+                android:id="@+id/cost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:selectAllOnFocus="true"
 
-                android:text="@={Converter.toString(rate,viewModel.itemMutableLiveData.cost,viewModel.itemMutableLiveData.cost)}"
+                android:text="@={Converter.toString(cost,viewModel.itemMutableLiveData.unitCost,viewModel.itemMutableLiveData.unitCost)}"
 
                 />
 

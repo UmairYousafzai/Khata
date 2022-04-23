@@ -110,6 +110,9 @@ public class AuthenticationViewModel extends BaseViewModel {
 
     }
 
+    /*************************** network Calls *************************/
+
+
     public void login() {
 
         if (validateUserNameAndPassword()) {

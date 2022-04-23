@@ -337,7 +337,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                     document.setItems(adapter.getItemList());
                     document.setAction(actionMutableLiveData.getValue());
                     document.setBusinessId(businessID);
-                    document.setLocationCode("01");
+                    document.setLocationCode("000001");
                     document.setSupplierCode(supplierCode);
                     document.setTotalAmount(Double.parseDouble(totalAmount.get()));
                     document.setUserId(userID);
@@ -349,7 +349,6 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                     }
 
                     repository.savePurchaseReturn(document);
-                    actionMutableLiveData.setValue("Update");
 
                 } else {
                     showProgressDialog.setValue(false);
@@ -391,7 +390,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                             isEdit.setValue(false);
                         }
                         showProgressDialog.setValue(false);
-
+                        actionMutableLiveData.setValue("Update");
                         toastMessage.setValue(saveDocumentResponse.getMessage());
                     }else if (key == GET_DOCUMENT_BY_CODE) {
                         GetDocumentByCode purchaseByCode = (GetDocumentByCode) object;

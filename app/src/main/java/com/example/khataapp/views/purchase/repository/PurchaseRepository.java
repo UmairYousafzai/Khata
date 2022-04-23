@@ -5,6 +5,8 @@ import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
 import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_DOCUMENT_RESPONSE;
+import static com.example.khataapp.utils.CONSTANTS.SAVE_PURCHASE_ERROR;
+import static com.example.khataapp.utils.CONSTANTS.SAVE_PURCHASE_RETURN_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 
 import android.util.Log;
@@ -230,7 +232,7 @@ public class PurchaseRepository {
                 } else {
                     if (response.errorBody() != null) {
                         if (callBackListener != null) {
-                            callBackListener.getServerResponse(response.errorBody().toString(), SERVER_ERROR);
+                            callBackListener.getServerResponse(response.errorBody().toString(), SAVE_PURCHASE_ERROR);
 
                         }
                     }
@@ -242,7 +244,7 @@ public class PurchaseRepository {
             public void onFailure(@NonNull Call<SaveDocumentResponse> call, @NonNull Throwable t) {
 
                 if (callBackListener != null) {
-                    callBackListener.getServerResponse(t.getMessage(), SERVER_ERROR);
+                    callBackListener.getServerResponse(t.getMessage(), SAVE_PURCHASE_ERROR);
 
                 }
             }
@@ -270,7 +272,7 @@ public class PurchaseRepository {
                 } else {
                     if (response.errorBody() != null) {
                         if (callBackListener != null) {
-                            callBackListener.getServerResponse(response.errorBody().toString(), SERVER_ERROR);
+                            callBackListener.getServerResponse(response.errorBody().toString(), SAVE_PURCHASE_RETURN_ERROR);
 
                         }
                     }
@@ -282,7 +284,7 @@ public class PurchaseRepository {
             public void onFailure(@NonNull Call<SaveDocumentResponse> call, @NonNull Throwable t) {
 
                 if (callBackListener != null) {
-                    callBackListener.getServerResponse(t.getMessage(), SERVER_ERROR);
+                    callBackListener.getServerResponse(t.getMessage(), SAVE_PURCHASE_RETURN_ERROR);
 
                 }
             }
