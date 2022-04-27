@@ -29,9 +29,9 @@ public class AuthenticationViewModel extends BaseViewModel {
     private final MutableLiveData<Integer> btnAction;
     private ObservableField<String> userName;
     private ObservableField<String> password;
-    private MutableLiveData<String> userNameError;
-    private MutableLiveData<String> passwordError;
-    private MutableLiveData<Boolean> moveToHomeScreenLiveData;
+    private final MutableLiveData<String> userNameError;
+    private final MutableLiveData<String> passwordError;
+    private final MutableLiveData<Boolean> moveToHomeScreenLiveData;
     private int partyCount = 0;
 
 

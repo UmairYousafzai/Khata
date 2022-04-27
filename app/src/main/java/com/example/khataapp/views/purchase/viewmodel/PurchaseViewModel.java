@@ -68,6 +68,7 @@ public class PurchaseViewModel extends AndroidViewModel {
 
     public PurchaseViewModel(@NonNull Application application) {
         super(application);
+        Item.IS_PURCHASE=true;
 
         repository = new PurchaseRepository();
         btnAction = new MutableLiveData<>();
@@ -292,7 +293,7 @@ public class PurchaseViewModel extends AndroidViewModel {
         String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
         repository.getPartiesFromServer("s", businessID);
-
+        showProgressDialog.setValue(true);
         getServerResponse();
     }
 
@@ -300,6 +301,7 @@ public class PurchaseViewModel extends AndroidViewModel {
         String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
         repository.getItems(businessID);
+        showProgressDialog.setValue(true);
 
         getServerResponse();
     }
@@ -312,6 +314,8 @@ public class PurchaseViewModel extends AndroidViewModel {
     {
         repository.getPurchaseByCode(docCode);
         getServerResponse();
+        showProgressDialog.setValue(true);
+
     }
     private void setFields(Document document)
     {
@@ -357,6 +361,7 @@ public class PurchaseViewModel extends AndroidViewModel {
 
                     }
 
+                    showProgressDialog.setValue(true);
                     repository.savePurchase(document);
 
                 } else {
@@ -380,14 +385,20 @@ public class PurchaseViewModel extends AndroidViewModel {
                     if (key == GET_PARTY) {
                         GetPartyServerResponse partyServerResponse = (GetPartyServerResponse) object;
                         setUpSupplierSpinner(partyServerResponse.getPartyList());
+                        showProgressDialog.setValue(false);
+
 
                     } else if (key == GET_ITEMS) {
                         GetItemResponse itemResponse = (GetItemResponse) object;
                         itemList = itemResponse.getItem();
                         setupProductSpinner(itemResponse.getItem());
+                        showProgressDialog.setValue(false);
+
 
                     } else if (key == SERVER_ERROR) {
                         toastMessage.setValue((String) object);
+                        showProgressDialog.setValue(false);
+
 
                     }else if (key == SAVE_DOCUMENT_RESPONSE) {
                         SaveDocumentResponse saveDocumentResponse = (SaveDocumentResponse) object;
@@ -407,6 +418,8 @@ public class PurchaseViewModel extends AndroidViewModel {
 
 
                         toastMessage.setValue(purchaseByCode.getMessage());
+                        showProgressDialog.setValue(false);
+
                     }
                 }
 

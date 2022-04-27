@@ -50,13 +50,9 @@ public class MoreFragment extends Fragment {
     }
     private void btListener() {
 
-        mBinding.stockCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                navController.navigate(R.id.action_moreFragment_to_itemListFragment);
-            }
-        });
+        mBinding.stockCard.setOnClickListener(view -> navController.navigate(R.id.action_moreFragment_to_itemListFragment));
+        mBinding.purchaseCard.setOnClickListener(view -> navController.navigate(R.id.action_moreFragment_to_purchaseFragment));
+        mBinding.saleCard.setOnClickListener(view -> navController.navigate(R.id.action_moreFragment_to_saleReturnDocFragment));
         mBinding.btnLogout.setOnClickListener(view -> {
 
 

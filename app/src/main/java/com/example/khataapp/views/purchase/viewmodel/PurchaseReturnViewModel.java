@@ -36,7 +36,7 @@ import java.util.List;
 
 public class PurchaseReturnViewModel extends AndroidViewModel {
 
-     private  final String TAG = PurchaseReturnViewModel.class.getSimpleName()+":";
+    private final String TAG = PurchaseReturnViewModel.class.getSimpleName() + ":";
     private final PurchaseRepository repository;
     private final MutableLiveData<Integer> btnAction;
     private final MutableLiveData<Party> party;
@@ -66,6 +66,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
 
     public PurchaseReturnViewModel(@NonNull Application application) {
         super(application);
+        Item.IS_PURCHASE = true;
 
         repository = new PurchaseRepository();
         btnAction = new MutableLiveData<>();
@@ -74,7 +75,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         showProgressDialog = new MutableLiveData<>();
         itemMutableLiveData = new MutableLiveData<>();
         actionMutableLiveData = new MutableLiveData<>("INSERT");
-        adapter = new ProductRecyclerAdapter(null,this,2);
+        adapter = new ProductRecyclerAdapter(null, this, 2);
         toastMessage = new MutableLiveData<>();
         date = new ObservableField<>(DateUtil.getInstance().getDate());
         totalQty = new ObservableField<>("0");
@@ -205,7 +206,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                         totalAmount.set(String.valueOf(amount));
                     }
                 } catch (Exception e) {
-                    Log.e(TAG+"ConverSion error:", e.getMessage());
+                    Log.e(TAG + "ConverSion error:", e.getMessage());
                 }
 
             }
@@ -288,7 +289,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
         repository.getPartiesFromServer("s", businessID);
-
+        showProgressDialog.setValue(true);
         getServerResponse();
     }
 
@@ -296,6 +297,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
         repository.getItems(businessID);
+        showProgressDialog.setValue(true);
 
         getServerResponse();
     }
@@ -304,13 +306,12 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         return docNumber;
     }
 
-    public void getPurchaseReturnByDocCode(String docCode)
-    {
+    public void getPurchaseReturnByDocCode(String docCode) {
         repository.getPurchaseReturnByCode(docCode);
         getServerResponse();
     }
-    private void setFields(Document document)
-    {
+
+    private void setFields(Document document) {
         docNumber.set(document.getDocNo());
         date.set(Converter.StringToFormatDate(document.getDocDate()));
         selectedSupplierName.set(document.getSupplierName());
@@ -318,10 +319,9 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         subTotalAmount.set(String.valueOf(document.getTotalAmount()));
         adapter.setItemList(document.getItems());
         actionMutableLiveData.setValue("UPDATE");
-        for (Item item: document.getItems())
-        {
-            Item.totalQty+=item.getQty();
-            Item.totalAmount+=item.getAmount();
+        for (Item item : document.getItems()) {
+            Item.totalQty += item.getQty();
+            Item.totalAmount += item.getAmount();
         }
         totalQty.set(String.valueOf(Item.totalQty));
 
@@ -343,10 +343,10 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                     document.setUserId(userID);
                     document.setStatus("0");
                     document.setDocDate(date.get());
-                    if (actionMutableLiveData.getValue().equals("UPDATE"))
-                    {
+                    if (actionMutableLiveData.getValue().equals("UPDATE")) {
                         document.setDocNo(docNumber.get());
                     }
+                    showProgressDialog.setValue(true);
 
                     repository.savePurchaseReturn(document);
 
@@ -376,14 +376,20 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                     if (key == GET_PARTY) {
                         GetPartyServerResponse partyServerResponse = (GetPartyServerResponse) object;
                         setUpSupplierSpinner(partyServerResponse.getPartyList());
+                        showProgressDialog.setValue(false);
+
 
                     } else if (key == GET_ITEMS) {
                         GetItemResponse itemResponse = (GetItemResponse) object;
                         itemList = itemResponse.getItem();
                         setupProductSpinner(itemResponse.getItem());
+                        showProgressDialog.setValue(false);
+
 
                     } else if (key == SERVER_ERROR) {
                         toastMessage.setValue((String) object);
+                        showProgressDialog.setValue(false);
+
                     } else if (key == SAVE_DOCUMENT_RESPONSE) {
                         SaveDocumentResponse saveDocumentResponse = (SaveDocumentResponse) object;
                         if (saveDocumentResponse.getCode() == 200) {
@@ -392,15 +398,16 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                         showProgressDialog.setValue(false);
                         actionMutableLiveData.setValue("Update");
                         toastMessage.setValue(saveDocumentResponse.getMessage());
-                    }else if (key == GET_DOCUMENT_BY_CODE) {
+                        showProgressDialog.setValue(false);
+
+                    } else if (key == GET_DOCUMENT_BY_CODE) {
                         GetDocumentByCode purchaseByCode = (GetDocumentByCode) object;
                         if (purchaseByCode.getCode() == 200) {
 
                             setFields(purchaseByCode.getDocument());
 
                         }
-
-
+                        showProgressDialog.setValue(false);
                         toastMessage.setValue(purchaseByCode.getMessage());
                     }
                 }

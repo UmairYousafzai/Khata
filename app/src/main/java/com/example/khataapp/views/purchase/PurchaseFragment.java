@@ -34,6 +34,7 @@ import com.example.khataapp.databinding.CustomProductDialogBinding;
 import com.example.khataapp.databinding.FragmentPurchaseBinding;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.models.Item;
+import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.views.purchase.viewmodel.PurchaseViewModel;
 
 import java.util.Calendar;
@@ -44,7 +45,7 @@ public class PurchaseFragment extends Fragment {
     private FragmentPurchaseBinding mBinding;
     private NavController navController;
     private PurchaseViewModel viewModel;
-    private ProgressDialog progressDialog;
+    private AlertDialog progressDialog;
 
 
     @Override
@@ -58,6 +59,7 @@ public class PurchaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
 
         Item.totalAmount=0;
         Item.totalQty=0;
@@ -65,19 +67,10 @@ public class PurchaseFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
 
         mBinding.setViewModel(viewModel);
-        setUpProgressDialog();
 
         getLiveData();
     }
 
-    private void setUpProgressDialog() {
-
-        progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setTitle("Purchase");
-        progressDialog.setMessage("Saving");
-        progressDialog.setCancelable(false);
-
-    }
 
     @Override
     public void onStop() {
@@ -267,6 +260,7 @@ public class PurchaseFragment extends Fragment {
         dialogBinding.setViewModel(viewModel);
 
         alertDialog.show();
+        viewModel.getItemMutableLiveData().getValue().setQty(1);
 
         dialogBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override

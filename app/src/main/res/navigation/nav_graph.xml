@@ -164,6 +164,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_moreFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_moreFragment_to_saleReturnDocFragment"
+            app:destination="@id/saleReturnDocFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <dialog
         android:id="@+id/searchFilterBottomSheetFragment"
@@ -285,13 +299,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
-        <action
-            android:id="@+id/action_purchaseFragment_to_supplierListFragment"
-            app:destination="@id/supplierListFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+
         <action
             android:id="@+id/action_purchaseFragment_to_itemListFragment"
             app:destination="@id/itemListFragment" />
@@ -306,11 +314,7 @@
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>
-    <fragment
-        android:id="@+id/supplierListFragment"
-        android:name="com.example.khataapp.views.purchase.SupplierListFragment"
-        android:label="Suppliers"
-        />
+
     <fragment
         android:id="@+id/saleDocFragment"
         android:name="com.example.khataapp.views.sale.SaleDocFragment"
@@ -354,8 +358,17 @@
         tools:layout="@layout/fragment_purchase_return">
         <action
             android:id="@+id/action_purchaseReturnFragment_to_purchaseListFragment"
-            app:destination="@id/purchaseListFragment" />
+            app:destination="@id/purchaseListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
+    <fragment
+        android:id="@+id/stockAdjustmentFragment"
+        android:name="com.example.khataapp.views.stockAdjustment.StockAdjustmentFragment"
+        android:label="Stock Adjustment"
+        tools:layout="@layout/fragment_stock_adjustment"/>
 
 
 </navigation>

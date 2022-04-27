@@ -136,7 +136,7 @@
                 android:textColor="@color/black"
                 android:selectAllOnFocus="true"
 
-                android:text="@={Converter.toString(cost,viewModel.itemMutableLiveData.unitCost,viewModel.itemMutableLiveData.unitCost)}"
+                android:text="@={Converter.toString(cost,viewModel.itemMutableLiveData.unitRetail,viewModel.itemMutableLiveData.unitRetail)}"
 
                 />
 

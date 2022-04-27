@@ -66,6 +66,7 @@ public class SaleDocViewModel extends AndroidViewModel {
 
     public SaleDocViewModel(@NonNull Application application) {
         super(application);
+        Item.IS_PURCHASE = false;
 
         repository = new SaleRepository();
         btnAction = new MutableLiveData<>();
@@ -74,7 +75,7 @@ public class SaleDocViewModel extends AndroidViewModel {
         showProgressDialog = new MutableLiveData<>();
         itemMutableLiveData = new MutableLiveData<>();
         actionMutableLiveData = new MutableLiveData<>("INSERT");
-        adapter = new ProductSaleRecyclerAdapter(null,this,2);
+        adapter = new ProductSaleRecyclerAdapter(null, this, 2);
         toastMessage = new MutableLiveData<>();
         date = new ObservableField<>(DateUtil.getInstance().getDate());
         totalQty = new ObservableField<>("0");
@@ -286,6 +287,7 @@ public class SaleDocViewModel extends AndroidViewModel {
 
     private void getCustomer() {
         String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
+        showProgressDialog.setValue(true);
 
         repository.getPartiesFromServer("c", businessID);
 
@@ -294,6 +296,7 @@ public class SaleDocViewModel extends AndroidViewModel {
 
     private void getProducts() {
         String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
+        showProgressDialog.setValue(true);
 
         repository.getItems(businessID);
 
@@ -304,13 +307,12 @@ public class SaleDocViewModel extends AndroidViewModel {
         return docNumber;
     }
 
-    public void getPurchaseByDocCode(String docCode)
-    {
+    public void getPurchaseByDocCode(String docCode) {
         repository.getSaleDocByCode(docCode);
         getServerResponse();
     }
-    private void setFields(Document document)
-    {
+
+    private void setFields(Document document) {
         docNumber.set(document.getDocNo());
         date.set(Converter.StringToFormatDate(document.getDocDate()));
         selectedCustomerName.set(document.getSupplierName());
@@ -318,10 +320,9 @@ public class SaleDocViewModel extends AndroidViewModel {
         subTotalAmount.set(String.valueOf(document.getTotalAmount()));
         adapter.setItemList(document.getItems());
         actionMutableLiveData.setValue("UPDATE");
-        for (Item item: document.getItems())
-        {
-            Item.totalQty+=item.getQty();
-            Item.totalAmount+=item.getAmount();
+        for (Item item : document.getItems()) {
+            Item.totalQty += item.getQty();
+            Item.totalAmount += item.getAmount();
         }
         totalQty.set(String.valueOf(Item.totalQty));
 
@@ -344,15 +345,13 @@ public class SaleDocViewModel extends AndroidViewModel {
                     document.setUserId(userID);
                     document.setStatus("0");
                     document.setDocDate(date.get());
-                    if (actionMutableLiveData.getValue().equals("UPDATE"))
-                    {
+                    if (actionMutableLiveData.getValue().equals("UPDATE")) {
                         document.setDocNo(docNumber.get());
-                    }
-                    else
-                    {
+                    } else {
                         document.setDocNo("");
 
                     }
+                    showProgressDialog.setValue(true);
 
                     repository.saveSaleDocument(document);
 
@@ -377,15 +376,21 @@ public class SaleDocViewModel extends AndroidViewModel {
                     if (key == GET_PARTY) {
                         GetPartyServerResponse partyServerResponse = (GetPartyServerResponse) object;
                         setUpCustomerSpinner(partyServerResponse.getPartyList());
+                        showProgressDialog.setValue(false);
+
 
                     } else if (key == GET_ITEMS) {
                         GetItemResponse itemResponse = (GetItemResponse) object;
                         itemList = itemResponse.getItem();
                         setupProductSpinner(itemResponse.getItem());
+                        showProgressDialog.setValue(false);
+
 
                     } else if (key == SERVER_ERROR) {
                         toastMessage.setValue((String) object);
                         actionMutableLiveData.setValue("INSERT");
+                        showProgressDialog.setValue(false);
+
 
                     } else if (key == SAVE_DOCUMENT_RESPONSE) {
                         SaveDocumentResponse saveDocumentResponse = (SaveDocumentResponse) object;
@@ -395,7 +400,9 @@ public class SaleDocViewModel extends AndroidViewModel {
                         showProgressDialog.setValue(false);
                         actionMutableLiveData.setValue("Update");
                         toastMessage.setValue(saveDocumentResponse.getMessage());
-                    }else if (key == GET_DOCUMENT_BY_CODE) {
+                        showProgressDialog.setValue(false);
+
+                    } else if (key == GET_DOCUMENT_BY_CODE) {
                         GetDocumentByCode purchaseByCode = (GetDocumentByCode) object;
                         if (purchaseByCode.getCode() == 200) {
 
@@ -403,6 +410,7 @@ public class SaleDocViewModel extends AndroidViewModel {
 
                         }
 
+                        showProgressDialog.setValue(false);
 
                         toastMessage.setValue(purchaseByCode.getMessage());
                     }

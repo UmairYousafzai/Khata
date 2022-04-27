@@ -25,6 +25,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,7 +91,29 @@ public class AddAmountFragment extends Fragment {
         setUpBaseViewModel(viewModel);
         btnListener();
         editTextFocusListener();
+        textWatcher();
 
+    }
+
+    private void textWatcher() {
+
+        mBinding.etAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                mBinding.etAmount.setSelection(mBinding.etAmount.getText().length());
+
+            }
+        });
     }
 
     private void editTextFocusListener() {

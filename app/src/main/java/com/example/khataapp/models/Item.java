@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Item  extends BaseObservable implements Parcelable {
+public class Item extends BaseObservable implements Parcelable {
 
     @SerializedName("Barcode")
     @Expose
@@ -107,7 +107,7 @@ public class Item  extends BaseObservable implements Parcelable {
     @SerializedName("Qty")
     @Expose
     @Bindable
-    private double qty=0;
+    private double qty = 0;
     @SerializedName("FreeQty")
     @Expose
     @Bindable
@@ -124,10 +124,12 @@ public class Item  extends BaseObservable implements Parcelable {
     private double amount;
 
 
-    public static double totalQty=0;
-    public static double totalAmount=0;
+    public static double totalQty = 0;
+    public static double totalAmount = 0;
+    public static boolean IS_PURCHASE = true;
 
     public Item() {
+
     }
 
     protected Item(Parcel in) {
@@ -235,12 +237,17 @@ public class Item  extends BaseObservable implements Parcelable {
     }
 
     public void setQty(double qty) {
-        if (this.qty!=qty)
-        {
-            totalQty-=this.qty;
+        if (this.qty != qty) {
+            totalQty -= this.qty;
             this.qty = qty;
-            totalQty+=this.qty;
-            setAmount(qty*cost);
+            totalQty += this.qty;
+            if (IS_PURCHASE) {
+                setAmount(qty * unitCost);
+
+            } else {
+                setAmount(qty * unitRetail);
+
+            }
             notifyPropertyChanged(BR.qty);
         }
     }
@@ -251,8 +258,7 @@ public class Item  extends BaseObservable implements Parcelable {
     }
 
     public void setFreeQty(double freeQty) {
-        if (this.freeQty!=freeQty)
-        {
+        if (this.freeQty != freeQty) {
             this.freeQty = freeQty;
             notifyPropertyChanged(BR.freeQty);
         }
@@ -263,8 +269,7 @@ public class Item  extends BaseObservable implements Parcelable {
     }
 
     public void setCost(double cost) {
-        if (this.cost!=cost)
-        {
+        if (this.cost != cost) {
             this.cost = cost;
             notifyPropertyChanged(BR.cost);
         }
@@ -283,10 +288,10 @@ public class Item  extends BaseObservable implements Parcelable {
     }
 
     public void setAmount(double amount) {
-        totalAmount-=this.amount;
+        totalAmount -= this.amount;
 
         this.amount = amount;
-        totalAmount+=this.amount;
+        totalAmount += this.amount;
     }
 
     public int getBtn_action() {

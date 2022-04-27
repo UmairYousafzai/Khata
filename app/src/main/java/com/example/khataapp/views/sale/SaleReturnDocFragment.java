@@ -33,6 +33,7 @@ import com.example.khataapp.databinding.CustomProductDialogSaleReturnBinding;
 import com.example.khataapp.databinding.FragmentSaleDocReturnBinding;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.models.Item;
+import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.views.sale.viewModel.SaleReturnDocViewModel;
 
 import java.util.Calendar;
@@ -42,7 +43,7 @@ public class SaleReturnDocFragment extends Fragment {
     private FragmentSaleDocReturnBinding mBinding;
     private SaleReturnDocViewModel viewModel;
     private NavController navController;
-    private ProgressDialog progressDialog;
+    private AlertDialog progressDialog;
 
 
     @Override
@@ -61,21 +62,13 @@ public class SaleReturnDocFragment extends Fragment {
         Item.totalQty=0;
         viewModel= new ViewModelProvider(this).get(SaleReturnDocViewModel.class);
         navController = NavHostFragment.findNavController(this);
+        progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
 
         mBinding.setViewModel(viewModel);
-        setUpProgressDialog();
 
         getLiveData();
     }
 
-    private void setUpProgressDialog() {
-
-        progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setTitle("Sale");
-        progressDialog.setMessage("Saving");
-        progressDialog.setCancelable(false);
-
-    }
 
     @Override
     public void onStop() {
@@ -265,6 +258,7 @@ public class SaleReturnDocFragment extends Fragment {
         dialogBinding.setViewModel(viewModel);
 
         alertDialog.show();
+        viewModel.getItemMutableLiveData().getValue().setQty(1);
 
         dialogBinding.btnCancel.setOnClickListener(v -> {
             viewModel.getSelectedProductName().set("");
