@@ -3,6 +3,7 @@ package com.example.khataapp.views.stock;
 import static com.example.khataapp.utils.CONSTANTS.ITEM;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.khataapp.R;
@@ -73,6 +75,7 @@ public class ItemListFragment extends Fragment {
         getLiveData();
 
         btnListener();
+        closeKeyBoard();
     }
 
     private void btnListener() {
@@ -106,11 +109,10 @@ public class ItemListFragment extends Fragment {
                 {
                     if (item.getBtn_action()==2){
                         ItemListFragmentDirections.ActionItemListFragmentToAddItemFragment action=
-                                ItemListFragmentDirections.actionItemListFragmentToAddItemFragment();
+                                ItemListFragmentDirections.actionItemListFragmentToAddItemFragment(item.getBarcode());
 
-                        action.setItem(item);
-                        navController.navigate(action);
                         viewModel.getItemMutableLiveData().setValue(null);
+                        navController.navigate(action);
                     }
 
 
@@ -127,6 +129,7 @@ public class ItemListFragment extends Fragment {
 
                         Objects.requireNonNull(navController.getPreviousBackStackEntry()).getSavedStateHandle().set(ITEM,items);
                         navController.popBackStack();
+                        closeKeyBoard();
                 }
             }
         });
@@ -157,5 +160,15 @@ public class ItemListFragment extends Fragment {
             }
         });
 
+    }
+
+    public void closeKeyBoard() {
+        View view = requireActivity().getCurrentFocus();
+
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+        }
     }
 }

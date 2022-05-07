@@ -4,9 +4,10 @@ import com.example.khataapp.models.Department;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.models.GetDepartmentResponse;
 import com.example.khataapp.models.GetGroupResponse;
+import com.example.khataapp.models.GetItemByCodeResponse;
 import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.GetLocationResponse;
-import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPartiesServerResponse;
 import com.example.khataapp.models.GetDocumentByCode;
 import com.example.khataapp.models.GetDocumentResponse;
 import com.example.khataapp.models.GetSubGroup;
@@ -23,6 +24,7 @@ import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
 import com.example.khataapp.models.SubGroup;
 import com.example.khataapp.models.request.Voucher;
+import com.example.khataapp.models.response.party.SavePartyResponse;
 import com.example.khataapp.models.response.voucher.VoucherResponse;
 
 import retrofit2.Call;
@@ -51,10 +53,10 @@ public interface Api {
 
 
     @POST("api/Party/SaveParty")
-    Call<ServerResponse> saveParty(@Body Party party);
+    Call<SavePartyResponse> saveParty(@Body Party party);
 
     @GET("api/Party/PartyData")
-    Call<GetPartyServerResponse> getParties(@Query("BusinessId")String businessID,@Query("partytype") String partyType);
+    Call<GetPartiesServerResponse> getParties(@Query("BusinessId")String businessID, @Query("partytype") String partyType);
 
     /****************************   Department , Group And Sub Group **********************/
 
@@ -83,6 +85,9 @@ public interface Api {
 
     @GET("api/Product/ProductData")
     Call<GetItemResponse> getProducts(@Query("BusinessId")String businessID);
+
+    @GET("api/Product/ProductByCode")
+    Call<GetItemByCodeResponse> getProductByCode(@Query("Barcode")String barCode);
 
     @POST("api/Product/SaveProduct")
     Call<ServerResponse> saveItem(@Body Item item);

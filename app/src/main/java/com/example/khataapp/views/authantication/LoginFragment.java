@@ -2,14 +2,11 @@ package com.example.khataapp.views.authantication;
 
 import static com.example.khataapp.utils.CONSTANTS.LOGIN_BTN;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,22 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.khataapp.R;
 import com.example.khataapp.databinding.FragmentLoginBinding;
-import com.example.khataapp.models.GetPartyServerResponse;
-import com.example.khataapp.models.LoginResponse;
-import com.example.khataapp.models.User;
-import com.example.khataapp.network.ApiClient;
-import com.example.khataapp.utils.CONSTANTS;
 import com.example.khataapp.utils.DataViewModel;
 import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 import com.example.khataapp.viewModel.AuthenticationViewModel;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
 

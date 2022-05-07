@@ -5,31 +5,20 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.khataapp.BuildConfig;
 import com.example.khataapp.databinding.FragmentSplashScreenBinding;
-import com.example.khataapp.models.GetPartyServerResponse;
-import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.DataViewModel;
 import com.example.khataapp.utils.SharedPreferenceHelper;
-
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class SplashScreenFragment extends Fragment {
@@ -63,6 +52,8 @@ public class SplashScreenFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         dataViewModel= new ViewModelProvider(this).get(DataViewModel.class);
         dataViewModel.deleteParties();
+
+        mBinding.versionName.setText(BuildConfig.VERSION_NAME);
 
 
 

@@ -8,19 +8,14 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.Repository.PartyRepository;
-import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPartiesServerResponse;
 import com.example.khataapp.models.Party;
-import com.example.khataapp.models.response.voucher.VoucherDetail;
 import com.example.khataapp.models.response.voucher.VoucherResponse;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 import com.example.khataapp.views.party.adapter.VoucherDetailAdapter;
-
-import java.util.List;
 
 public class PartyViewModel extends BaseViewModel {
 
@@ -85,7 +80,7 @@ public class PartyViewModel extends BaseViewModel {
             {
                 if (key== GET_PARTY)
                 {
-                    GetPartyServerResponse partyServerResponse = (GetPartyServerResponse) object;
+                    GetPartiesServerResponse partyServerResponse = (GetPartiesServerResponse) object;
 
                     setShowProgressDialog(false);
                 }

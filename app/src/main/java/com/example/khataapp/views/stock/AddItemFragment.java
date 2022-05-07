@@ -20,7 +20,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.util.StringUtil;
 
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,7 @@ import com.example.khataapp.models.Department;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.response.ServerResponse;
+import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.utils.ImageUtil;
 import com.example.khataapp.utils.Permission;
 import com.example.khataapp.views.stock.viewmodel.StockViewModel;
@@ -54,12 +57,13 @@ public class AddItemFragment extends Fragment {
     private final HashMap<String, String> supplierHashMapForName = new HashMap<>();
     private final ArrayList<String> supplierNameList = new ArrayList<>();
     private final ArrayList<String> departmentNameList = new ArrayList<>();
-    private ProgressDialog progressDialog;
+    private AlertDialog progressDialog;
     private Bitmap selectedImage = null;
     private boolean isEdit = false;
     private Item editedItem;
     private String saveAction = "INSERT";
-    private String departmentCode = "", supplierCode = "",barcode="",uan="";
+    private String departmentCode = "0001", supplierCode = "", barcode = "", uan = "";
+    private List<String> uanList=new ArrayList<>();
 
 
     @Override
@@ -76,36 +80,70 @@ public class AddItemFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         stockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
+        progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
 
 
         getDepartment();
         getSupplier();
         btnListener();
+        liveDataListeners();
 
-        getDepartmentFromArgument();
+        if (getArguments() != null) {
+            barcode = AddItemFragmentArgs.fromBundle(getArguments()).getItemCode();
+            getItemByCode();
+        }
 
     }
 
-    private void getDepartmentFromArgument() {
-        if (getArguments() != null) {
-            editedItem = AddItemFragmentArgs.fromBundle(getArguments()).getItem();
-            if (editedItem != null) {
-                mBinding.setItem(editedItem);
-                mBinding.itemImage2.setVisibility(View.GONE);
-                isEdit = true;
-                saveAction = "UPDATE";
-                departmentCode = editedItem.getDepartmentCode();
-                String departmentName = departmentHashMapForName.get(departmentCode);
+    private void liveDataListeners() {
+
+        stockViewModel.getShowProgressDialog().observe(getViewLifecycleOwner(), flag -> {
+            if (flag) {
+                progressDialog.show();
+            } else {
+                progressDialog.dismiss();
+            }
+        });
+
+    }
+
+    private void getItemByCode() {
+        new Handler().postDelayed(() -> stockViewModel.getItemByCode(barcode),2000);
+        stockViewModel.getItemMutableLiveData().observe(getViewLifecycleOwner(), this::setupFields);
+    }
+
+    private void setupFields(Item item) {
+
+        editedItem = item;
+        if (editedItem != null) {
+            mBinding.setItem(editedItem);
+            mBinding.itemImage2.setVisibility(View.GONE);
+            isEdit = true;
+            saveAction = "UPDATE";
+            departmentCode = editedItem.getDepartmentCode();
+            String departmentName = departmentHashMapForName.get(departmentCode);
+            if (departmentName != null && !departmentName.isEmpty()) {
+                mBinding.departmentSpinnerLayout.setVisibility(View.VISIBLE);
+                mBinding.btnDepartment.setChecked(true);
                 mBinding.departmentSpinner.setText(departmentName);
-                supplierCode = editedItem.getSupplierCode();
-                String supplierName = supplierHashMapForName.get(supplierCode);
+            }
+            else{
+                departmentCode = "0001";
+            }
+            supplierCode = editedItem.getSupplierCode();
+            String supplierName = supplierHashMapForName.get(supplierCode);
+            if (supplierName != null && !supplierName.isEmpty()) {
+                mBinding.supplierSpinnerLayout.setVisibility(View.VISIBLE);
+                mBinding.btnSupplier.setChecked(true);
                 mBinding.supplierSpinner.setText(supplierName);
-                barcode=editedItem.getBarcode();
-                uan=editedItem.getUan();
             }
 
+            barcode = editedItem.getBarcode();
+            uan = editedItem.getUan();
+            uanList=editedItem.getUanList();
         }
     }
+
 
     private void btnListener() {
 
@@ -138,10 +176,6 @@ public class AddItemFragment extends Fragment {
 
     private void saveItem() {
 
-        progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setCancelable(false);
-        progressDialog.setTitle("Item");
-        progressDialog.setMessage("Saving....");
         progressDialog.show();
         String unitSize, cartonSize, costPrice, salePrice;
 
@@ -190,15 +224,24 @@ public class AddItemFragment extends Fragment {
 
                             if (departmentNameList.size() != 0) {
                                 String name = mBinding.departmentSpinner.getText().toString();
-                                departmentCode = departmentHashMapForID.get(name);
-                                item.setDepartmentCode(departmentCode);
-                                item.setGroupCode(departmentHashMapForID.get(name));
-                                item.setSubGroupCode(departmentHashMapForID.get(name));
+                                if (!name.isEmpty())
+                                {
+                                    departmentCode = departmentHashMapForID.get(name);
+                                    item.setDepartmentCode(departmentCode);
+                                    item.setGroupCode(departmentHashMapForID.get(name));
+                                    item.setSubGroupCode(departmentHashMapForID.get(name));
+                                }
+                                else {
+                                    item.setDepartmentCode(departmentCode);
+                                    item.setGroupCode(departmentCode);
+                                    item.setSubGroupCode(departmentCode);
+                                }
+
 
                             } else {
-                                item.setDepartmentCode("");
-                                item.setGroupCode("");
-                                item.setSubGroupCode("");
+                                item.setDepartmentCode(departmentCode);
+                                item.setGroupCode(departmentCode);
+                                item.setSubGroupCode(departmentCode);
                             }
 
 
@@ -217,6 +260,7 @@ public class AddItemFragment extends Fragment {
                             item.setAction(saveAction);
                             item.setBarcode(barcode);
                             item.setUan(uan);
+                            item.setUanList(uanList);
                             item.setUserID(SharedPreferenceHelper.getInstance(requireContext()).getUserID());
                             item.setBusinessID(SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID());
 
@@ -255,14 +299,11 @@ public class AddItemFragment extends Fragment {
 
     private void saveCall(Item item) {
 
-        stockViewModel.saveItem(item).observe(getViewLifecycleOwner(), new Observer<ServerResponse>() {
-            @Override
-            public void onChanged(ServerResponse serverResponse) {
+        stockViewModel.saveItem(item).observe(getViewLifecycleOwner(), serverResponse -> {
 
-                if (serverResponse != null) {
-                    progressDialog.dismiss();
-                    Toast.makeText(requireContext(), "" + serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+            if (serverResponse != null) {
+                progressDialog.dismiss();
+                Toast.makeText(requireContext(), "" + serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

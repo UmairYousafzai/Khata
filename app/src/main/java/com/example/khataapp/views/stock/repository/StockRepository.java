@@ -2,6 +2,7 @@ package com.example.khataapp.views.stock.repository;
 
 import static com.example.khataapp.utils.CONSTANTS.GET_DEPARTMENT;
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
+import static com.example.khataapp.utils.CONSTANTS.GET_ITEM_BY_CODE;
 import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
@@ -15,8 +16,9 @@ import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.database.Dao;
 import com.example.khataapp.database.KhataDB;
 import com.example.khataapp.models.GetDepartmentResponse;
+import com.example.khataapp.models.GetItemByCodeResponse;
 import com.example.khataapp.models.GetItemResponse;
-import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPartiesServerResponse;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.network.ApiClient;
@@ -142,25 +144,25 @@ public class StockRepository {
 
     public void getSupplier(String businessID)
     {
-        Call<GetPartyServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID,"s");
-        call.enqueue(new Callback<GetPartyServerResponse>() {
+        Call<GetPartiesServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID,"s");
+        call.enqueue(new Callback<GetPartiesServerResponse>() {
             @Override
-            public void onResponse(@NonNull Call<GetPartyServerResponse> call, @NonNull Response<GetPartyServerResponse> response) {
+            public void onResponse(@NonNull Call<GetPartiesServerResponse> call, @NonNull Response<GetPartiesServerResponse> response) {
 
                 if (response.isSuccessful())
                 {
                     if (response.body()!=null)
                     {
-                        GetPartyServerResponse getPartyServerResponse= response.body();
+                        GetPartiesServerResponse getPartiesServerResponse = response.body();
 
-                        if (getPartyServerResponse.getCode()==200)
+                        if (getPartiesServerResponse.getCode()==200)
                         {
 
-                            if (getPartyServerResponse.getPartyList()!=null&& getPartyServerResponse.getPartyList().size()>0)
+                            if (getPartiesServerResponse.getPartyList()!=null&& getPartiesServerResponse.getPartyList().size()>0)
                             {
                                 if (callBackListener!=null)
                                 {
-                                    callBackListener.getServerResponse(getPartyServerResponse.getPartyList(), GET_PARTY);
+                                    callBackListener.getServerResponse(getPartiesServerResponse.getPartyList(), GET_PARTY);
 
                                 }
 
@@ -187,7 +189,7 @@ public class StockRepository {
             }
 
             @Override
-            public void onFailure(@NonNull Call<GetPartyServerResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<GetPartiesServerResponse> call, @NonNull Throwable t) {
                 Log.e("Parties Saving Error:",t.getMessage());
                 if (callBackListener!=null)
                 {
@@ -255,6 +257,68 @@ public class StockRepository {
 
             @Override
             public void onFailure(@NonNull Call<GetItemResponse> call, @NonNull Throwable t) {
+                Log.e("Parties Saving Error:",t.getMessage());
+                if (callBackListener!=null)
+                {
+                    callBackListener.getServerResponse(t.getMessage(),SERVER_ERROR);
+
+                }
+            }
+        });
+
+    }
+
+    public void getItemByCode(String barcode)
+    {
+        Call<GetItemByCodeResponse> call = ApiClient.getInstance().getApi().getProductByCode(barcode);
+        call.enqueue(new Callback<GetItemByCodeResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetItemByCodeResponse> call, @NonNull Response<GetItemByCodeResponse> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body()!=null)
+                    {
+                        GetItemByCodeResponse getItemByCodeResponse= response.body();
+
+                        if (getItemByCodeResponse.getCode()==200)
+                        {
+
+
+                                if (callBackListener!=null)
+                                {
+                                    callBackListener.getServerResponse(getItemByCodeResponse.getItem(),GET_ITEM_BY_CODE);
+
+                                }
+
+                            }
+
+                    }
+                    else
+                    {
+                        callBackListener.getServerResponse(response.message(),SERVER_ERROR);
+
+                    }
+
+                }
+                else
+                {
+                    if (response.errorBody() != null) {
+
+                        if (callBackListener!=null)
+                        {
+                            callBackListener.getServerResponse(response.errorBody().toString(),SERVER_ERROR);
+
+                        }
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetItemByCodeResponse> call, @NonNull Throwable t) {
                 Log.e("Parties Saving Error:",t.getMessage());
                 if (callBackListener!=null)
                 {

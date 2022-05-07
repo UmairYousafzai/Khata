@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetPartyServerResponse {
+public class GetPartiesServerResponse {
 
     @SerializedName("Code")
     @Expose
@@ -20,7 +20,7 @@ public class GetPartyServerResponse {
     private List<Party> partyList ;
 
 
-    public GetPartyServerResponse() {
+    public GetPartiesServerResponse() {
 
         partyList= new ArrayList<>();
     }

@@ -48,9 +48,16 @@ public class Party implements Parcelable {
     @SerializedName("Action")
     @Expose
     private String action;
+    @SerializedName("OpeningBalance")
+    @Expose
+    private String openingBalance;
+    @SerializedName("ClosingBalance")
+    @Expose
+    private String closingBalance;
 
     public Party() {
     }
+
 
     protected Party(Parcel in) {
         id_pk = in.readInt();
@@ -65,6 +72,8 @@ public class Party implements Parcelable {
         userId = in.readString();
         businessId = in.readString();
         action = in.readString();
+        openingBalance = in.readString();
+        closingBalance = in.readString();
     }
 
     public static final Creator<Party> CREATOR = new Creator<Party>() {
@@ -175,24 +184,42 @@ public class Party implements Parcelable {
         this.action = action;
     }
 
+    public String getOpeningBalance() {
+        return openingBalance;
+    }
+
+    public void setOpeningBalance(String openingBalance) {
+        this.openingBalance = openingBalance;
+    }
+
+    public String getClosingBalance() {
+        return closingBalance;
+    }
+
+    public void setClosingBalance(String closingBalance) {
+        this.closingBalance = closingBalance;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id_pk);
-        dest.writeString(partyCode);
-        dest.writeString(partyName);
-        dest.writeString(cnic);
-        dest.writeString(partyAddress);
-        dest.writeString(phone);
-        dest.writeString(mobile);
-        dest.writeString(email);
-        dest.writeString(partyType);
-        dest.writeString(userId);
-        dest.writeString(businessId);
-        dest.writeString(action);
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id_pk);
+        parcel.writeString(partyCode);
+        parcel.writeString(partyName);
+        parcel.writeString(cnic);
+        parcel.writeString(partyAddress);
+        parcel.writeString(phone);
+        parcel.writeString(mobile);
+        parcel.writeString(email);
+        parcel.writeString(partyType);
+        parcel.writeString(userId);
+        parcel.writeString(businessId);
+        parcel.writeString(action);
+        parcel.writeString(openingBalance);
+        parcel.writeString(closingBalance);
     }
 }

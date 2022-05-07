@@ -9,9 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.khataapp.Interface.CallBackListener;
-
-import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPartiesServerResponse;
 import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.models.request.Voucher;
 import com.example.khataapp.models.response.voucher.VoucherResponse;
@@ -109,10 +107,10 @@ public class PartyRepository extends BaseRepository{
 
 
 
-        Call<GetPartyServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID,type);
-        call.enqueue(new Callback<GetPartyServerResponse>() {
+        Call<GetPartiesServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID,type);
+        call.enqueue(new Callback<GetPartiesServerResponse>() {
             @Override
-            public void onResponse(@NonNull Call<GetPartyServerResponse> call, @NonNull Response<GetPartyServerResponse> response) {
+            public void onResponse(@NonNull Call<GetPartiesServerResponse> call, @NonNull Response<GetPartiesServerResponse> response) {
                 if (response.isSuccessful())
                 {
                     if (response.body()!=null)
@@ -152,7 +150,7 @@ public class PartyRepository extends BaseRepository{
             }
 
             @Override
-            public void onFailure(@NonNull Call<GetPartyServerResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<GetPartiesServerResponse> call, @NonNull Throwable t) {
                 Log.e("Parties Saving Error:",t.getMessage());
                 callBackListener.getServerResponse(t.getMessage(),SERVER_ERROR);
 

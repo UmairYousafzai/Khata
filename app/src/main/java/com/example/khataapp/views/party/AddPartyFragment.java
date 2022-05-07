@@ -23,6 +23,7 @@ import com.example.khataapp.databinding.FragmentAddPartyBinding;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.models.User;
+import com.example.khataapp.models.response.party.SavePartyResponse;
 import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.DataViewModel;
 
@@ -300,23 +301,21 @@ public class AddPartyFragment extends Fragment {
         progressDialog.setMessage("Saving....");
         progressDialog.show();
 
-        Call<ServerResponse> call = ApiClient.getInstance().getApi().saveParty(party);
+        Call<SavePartyResponse> call = ApiClient.getInstance().getApi().saveParty(party);
 
-        call.enqueue(new Callback<ServerResponse>() {
+        call.enqueue(new Callback<SavePartyResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ServerResponse> call, @NonNull Response<ServerResponse> response) {
+            public void onResponse(@NonNull Call<SavePartyResponse> call, @NonNull Response<SavePartyResponse> response) {
 
                 if (response.isSuccessful())
                 {
                     if (response.body()!=null)
                     {
-                        ServerResponse serverResponse= response.body();
+                        SavePartyResponse serverResponse= response.body();
                         Toast.makeText(requireContext(), ""+serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         if (serverResponse.getCode()==200)
                         {
-                            progressDialog.setMessage("Syncing...");
-                            progressDialog.setTitle("Parties");
-                            progressDialog.show();
+                            dataViewModel.insertParty(serverResponse.getParty());
                             navController.popBackStack();
                         }
 
@@ -332,7 +331,7 @@ public class AddPartyFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ServerResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<SavePartyResponse> call, @NonNull Throwable t) {
 
                 Toast.makeText(requireContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
 

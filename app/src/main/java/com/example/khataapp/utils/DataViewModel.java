@@ -45,6 +45,11 @@ public class DataViewModel extends AndroidViewModel {
         dataRepository.insertParties(partyList);
 
     }
+    public void insertParty(Party party) {
+
+        dataRepository.insertParty(party);
+
+    }
 
     public void deleteParties() {
         dataRepository.deleteparties();

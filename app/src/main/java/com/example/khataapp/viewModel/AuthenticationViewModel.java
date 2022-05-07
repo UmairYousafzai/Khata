@@ -12,7 +12,7 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.khataapp.Repository.AuthenticationRepository;
-import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPartiesServerResponse;
 import com.example.khataapp.models.LoginResponse;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.User;
@@ -149,7 +149,7 @@ public class AuthenticationViewModel extends BaseViewModel {
             if (object != null) {
                 if (key == GET_PARTY) {
                     partyCount += 1;
-                    GetPartyServerResponse partyServerResponse = (GetPartyServerResponse) object;
+                    GetPartiesServerResponse partyServerResponse = (GetPartiesServerResponse) object;
                     insertParties(partyServerResponse.getPartyList());
                     if (partyCount == 2) {
                         moveToHomeScreenLiveData.setValue(true);

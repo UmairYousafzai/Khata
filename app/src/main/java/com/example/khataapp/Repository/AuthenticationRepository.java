@@ -4,18 +4,14 @@ import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.LOGIN_RESPONSE;
 import static com.example.khataapp.utils.CONSTANTS.LOGIN_RESPONSE_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
-import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPartiesServerResponse;
 import com.example.khataapp.models.LoginResponse;
 import com.example.khataapp.network.ApiClient;
-import com.example.khataapp.utils.CONSTANTS;
-import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,7 +63,7 @@ public class AuthenticationRepository extends BaseRepository {
 
 
     public void getPartiesFromServer(String businessID) {
-        Call<GetPartyServerResponse> call;
+        Call<GetPartiesServerResponse> call;
         for (int i=0 ;i<2;i++)
         {
             if (i==0)
@@ -79,9 +75,9 @@ public class AuthenticationRepository extends BaseRepository {
                  call = ApiClient.getInstance().getApi().getParties(businessID, "s");
 
             }
-            call.enqueue(new Callback<GetPartyServerResponse>() {
+            call.enqueue(new Callback<GetPartiesServerResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<GetPartyServerResponse> call, @NonNull Response<GetPartyServerResponse> response) {
+                public void onResponse(@NonNull Call<GetPartiesServerResponse> call, @NonNull Response<GetPartiesServerResponse> response) {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
                             if (response.body().getCode() == 200) {
@@ -110,7 +106,7 @@ public class AuthenticationRepository extends BaseRepository {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<GetPartyServerResponse> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<GetPartiesServerResponse> call, @NonNull Throwable t) {
                     Log.e("Parties Saving Error:", t.getMessage());
                     callBackListener.getServerResponse(t.getMessage(), SERVER_ERROR);
 

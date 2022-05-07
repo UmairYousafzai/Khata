@@ -24,6 +24,9 @@ public interface Dao {
     @Insert
     void insertParties(List<Party> partyList);
 
+    @Insert
+    void insertParty(Party party);
+
     @Query("Delete from Party")
     void deleteParty( );
 

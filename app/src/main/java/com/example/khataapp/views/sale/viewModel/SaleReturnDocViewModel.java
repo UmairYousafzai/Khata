@@ -19,7 +19,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.models.GetItemResponse;
-import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPartiesServerResponse;
 import com.example.khataapp.models.GetDocumentByCode;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
@@ -375,7 +375,7 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
             public void getServerResponse(Object object, int key) {
                 if (object != null) {
                     if (key == GET_PARTY) {
-                        GetPartyServerResponse partyServerResponse = (GetPartyServerResponse) object;
+                        GetPartiesServerResponse partyServerResponse = (GetPartiesServerResponse) object;
                         setUpCustomerSpinner(partyServerResponse.getPartyList());
                         showProgressDialog.setValue(false);
 

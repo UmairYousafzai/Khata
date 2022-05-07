@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
@@ -31,11 +30,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.khataapp.R;
 import com.example.khataapp.adapter.PartyListAdapter;
 import com.example.khataapp.databinding.FragmentHomeBinding;
-import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPartiesServerResponse;
 import com.example.khataapp.models.Party;
 import com.example.khataapp.models.User;
 import com.example.khataapp.network.ApiClient;
@@ -45,7 +43,6 @@ import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,14 +70,10 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
 
 
-
-        if( ((AppCompatActivity) requireActivity()).getSupportActionBar()!=null)
-        {
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
             ((AppCompatActivity) requireActivity()).getSupportActionBar().show();
 
         }
-
-
 
 
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -116,7 +109,6 @@ public class HomeFragment extends Fragment {
 //            Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).show();
 //
 //        }
-
 
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -344,9 +336,7 @@ public class HomeFragment extends Fragment {
         });
 
 
-
     }
-
 
 
     private void change_view_by_buttons(int i) {
@@ -455,20 +445,20 @@ public class HomeFragment extends Fragment {
 
         String businessID = SharedPreferenceHelper.getInstance(requireContext()).getBUSINESS_ID();
 
-        Call<GetPartyServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID, type);
-        call.enqueue(new Callback<GetPartyServerResponse>() {
+        Call<GetPartiesServerResponse> call = ApiClient.getInstance().getApi().getParties(businessID, type);
+        call.enqueue(new Callback<GetPartiesServerResponse>() {
             @Override
-            public void onResponse(@NonNull Call<GetPartyServerResponse> call, @NonNull Response<GetPartyServerResponse> response) {
+            public void onResponse(@NonNull Call<GetPartiesServerResponse> call, @NonNull Response<GetPartiesServerResponse> response) {
 
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        GetPartyServerResponse getPartyServerResponse = response.body();
+                        GetPartiesServerResponse getPartiesServerResponse = response.body();
 
-                        if (getPartyServerResponse.getCode() == 200) {
+                        if (getPartiesServerResponse.getCode() == 200) {
 
-                            if (getPartyServerResponse.getPartyList() != null && getPartyServerResponse.getPartyList().size() > 0) {
+                            if (getPartiesServerResponse.getPartyList() != null && getPartiesServerResponse.getPartyList().size() > 0) {
 
-                                dataViewModel.insertParties(getPartyServerResponse.getPartyList());
+                                dataViewModel.insertParties(getPartiesServerResponse.getPartyList());
 
 
                             }
@@ -484,15 +474,13 @@ public class HomeFragment extends Fragment {
                 progressDialog.dismiss();
                 if (isSupplier) {
                     getSupplierLiveData();
-                }
-                else
-                {
+                } else {
                     getCustomerLiveData();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<GetPartyServerResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<GetPartiesServerResponse> call, @NonNull Throwable t) {
 
                 Toast.makeText(requireContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
@@ -513,17 +501,13 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void closeKeyBoard()
-    {
+    public void closeKeyBoard() {
         View view = requireActivity().getCurrentFocus();
 
-        if (view!=null)
-        {
+        if (view != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         }
-
-
     }
 }

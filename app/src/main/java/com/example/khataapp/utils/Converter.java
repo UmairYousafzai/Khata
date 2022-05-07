@@ -137,4 +137,9 @@ public class Converter {
         }
         return format;
     }
+
+    public  static String FormatDoubleNumbers(double num)
+    {
+       return "Rs "+new DecimalFormat("##.##").format(num);
+    }
 }

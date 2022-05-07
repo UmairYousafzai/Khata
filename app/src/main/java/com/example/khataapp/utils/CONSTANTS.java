@@ -27,6 +27,8 @@ public class CONSTANTS {
     public static final int SAVE_PURCHASE_RETURN_ERROR=17;
     public static final int SAVE_SALE_ERROR=18;
     public static final int SAVE_SALE_RETURN_ERROR=19;
+    public static final int GET_ITEM_BY_CODE=20;
+
 
     public static final int PERMISSION_REQUEST_CODE = 1;
 

@@ -2,6 +2,7 @@ package com.example.khataapp.views.stock.viewmodel;
 
 import static com.example.khataapp.utils.CONSTANTS.GET_DEPARTMENT;
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
+import static com.example.khataapp.utils.CONSTANTS.GET_ITEM_BY_CODE;
 import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_RESPONSE;
@@ -35,7 +36,7 @@ public class StockViewModel extends AndroidViewModel {
     private final ItemListAdapter adapter;
     private final MutableLiveData<Item> itemMutableLiveData;
     private final MutableLiveData<List<Item>> itemListMutableLiveData;
-    private List<Item> selectedItems;
+    private final List<Item> selectedItems;
     private final MutableLiveData<String> selectedBtnText;
     private final MutableLiveData<Boolean> showProgressDialog;
 
@@ -150,6 +151,14 @@ public class StockViewModel extends AndroidViewModel {
         stockRepository.getItems(businessID);
     }
 
+    public void getItemByCode(String itemCode)
+    {
+        showProgressDialog.setValue(true);
+
+        getServerResponse();
+        stockRepository.getItemByCode(itemCode);
+    }
+
 
     public void getServerResponse() {
         stockRepository.setCallBackListener(new CallBackListener() {
@@ -181,6 +190,11 @@ public class StockViewModel extends AndroidViewModel {
 
                         List<Item> list= (List<Item>) object;
                         adapter.setItemList(list);
+                    }
+                    else if (key == GET_ITEM_BY_CODE) {
+                        showProgressDialog.setValue(false);
+                        itemMutableLiveData.setValue((Item) object);
+
                     }
                 }
 

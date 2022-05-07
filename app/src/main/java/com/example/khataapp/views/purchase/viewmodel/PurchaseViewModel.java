@@ -5,7 +5,6 @@ import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
 import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.SAVE_DOCUMENT_RESPONSE;
-import static com.example.khataapp.utils.CONSTANTS.SAVE_PURCHASE_RETURN_ERROR;
 import static com.example.khataapp.utils.CONSTANTS.SERVER_ERROR;
 
 import android.app.Application;
@@ -20,7 +19,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.khataapp.Interface.CallBackListener;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.models.GetItemResponse;
-import com.example.khataapp.models.GetPartyServerResponse;
+import com.example.khataapp.models.GetPartiesServerResponse;
 import com.example.khataapp.models.GetDocumentByCode;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
@@ -32,8 +31,6 @@ import com.example.khataapp.utils.Converter;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -383,7 +380,7 @@ public class PurchaseViewModel extends AndroidViewModel {
             public void getServerResponse(Object object, int key) {
                 if (object != null) {
                     if (key == GET_PARTY) {
-                        GetPartyServerResponse partyServerResponse = (GetPartyServerResponse) object;
+                        GetPartiesServerResponse partyServerResponse = (GetPartiesServerResponse) object;
                         setUpSupplierSpinner(partyServerResponse.getPartyList());
                         showProgressDialog.setValue(false);
 
