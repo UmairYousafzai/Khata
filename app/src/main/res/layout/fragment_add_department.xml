@@ -111,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.editDepartmentName}"
+                    android:inputType="textCapCharacters"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -215,8 +216,9 @@
                     android:id="@+id/et_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
                     android:text="@={viewModel.editGroupName}"
+                    android:inputType="textCapCharacters"
+
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -287,7 +289,7 @@
                 android:contentDescription="Edit Sub Group"
                 android:minWidth="48dp"
                 android:src="@drawable/ic_edit_24"
-                android:onClick="@{()-> viewModel.onClick(CONSTANTS.ADD_SUB_GROUP_BTN)}"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.EDIT_SUB_GROUP_BTN)}"
                 app:layout_constraintBottom_toBottomOf="@id/sub_group_spinner_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btn_add_sub_group"
@@ -318,6 +320,8 @@
                     android:id="@+id/et_sub_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"
+
                     android:text="@={viewModel.editSubGroupName}"/>
             </com.google.android.material.textfield.TextInputLayout>
 

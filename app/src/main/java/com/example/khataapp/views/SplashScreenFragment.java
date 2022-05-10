@@ -11,6 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class SplashScreenFragment extends Fragment {
         dataViewModel= new ViewModelProvider(this).get(DataViewModel.class);
         dataViewModel.deleteParties();
 
-        mBinding.versionName.setText(BuildConfig.VERSION_NAME);
+        mBinding.versionName.setText(String.format("Version %s", BuildConfig.VERSION_NAME));
 
 
 
@@ -71,8 +72,14 @@ public class SplashScreenFragment extends Fragment {
 //
 //        }
 
-        checkLogin();
-        dataViewModel.getAndSaveParties();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkLogin();
+                dataViewModel.getAndSaveParties();
+            }
+        },500);
+
     }
 //
 //    public String getParties(String type) {

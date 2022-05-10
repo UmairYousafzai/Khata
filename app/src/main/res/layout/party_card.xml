@@ -1,108 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <variable
             name="party"
             type="com.example.khataapp.models.Party" />
     </data>
 
 
-
-    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.google.android.material.card.MaterialCardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/party_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="5dp"
-        android:id="@+id/party_card"
-        >
+        app:cardCornerRadius="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_part_name_drawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="W"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="25sp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/party_name_background"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:text="W"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/view"
-                android:layout_marginTop="10dp"
-                android:layout_marginHorizontal="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
 
                 />
-            
+
             <TextView
                 android:id="@+id/tv_name_party"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginLeft="6dp"
+                android:padding="3dp"
                 android:text="@{party.partyName}"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
-                android:padding="3dp"
-                app:layout_constraintTop_toTopOf="@id/tv_part_name_drawable"
-                app:layout_constraintStart_toEndOf="@id/tv_part_name_drawable"
                 app:layout_constraintBottom_toTopOf="@id/tv_date_time"
-                android:layout_marginStart="6dp"
-                />
+                app:layout_constraintStart_toEndOf="@id/tv_part_name_drawable"
+                app:layout_constraintTop_toTopOf="@id/tv_part_name_drawable" />
 
             <TextView
-                android:id="@+id/tv_credit"
+                android:id="@+id/tv_closing_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rs 5000."
-                android:textColor="@color/custom_red_color"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tv"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
-                />
+                android:layout_marginRight="5dp"
+                android:text='@{"Rs "+party.closingBalance}'
+                android:textColor="@color/custom_red_color"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_date_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Yesterday"
                 android:padding="3dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_name_party"
-                app:layout_constraintStart_toStartOf="@id/tv_name_party"
+                android:text="Yesterday"
                 app:layout_constraintBottom_toBottomOf="@id/tv_part_name_drawable"
-                />
+                app:layout_constraintStart_toStartOf="@id/tv_name_party"
+                app:layout_constraintTop_toBottomOf="@id/tv_name_party" />
 
             <TextView
                 android:id="@+id/tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You Will get"
-                android:padding="3dp"
                 android:layout_marginBottom="10dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_credit"
-                app:layout_constraintEnd_toEndOf="@id/tv_credit"
+                android:padding="3dp"
+                android:text="You Will get"
                 app:layout_constraintBottom_toTopOf="@id/view"
-                />
+                app:layout_constraintEnd_toEndOf="@id/tv_closing_balance"
+                app:layout_constraintTop_toBottomOf="@id/tv_closing_balance" />
+
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/gray_custom"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                />
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

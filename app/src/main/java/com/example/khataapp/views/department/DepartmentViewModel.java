@@ -35,6 +35,7 @@ import com.example.khataapp.utils.SharedPreferenceHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class DepartmentViewModel extends AndroidViewModel {
 
@@ -455,7 +456,7 @@ public class DepartmentViewModel extends AndroidViewModel {
             String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
             Group group= new Group();
             group.setGroupCode(groupID);
-            group.setGroupName(editGroupName.get());
+            group.setGroupName(editGroupName.get().toUpperCase(Locale.ROOT));
             group.setBusinessID(businessID);
             group.setDepartmentCode(departmentID);
             group.setUserID(userID);
@@ -478,7 +479,7 @@ public class DepartmentViewModel extends AndroidViewModel {
             String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
             SubGroup subGroup= new SubGroup();
             subGroup.setGroupCode(groupID);
-            subGroup.setSubGroupName(editSubGroupName.get());
+            subGroup.setSubGroupName(editSubGroupName.get().toUpperCase(Locale.ROOT));
             subGroup.setBusinessId(businessID);
             subGroup.setDepartmentCode(departmentID);
             subGroup.setUserId(userID);
@@ -502,7 +503,7 @@ public class DepartmentViewModel extends AndroidViewModel {
             String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
             Department department = new Department();
             department.setDepartmentCode(departmentID);
-            department.setDepartmentName(editDepartmentName.get());
+            department.setDepartmentName(editDepartmentName.get().toUpperCase(Locale.ROOT));
             department.setBusinessID(businessID);
             department.setUserID(userID);
             department.setAction(departmentAction);
@@ -558,6 +559,7 @@ public class DepartmentViewModel extends AndroidViewModel {
 
                         SaveDepartmentResponse departmentResponse = (SaveDepartmentResponse) object;
                         Department department = departmentResponse.getDepartment();
+                        removeDepartment(departmentID);
                         departmentList.add(department);
                         departmentID = department.getDepartmentCode();
                         departmentName = department.getDepartmentName();
@@ -573,6 +575,7 @@ public class DepartmentViewModel extends AndroidViewModel {
 
                         SaveGroupResponse saveGroupResponse = (SaveGroupResponse) object;
                         Group group = saveGroupResponse.getGroup();
+                        removeGroup(groupID);
                         groupList.add(group);
                         groupID = group.getGroupCode();
                         groupName = group.getGroupName();
@@ -588,10 +591,11 @@ public class DepartmentViewModel extends AndroidViewModel {
 
                         SaveSubGroupResponse saveSubGroupResponse = (SaveSubGroupResponse) object;
                         SubGroup subGroup = saveSubGroupResponse.getSubGroup();
+                        removeSubGroup(subGroupID);
                         subGroupList.add(subGroup);
                         subGroupID = subGroup.getSubGroupCode();
                         subGroupName = subGroup.getSubGroupName();
-                        selectedSubGroupName.set(groupName);
+                        selectedSubGroupName.set(subGroupName);
                         subGroupHashMap.put(subGroup.getSubGroupName(), subGroup.getSubGroupCode());
                         setupSubGroupSpinner(subGroupList);
                         progressMutableLiveData.setValue(false);
@@ -602,6 +606,42 @@ public class DepartmentViewModel extends AndroidViewModel {
                 }
             }
         });
+    }
+
+    private void removeSubGroup(String subGroupID) {
+
+        for (SubGroup subGroup:subGroupList)
+        {
+            if (subGroup.getSubGroupCode().equals(subGroupID))
+            {
+                subGroupList.remove(subGroup);
+                return;
+            }
+        }
+    }
+
+    private void removeGroup(String groupID) {
+
+        for (Group group:groupList)
+        {
+            if (group.getGroupCode().equals(groupID))
+            {
+                groupList.remove(group);
+                return;
+            }
+        }
+    }
+
+    private void removeDepartment(String departmentID) {
+
+        for (Department department:departmentList)
+        {
+            if (department.getDepartmentCode().equals(departmentID))
+            {
+                departmentList.remove(department);
+                return;
+            }
+        }
     }
 
 

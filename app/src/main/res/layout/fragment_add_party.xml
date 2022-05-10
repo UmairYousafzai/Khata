@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lines="1"
-                    android:inputType="textCapSentences"
+                    android:inputType="textCapCharacters"
                     android:nextFocusDown="@+id/edit_text_person_in_contact_phone"
                     android:singleLine="true"
                     android:textColor="@color/black"

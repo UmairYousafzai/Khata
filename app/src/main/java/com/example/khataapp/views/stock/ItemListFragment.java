@@ -8,11 +8,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 import com.example.khataapp.R;
 import com.example.khataapp.databinding.FragmentItemListBinding;
 import com.example.khataapp.models.Item;
+import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.views.stock.viewmodel.StockViewModel;
 
 import java.util.List;
@@ -34,7 +38,7 @@ public class ItemListFragment extends Fragment {
     private StockViewModel viewModel;
     private NavController navController;
     private int key=0;
-    private ProgressDialog progressDialog;
+    private AlertDialog progressDialog;
 
 
     @Override
@@ -54,12 +58,11 @@ public class ItemListFragment extends Fragment {
 
         mBinding.setViewModel(viewModel);
 
-        progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setTitle("Items");
-        progressDialog.setMessage("Loading");
+        progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
 
 
         viewModel.getItemsList();
+
 
         if (getArguments()!=null)
         {
@@ -76,6 +79,23 @@ public class ItemListFragment extends Fragment {
 
         btnListener();
         closeKeyBoard();
+        setPullToFresh();
+        searchViewListener();
+    }
+
+    private void searchViewListener() {
+        mBinding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                viewModel.searchItem(newText);
+                return false;
+            }
+        });
     }
 
     private void btnListener() {
@@ -84,8 +104,11 @@ public class ItemListFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                navController.navigate(R.id.action_itemListFragment_to_addItemFragment);
-            }
+                ItemListFragmentDirections.ActionItemListFragmentToAddItemFragment action=
+                        ItemListFragmentDirections.actionItemListFragmentToAddItemFragment("");
+
+                viewModel.getItemMutableLiveData().setValue(null);
+                navController.navigate(action);            }
         });
     }
 
@@ -162,6 +185,16 @@ public class ItemListFragment extends Fragment {
 
     }
 
+    public void setPullToFresh() {
+        mBinding.swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                mBinding.swipeLayout.setRefreshing(false);
+                viewModel.getItemsList();
+            }
+        });
+    }
     public void closeKeyBoard() {
         View view = requireActivity().getCurrentFocus();
 

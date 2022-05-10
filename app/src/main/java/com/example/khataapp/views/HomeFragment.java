@@ -84,7 +84,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        change_view_by_buttons(CUSTOMER_FRAGMENT);
 //        MeowBottomNavigation navBar = getActivity().findViewById(R.id.bottom_view);
 //        if (navBar!=null)
 //        {
@@ -136,6 +135,18 @@ public class HomeFragment extends Fragment {
 
         }
 
+        checkPartyButtonState();
+
+    }
+
+    private void checkPartyButtonState() {
+        if (isCustomer) {
+            change_view_by_buttons(CUSTOMER_FRAGMENT);
+            getCustomerLiveData();
+        } else {
+            change_view_by_buttons(SUPPLIER_FRAGMENT);
+            getSupplierLiveData();
+        }
     }
 
     private void searchViewListener() {

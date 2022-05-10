@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,11 +17,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.khataapp.databinding.FragmentAddDepartmentBinding;
+import com.example.khataapp.utils.DialogUtil;
 
 public class AddDepartmentFragment extends Fragment {
 
     private FragmentAddDepartmentBinding mBinding;
     private DepartmentViewModel viewModel;
+    private AlertDialog progressDialog ;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -39,12 +43,11 @@ public class AddDepartmentFragment extends Fragment {
         mBinding.setViewModel(viewModel);
 
         getLiveData();
+        progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
+
     }
 
     private void getLiveData() {
-        ProgressDialog progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
         progressDialog.show();
 
 

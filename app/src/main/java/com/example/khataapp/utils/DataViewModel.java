@@ -52,7 +52,11 @@ public class DataViewModel extends AndroidViewModel {
     }
 
     public void deleteParties() {
-        dataRepository.deleteparties();
+        dataRepository.deleteParties();
+
+    }
+    public void deleteParty(String partyCode) {
+        dataRepository.deleteParty(partyCode);
 
     }
 

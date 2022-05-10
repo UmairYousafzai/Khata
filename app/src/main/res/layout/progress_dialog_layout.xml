@@ -12,8 +12,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cp_cardview"
-        android:layout_width="180dp"
-        android:layout_height="130dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
@@ -31,18 +31,18 @@
             android:layout_gravity="center"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/cp_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/loading"
-                android:textColor="@color/app_theme_color"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <TextView-->
+<!--                android:id="@+id/cp_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:text="@string/loading"-->
+<!--                android:textColor="@color/app_theme_color"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
 
             <ProgressBar

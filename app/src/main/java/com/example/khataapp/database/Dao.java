@@ -28,7 +28,10 @@ public interface Dao {
     void insertParty(Party party);
 
     @Query("Delete from Party")
-    void deleteParty( );
+    void deleteParties( );
+
+    @Query("Delete from Party where partyCode=:partyCode")
+    void deleteParty( String partyCode);
 
     @Query("Select *from Party  where partyType=:type order by id_pk desc  ")
     LiveData<List<Party>> getParties(String type);

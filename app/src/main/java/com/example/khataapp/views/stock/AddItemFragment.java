@@ -90,7 +90,7 @@ public class AddItemFragment extends Fragment {
 
         if (getArguments() != null) {
             barcode = AddItemFragmentArgs.fromBundle(getArguments()).getItemCode();
-            getItemByCode();
+            if (barcode != null && !barcode.isEmpty()) getItemByCode();
         }
 
     }

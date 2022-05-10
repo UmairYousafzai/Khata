@@ -83,12 +83,21 @@ public class DataRepository {
         });
     }
 
-    public void deleteparties( )
+    public void deleteParties( )
     {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                mDao.deleteParty();
+                mDao.deleteParties();
+            }
+        });
+    }
+    public void deleteParty( String partyCode)
+    {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDao.deleteParty(partyCode);
             }
         });
     }

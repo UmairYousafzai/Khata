@@ -118,6 +118,11 @@ public class StockViewModel extends AndroidViewModel {
     {
         adapter.setKey(key);
     }
+
+    public void searchItem(String queryText)
+    {
+        adapter.getFilter().filter(queryText);
+    }
     public MutableLiveData<Item> getItemMutableLiveData() {
         return itemMutableLiveData;
     }
@@ -190,6 +195,7 @@ public class StockViewModel extends AndroidViewModel {
 
                         List<Item> list= (List<Item>) object;
                         adapter.setItemList(list);
+
                     }
                     else if (key == GET_ITEM_BY_CODE) {
                         showProgressDialog.setValue(false);

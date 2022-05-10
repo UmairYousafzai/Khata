@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -26,8 +27,10 @@ import com.example.khataapp.models.User;
 import com.example.khataapp.models.response.party.SavePartyResponse;
 import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.DataViewModel;
+import com.example.khataapp.utils.DialogUtil;
 
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +45,7 @@ public class AddPartyFragment extends Fragment {
     private NavController navController;
     private User user= new User();
     private String action = "INSERT",partyCode="";
-    private ProgressDialog progressDialog;
+    private AlertDialog progressDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -66,8 +69,8 @@ public class AddPartyFragment extends Fragment {
 
         navController= NavHostFragment.findNavController(this);
         dataViewModel= new ViewModelProvider(this).get(DataViewModel.class);
-        progressDialog= new ProgressDialog(requireContext());
-        progressDialog.setCancelable(false);
+        progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
+
 
 
         if (getArguments()!=null)
@@ -242,7 +245,7 @@ public class AddPartyFragment extends Fragment {
     private void saveParty() {
 
         Party party = new Party();
-        party.setPartyName(mBinding.etPartyName.getText().toString());
+        party.setPartyName(mBinding.etPartyName.getText().toString().toUpperCase(Locale.ROOT));
         party.setPartyCode(partyCode);
 
         party.setPartyType(partyType);
@@ -297,8 +300,6 @@ public class AddPartyFragment extends Fragment {
 
     private void generateSaveRequest(Party party) {
 
-        progressDialog.setTitle("Party");
-        progressDialog.setMessage("Saving....");
         progressDialog.show();
 
         Call<SavePartyResponse> call = ApiClient.getInstance().getApi().saveParty(party);
@@ -315,6 +316,7 @@ public class AddPartyFragment extends Fragment {
                         Toast.makeText(requireContext(), ""+serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         if (serverResponse.getCode()==200)
                         {
+                            dataViewModel.deleteParty(partyCode);
                             dataViewModel.insertParty(serverResponse.getParty());
                             navController.popBackStack();
                         }

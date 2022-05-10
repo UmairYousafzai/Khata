@@ -259,6 +259,7 @@
         android:name="com.example.khataapp.views.stock.AddItemFragment"
         android:label="Add Item"
         tools:layout="@layout/fragment_add_item" >
+
         <argument
             android:name="itemCode"
             app:argType="string"
