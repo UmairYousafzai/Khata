@@ -1,5 +1,6 @@
 package com.example.khataapp.views.purchase.viewmodel;
 
+import static com.example.khataapp.utils.CONSTANTS.AUTHORIZE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
 import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
@@ -65,7 +66,7 @@ public class PurchaseViewModel extends AndroidViewModel {
 
     public PurchaseViewModel(@NonNull Application application) {
         super(application);
-        Item.IS_PURCHASE=true;
+        Item.IS_PURCHASE = true;
 
         repository = new PurchaseRepository();
         btnAction = new MutableLiveData<>();
@@ -74,9 +75,9 @@ public class PurchaseViewModel extends AndroidViewModel {
         showProgressDialog = new MutableLiveData<>();
         itemMutableLiveData = new MutableLiveData<>();
         actionMutableLiveData = new MutableLiveData<>("INSERT");
-        adapter = new ProductRecyclerAdapter(this,null,1);
+        adapter = new ProductRecyclerAdapter(this, null, 1);
         toastMessage = new MutableLiveData<>();
-        String formatDate=DateUtil.getInstance().getDate();
+        String formatDate = DateUtil.getInstance().getDate();
         date = new ObservableField<>(formatDate);
         totalQty = new ObservableField<>("0");
         subTotalAmount = new ObservableField<>("0");
@@ -100,7 +101,10 @@ public class PurchaseViewModel extends AndroidViewModel {
 
         if (key == SAVE_BTN) {
             showProgressDialog.setValue(true);
-            savePurchase();
+            savePurchase("0");
+        } else if (key == AUTHORIZE_BTN) {
+            showProgressDialog.setValue(true);
+            savePurchase("3");
         } else {
             btnAction.setValue(key);
         }
@@ -178,7 +182,6 @@ public class PurchaseViewModel extends AndroidViewModel {
     public ObservableField<String> getDate() {
         return date;
     }
-
 
 
     public void addItemToProductAdapter() {
@@ -307,15 +310,14 @@ public class PurchaseViewModel extends AndroidViewModel {
         return docNumber;
     }
 
-    public void getPurchaseByDocCode(String docCode)
-    {
+    public void getPurchaseByDocCode(String docCode) {
         repository.getPurchaseByCode(docCode);
         getServerResponse();
         showProgressDialog.setValue(true);
 
     }
-    private void setFields(Document document)
-    {
+
+    private void setFields(Document document) {
         docNumber.set(document.getDocNo());
         date.set(Converter.StringToFormatDate(document.getDocDate()));
         selectedSupplierName.set(document.getSupplierName());
@@ -323,16 +325,15 @@ public class PurchaseViewModel extends AndroidViewModel {
         subTotalAmount.set(String.valueOf(document.getTotalAmount()));
         adapter.setItemList(document.getItems());
         actionMutableLiveData.setValue("UPDATE");
-        for (Item item: document.getItems())
-        {
-            Item.totalQty+=item.getQty();
-            Item.totalAmount+=item.getAmount();
+        for (Item item : document.getItems()) {
+            Item.totalQty += item.getQty();
+            Item.totalAmount += item.getAmount();
         }
         totalQty.set(String.valueOf(Item.totalQty));
 
     }
 
-    private void savePurchase() {
+    private void savePurchase(String authorizeKey) {
         if (!date.get().isEmpty()) {
             if (!supplierCode.isEmpty()) {
                 if (Item.totalAmount != 0) {
@@ -346,14 +347,12 @@ public class PurchaseViewModel extends AndroidViewModel {
                     document.setSupplierCode(supplierCode);
                     document.setTotalAmount(Double.parseDouble(totalAmount.get()));
                     document.setUserId(userID);
-                    document.setStatus("0");
+                    document.setStatus(authorizeKey);
                     document.setDocDate(date.get());
-                    if (actionMutableLiveData.getValue().equals("UPDATE"))
-                    {
+                    if (actionMutableLiveData.getValue().equals("UPDATE")) {
                         document.setDocNo(docNumber.get());
                     }
-                    else
-                    {
+                    else {
                         document.setDocNo("");
 
                     }
@@ -397,15 +396,17 @@ public class PurchaseViewModel extends AndroidViewModel {
                         showProgressDialog.setValue(false);
 
 
-                    }else if (key == SAVE_DOCUMENT_RESPONSE) {
+                    } else if (key == SAVE_DOCUMENT_RESPONSE) {
                         SaveDocumentResponse saveDocumentResponse = (SaveDocumentResponse) object;
                         if (saveDocumentResponse.getCode() == 200) {
                             isEdit.setValue(false);
+                            docNumber.set(saveDocumentResponse.getDocument().getDocNo());
+                            actionMutableLiveData.setValue("UPDATE");
                         }
                         showProgressDialog.setValue(false);
-                        actionMutableLiveData.setValue("Update");
+
                         toastMessage.setValue(saveDocumentResponse.getMessage());
-                    }else if (key == GET_DOCUMENT_BY_CODE) {
+                    } else if (key == GET_DOCUMENT_BY_CODE) {
                         GetDocumentByCode purchaseByCode = (GetDocumentByCode) object;
                         if (purchaseByCode.getCode() == 200) {
 

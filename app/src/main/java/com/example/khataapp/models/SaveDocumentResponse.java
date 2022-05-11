@@ -11,11 +11,11 @@ public class SaveDocumentResponse extends ServerResponse {
     @Expose
     private Document document;
 
-    public Document getPurchase() {
+    public Document getDocument() {
         return document;
     }
 
-    public void setPurchase(Document document) {
+    public void setDocument(Document document) {
         this.document = document;
     }
 }

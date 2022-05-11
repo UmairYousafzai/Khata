@@ -66,6 +66,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             holder.mBinding.setPurchaseReturnViewModel(purchaseReturnViewModel);
 
         }
+        holder.mBinding.setKey(key);
         holder.mBinding.setItem(item);
         holder.mBinding.executePendingBindings();
 

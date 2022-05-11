@@ -43,6 +43,7 @@ public class DepartmentViewModel extends AndroidViewModel {
     private ArrayAdapter<String> groupAdapter;
     private ArrayAdapter<String> subGroupAdapter;
     private final MutableLiveData<String> serverErrorMutableLiveData;
+    private final MutableLiveData<Integer> clickActionMutableLiveData;
     private final HashMap<String, String> departmentHashMap;
     private final HashMap<String, String> groupHashMap;
     private final HashMap<String, String> subGroupHashMap;
@@ -80,6 +81,7 @@ public class DepartmentViewModel extends AndroidViewModel {
     public DepartmentViewModel(@NonNull Application application) {
         super(application);
         serverErrorMutableLiveData = new MutableLiveData<>();
+        clickActionMutableLiveData = new MutableLiveData<>();
         departmentHashMap = new HashMap<>();
         groupHashMap = new HashMap<>();
         departmentAdapterMutableLiveData = new MutableLiveData<>();
@@ -221,6 +223,9 @@ public class DepartmentViewModel extends AndroidViewModel {
         return departmentAdapterMutableLiveData;
     }
 
+    public MutableLiveData<Integer> getClickActionMutableLiveData() {
+        return clickActionMutableLiveData;
+    }
 
     public MutableLiveData<String> getServerErrorMutableLiveData() {
         return serverErrorMutableLiveData;
@@ -280,6 +285,7 @@ public class DepartmentViewModel extends AndroidViewModel {
 
 
     public void onClick(int key) {
+        clickActionMutableLiveData.setValue(key);
         if (key == CONSTANTS.ADD_DEPARTMENT_BTN) {
             departmentEditTextVisibility.set(true);
             editDepartmentName.set("");

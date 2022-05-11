@@ -1,5 +1,6 @@
 package com.example.khataapp.views.purchase;
 
+import static com.example.khataapp.utils.CONSTANTS.AUTHORIZE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.DATE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.NEW_BTN;
 import static com.example.khataapp.utils.CONSTANTS.DOCUMENT;

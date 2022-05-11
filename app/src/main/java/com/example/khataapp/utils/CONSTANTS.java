@@ -51,5 +51,6 @@ public class CONSTANTS {
     public static  int SAVE_SUB_GROUP_BTN =16;
     public static  int LOGIN_BTN =17;
     public static  int NAVIGATE_SIGNUP_BTN =18;
+    public static  int AUTHORIZE_BTN =19;
 
 }

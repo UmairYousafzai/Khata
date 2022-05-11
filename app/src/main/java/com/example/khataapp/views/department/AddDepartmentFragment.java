@@ -1,5 +1,12 @@
 package com.example.khataapp.views.department;
 
+import static com.example.khataapp.utils.CONSTANTS.ADD_DEPARTMENT_BTN;
+import static com.example.khataapp.utils.CONSTANTS.ADD_GROUP_BTN;
+import static com.example.khataapp.utils.CONSTANTS.ADD_SUB_GROUP_BTN;
+import static com.example.khataapp.utils.CONSTANTS.EDIT_DEPARTMENT_BTN;
+import static com.example.khataapp.utils.CONSTANTS.EDIT_GROUP_BTN;
+import static com.example.khataapp.utils.CONSTANTS.EDIT_SUB_GROUP_BTN;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
@@ -42,8 +49,9 @@ public class AddDepartmentFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(DepartmentViewModel.class);
         mBinding.setViewModel(viewModel);
 
-        getLiveData();
         progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
+        getLiveData();
+
 
     }
 
@@ -52,6 +60,29 @@ public class AddDepartmentFragment extends Fragment {
 
 
         viewModel.getDepartmentList();
+
+        viewModel.getClickActionMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer key) {
+
+                if (key==ADD_DEPARTMENT_BTN||key== EDIT_DEPARTMENT_BTN)
+                {
+                    mBinding.etDepartment.requestFocus();
+                    mBinding.etDepartment.setSelection(mBinding.etDepartment.getText().length());
+                }
+                else if (key==ADD_GROUP_BTN|| key==EDIT_GROUP_BTN)
+                {
+                    mBinding.etGroup.requestFocus();
+
+                    mBinding.etGroup.setSelection(mBinding.etGroup.getText().length());
+
+                } else if (key==ADD_SUB_GROUP_BTN|| key==EDIT_SUB_GROUP_BTN) {
+                    mBinding.etSubGroup.requestFocus();
+                    mBinding.etSubGroup.setSelection(mBinding.etSubGroup.getText().length());
+
+                }
+            }
+        });
 
         viewModel.getProgressMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override

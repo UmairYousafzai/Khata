@@ -72,6 +72,7 @@ public class ProductSaleRecyclerAdapter extends RecyclerView.Adapter<ProductSale
             holder.mBinding.setSaleViewModel(saleViewModel);
 
         }
+        holder.mBinding.setKey(key);
         holder.mBinding.setItem(item);
         holder.mBinding.executePendingBindings();
 

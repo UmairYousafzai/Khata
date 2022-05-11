@@ -22,6 +22,8 @@ public class PurchaseListViewModel extends AndroidViewModel {
     private final PurchaseListAdapter adapter;
     private final MutableLiveData<String> toastMessage;
     private final MutableLiveData<Document> purchaseMutableLiveData;
+    private final MutableLiveData<Boolean> showProgressDialog;
+
 
 
     public PurchaseListViewModel(@NonNull Application application) {
@@ -29,6 +31,7 @@ public class PurchaseListViewModel extends AndroidViewModel {
         repository = new PurchaseRepository();
         adapter= new PurchaseListAdapter(this);
         toastMessage= new MutableLiveData<>();
+        showProgressDialog= new MutableLiveData<>();
         purchaseMutableLiveData= new MutableLiveData<>();
     }
 
@@ -57,8 +60,13 @@ public class PurchaseListViewModel extends AndroidViewModel {
         return adapter;
     }
 
+    public MutableLiveData<Boolean> getShowProgressDialog() {
+        return showProgressDialog;
+    }
+
     public void getPurchasesList()
     {
+        showProgressDialog.setValue(true);
         String businessID= SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
         repository.getPurchasesList(businessID);
@@ -66,6 +74,7 @@ public class PurchaseListViewModel extends AndroidViewModel {
     }
    public void getPurchasesReturnList()
     {
+        showProgressDialog.setValue(true);
         String businessID= SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
         repository.getPurchaseReturnList(businessID);
@@ -84,10 +93,14 @@ public class PurchaseListViewModel extends AndroidViewModel {
                         GetDocumentResponse purchaseResponse= (GetDocumentResponse) object;
 
                         adapter.setPurchaseList(purchaseResponse.getPurchaseList());
+                        showProgressDialog.setValue(false);
+
                     }
                     else if (key== SERVER_ERROR)
                     {
                         toastMessage.setValue((String) object);
+                        showProgressDialog.setValue(false);
+
                     }
                 }
             }

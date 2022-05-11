@@ -1,5 +1,6 @@
 package com.example.khataapp.views.sale.viewModel;
 
+import static com.example.khataapp.utils.CONSTANTS.AUTHORIZE_BTN;
 import static com.example.khataapp.utils.CONSTANTS.GET_ITEMS;
 import static com.example.khataapp.utils.CONSTANTS.GET_DOCUMENT_BY_CODE;
 import static com.example.khataapp.utils.CONSTANTS.GET_PARTY;
@@ -100,8 +101,13 @@ public class SaleDocViewModel extends AndroidViewModel {
 
         if (key == SAVE_BTN) {
             showProgressDialog.setValue(true);
-            saveSaleDocument();
-        } else {
+            saveSaleDocument("0");
+        } else if(key==AUTHORIZE_BTN)
+        {
+            showProgressDialog.setValue(true);
+            saveSaleDocument("3");
+        }
+        else {
             btnAction.setValue(key);
         }
     }
@@ -328,7 +334,7 @@ public class SaleDocViewModel extends AndroidViewModel {
 
     }
 
-    private void saveSaleDocument() {
+    private void saveSaleDocument(String authorizeKey) {
         if (!date.get().isEmpty()) {
             if (!customerCode.isEmpty()) {
                 if (Item.totalAmount != 0) {
@@ -343,7 +349,7 @@ public class SaleDocViewModel extends AndroidViewModel {
                     document.setPartyCode(customerCode);
                     document.setTotalAmount(Double.parseDouble(totalAmount.get()));
                     document.setUserId(userID);
-                    document.setStatus("0");
+                    document.setStatus(authorizeKey);
                     document.setDocDate(date.get());
                     if (actionMutableLiveData.getValue().equals("UPDATE")) {
                         document.setDocNo(docNumber.get());
@@ -396,9 +402,10 @@ public class SaleDocViewModel extends AndroidViewModel {
                         SaveDocumentResponse saveDocumentResponse = (SaveDocumentResponse) object;
                         if (saveDocumentResponse.getCode() == 200) {
                             isEdit.setValue(false);
+                            docNumber.set(saveDocumentResponse.getDocument().getDocNo());
+                            actionMutableLiveData.setValue("UPDATE");
                         }
-                        showProgressDialog.setValue(false);
-                        actionMutableLiveData.setValue("Update");
+
                         toastMessage.setValue(saveDocumentResponse.getMessage());
                         showProgressDialog.setValue(false);
 
