@@ -137,6 +137,10 @@ public class AddItemFragment extends Fragment {
                 mBinding.btnSupplier.setChecked(true);
                 mBinding.supplierSpinner.setText(supplierName);
             }
+            else
+            {
+                supplierCode="000001";
+            }
 
             barcode = editedItem.getBarcode();
             uan = editedItem.getUan();
@@ -153,6 +157,8 @@ public class AddItemFragment extends Fragment {
                 mBinding.departmentSpinnerLayout.setVisibility(View.VISIBLE);
             } else {
                 mBinding.departmentSpinnerLayout.setVisibility(View.GONE);
+                mBinding.departmentSpinner.setText("");
+                departmentCode="0001";
 
             }
         });
@@ -163,7 +169,8 @@ public class AddItemFragment extends Fragment {
                 mBinding.supplierSpinnerLayout.setVisibility(View.VISIBLE);
             } else {
                 mBinding.supplierSpinnerLayout.setVisibility(View.GONE);
-
+                mBinding.supplierSpinner.setText("");
+                supplierCode="000001";
             }
         });
 

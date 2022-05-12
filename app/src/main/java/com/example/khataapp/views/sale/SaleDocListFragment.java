@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.khataapp.databinding.FragmentSaleDocListBinding;
 import com.example.khataapp.models.Document;
+import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.views.sale.viewModel.SaleDocListViewModel;
 
 
@@ -27,6 +29,8 @@ public class SaleDocListFragment extends Fragment {
     private FragmentSaleDocListBinding mBinding;
     private SaleDocListViewModel viewModel;
     private NavController navController ;
+    private AlertDialog progressDialog;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -42,6 +46,7 @@ public class SaleDocListFragment extends Fragment {
 
         viewModel= new ViewModelProvider(this).get(SaleDocListViewModel.class);
         navController= NavHostFragment.findNavController(this);
+        progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
 
         mBinding.setSaleViewModel(viewModel);
 
@@ -56,28 +61,30 @@ public class SaleDocListFragment extends Fragment {
             viewModel.getDocument(SaleDocListFragmentArgs.fromBundle(getArguments()).getDocType());
         }
 
-        viewModel.getToastMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String message) {
+        viewModel.getShowProgressDialog().observe(getViewLifecycleOwner(), showProgressDialog -> {
 
-                if (message!=null)
-                {
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-                }
+            if (showProgressDialog) {
+                progressDialog.show();
+            } else {
+                progressDialog.dismiss();
+            }
+        });
+        viewModel.getToastMessage().observe(getViewLifecycleOwner(), message -> {
+
+            if (message!=null)
+            {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
             }
         });
 
-        viewModel.getDocumentMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Document>() {
-            @Override
-            public void onChanged(Document document) {
-                if (document !=null)
+        viewModel.getDocumentMutableLiveData().observe(getViewLifecycleOwner(), document -> {
+            if (document !=null)
+            {
+                if (navController.getPreviousBackStackEntry()!=null)
                 {
-                    if (navController.getPreviousBackStackEntry()!=null)
-                    {
-                        navController.getPreviousBackStackEntry().getSavedStateHandle().set(DOCUMENT, document);
-                        navController.popBackStack();
+                    navController.getPreviousBackStackEntry().getSavedStateHandle().set(DOCUMENT, document);
+                    navController.popBackStack();
 
-                    }
                 }
             }
         });

@@ -328,6 +328,7 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
         subTotalAmount.set(String.valueOf(document.getTotalAmount()));
         adapter.setItemList(document.getItems());
         actionMutableLiveData.setValue("UPDATE");
+        customerCode=document.getPartyCode();
         for (Item item: document.getItems())
         {
             Item.totalQty+=item.getQty();

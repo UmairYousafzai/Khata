@@ -119,8 +119,9 @@ public class AddAmountFragment extends Fragment {
     private void editTextFocusListener() {
         mBinding.etAmount.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                showAndHideCustomKeyBoard();
-            }
+                Animation animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down);
+                mBinding.keyboardLayout.GlKeyboard.setAnimation(animation);
+                mBinding.keyboardLayout.GlKeyboard.setVisibility(View.GONE);            }
         });
     }
 
@@ -171,11 +172,12 @@ public class AddAmountFragment extends Fragment {
     }
 
     private void showAndHideCustomKeyBoard() {
+
         if (mBinding.keyboardLayout.GlKeyboard.getVisibility() == View.GONE) {
             Animation animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up);
             mBinding.keyboardLayout.GlKeyboard.setAnimation(animation);
             mBinding.keyboardLayout.GlKeyboard.setVisibility(View.VISIBLE);
-
+            closeKeyBoard();
 
         } else {
             Animation animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down);

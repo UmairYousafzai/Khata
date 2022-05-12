@@ -325,6 +325,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         subTotalAmount.set(String.valueOf(document.getTotalAmount()));
         adapter.setItemList(document.getItems());
         actionMutableLiveData.setValue("UPDATE");
+        supplierCode=document.getSupplierCode();
         for (Item item : document.getItems()) {
             Item.totalQty += item.getQty();
             Item.totalAmount += item.getAmount();

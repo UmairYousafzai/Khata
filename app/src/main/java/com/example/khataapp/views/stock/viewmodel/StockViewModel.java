@@ -41,18 +41,16 @@ public class StockViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> showProgressDialog;
 
 
-
-
     public StockViewModel(@NonNull Application application) {
         super(application);
 
         stockRepository = StockRepository.getInstance(application);
         adapter = new ItemListAdapter(this);
-        itemMutableLiveData= new MutableLiveData<>();
-        itemListMutableLiveData= new MutableLiveData<>();
-        selectedItems= new ArrayList<>();
-        selectedBtnText= new MutableLiveData<>();
-        showProgressDialog= new MutableLiveData<>();
+        itemMutableLiveData = new MutableLiveData<>();
+        itemListMutableLiveData = new MutableLiveData<>();
+        selectedItems = new ArrayList<>();
+        selectedBtnText = new MutableLiveData<>();
+        showProgressDialog = new MutableLiveData<>();
     }
 
     public MutableLiveData<Boolean> getShowProgressDialog() {
@@ -71,26 +69,18 @@ public class StockViewModel extends AndroidViewModel {
         return adapter;
     }
 
-    public void onAdapterCardClick(Item item,int action)
-    {
-        if (item!=null)
-        {
-            if (action==1)
-            {
-                if (!selectedItems.contains(item))
-                {
+    public void onAdapterCardClick(Item item, int action) {
+        if (item != null) {
+            if (action == 1) {
+                if (!selectedItems.contains(item)) {
                     selectedItems.add(item);
-                    String size= String.valueOf(selectedItems.size());
+                    String size = String.valueOf(selectedItems.size());
                     selectedBtnText.setValue(size);
-                }
-                else
-                {
+                } else {
                     serverErrorLiveData.setValue("Already selected");
                 }
 
-            }
-            else
-            {
+            } else {
                 item.setBtn_action(action);
                 itemMutableLiveData.setValue(item);
             }
@@ -102,27 +92,22 @@ public class StockViewModel extends AndroidViewModel {
         return itemListMutableLiveData;
     }
 
-    public void onClick()
-    {
-        if (selectedItems.size()>0)
-        {
+    public void onClick() {
+        if (selectedItems.size() > 0) {
             itemListMutableLiveData.setValue(selectedItems);
-        }
-        else
-        {
+        } else {
             serverErrorLiveData.setValue("please select item");
         }
     }
 
-    public void setAdapterKey(int key)
-    {
+    public void setAdapterKey(int key) {
         adapter.setKey(key);
     }
 
-    public void searchItem(String queryText)
-    {
+    public void searchItem(String queryText) {
         adapter.getFilter().filter(queryText);
     }
+
     public MutableLiveData<Item> getItemMutableLiveData() {
         return itemMutableLiveData;
     }
@@ -147,17 +132,15 @@ public class StockViewModel extends AndroidViewModel {
         return partyMutableLiveData;
     }
 
-    public void getItemsList()
-    {
+    public void getItemsList() {
         showProgressDialog.setValue(true);
-        String businessID= SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
+        String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
         getServerResponse();
         stockRepository.getItems(businessID);
     }
 
-    public void getItemByCode(String itemCode)
-    {
+    public void getItemByCode(String itemCode) {
         showProgressDialog.setValue(true);
 
         getServerResponse();
@@ -186,18 +169,17 @@ public class StockViewModel extends AndroidViewModel {
                         showProgressDialog.setValue(false);
 
                         serverErrorLiveData.setValue(error);
-                    }else if (key == GET_PARTY) {
+                    } else if (key == GET_PARTY) {
 
-                        List<Party> partyList= (List<Party>) object;
+                        List<Party> partyList = (List<Party>) object;
                         partyMutableLiveData.setValue(partyList);
-                    }else if (key == GET_ITEMS) {
+                    } else if (key == GET_ITEMS) {
                         showProgressDialog.setValue(false);
 
-                        List<Item> list= (List<Item>) object;
+                        List<Item> list = (List<Item>) object;
                         adapter.setItemList(list);
 
-                    }
-                    else if (key == GET_ITEM_BY_CODE) {
+                    } else if (key == GET_ITEM_BY_CODE) {
                         showProgressDialog.setValue(false);
                         itemMutableLiveData.setValue((Item) object);
 

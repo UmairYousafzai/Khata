@@ -64,12 +64,19 @@ public class Document implements Parcelable {
     @SerializedName("PartyCode")
     @Expose
     private String partyCode;
+    @SerializedName("PartyName")
+    @Expose
+    private String PartyName;
+    @SerializedName("Party")
+    @Expose
+    private String party;
     @SerializedName("DocumentDetail")
     @Expose
     private List<Item> items= new ArrayList<>();
 
     public Document() {
     }
+
 
     protected Document(Parcel in) {
         docNo = in.readString();
@@ -89,6 +96,8 @@ public class Document implements Parcelable {
         action = in.readString();
         docType = in.readString();
         partyCode = in.readString();
+        PartyName = in.readString();
+        party = in.readString();
         items = in.createTypedArrayList(Item.CREATOR);
     }
 
@@ -111,6 +120,8 @@ public class Document implements Parcelable {
         dest.writeString(action);
         dest.writeString(docType);
         dest.writeString(partyCode);
+        dest.writeString(PartyName);
+        dest.writeString(party);
         dest.writeTypedList(items);
     }
 
@@ -130,6 +141,22 @@ public class Document implements Parcelable {
             return new Document[size];
         }
     };
+
+    public String getParty() {
+        return party;
+    }
+
+    public void setParty(String party) {
+        this.party = party;
+    }
+
+    public String getPartyName() {
+        return PartyName;
+    }
+
+    public void setPartyName(String partyName) {
+        PartyName = partyName;
+    }
 
     public String getPartyCode() {
         return partyCode;

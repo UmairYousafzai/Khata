@@ -23,6 +23,7 @@ public class SaleDocListViewModel extends AndroidViewModel {
     private final SaleDocListListAdapter adapter;
     private final MutableLiveData<String> toastMessage;
     private final MutableLiveData<Document> documentMutableLiveData;
+    private final MutableLiveData<Boolean> showProgressDialog;
 
 
     public SaleDocListViewModel(@NonNull Application application) {
@@ -31,6 +32,7 @@ public class SaleDocListViewModel extends AndroidViewModel {
         adapter= new SaleDocListListAdapter(this);
         toastMessage= new MutableLiveData<>();
         documentMutableLiveData = new MutableLiveData<>();
+        showProgressDialog = new MutableLiveData<>();
     }
 
     public void onClick(Document document)
@@ -44,6 +46,10 @@ public class SaleDocListViewModel extends AndroidViewModel {
         {
             toastMessage.setValue("Authorized Documents Cannot be Edit.");
         }
+    }
+
+    public MutableLiveData<Boolean> getShowProgressDialog() {
+        return showProgressDialog;
     }
 
     public MutableLiveData<Document> getDocumentMutableLiveData() {
@@ -60,6 +66,7 @@ public class SaleDocListViewModel extends AndroidViewModel {
 
     public void getDocument(int type)
     {
+        showProgressDialog.setValue(true);
         String businessID= SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
 
         repository.getSaleDocs(type,businessID);
@@ -78,10 +85,12 @@ public class SaleDocListViewModel extends AndroidViewModel {
                         GetDocumentResponse purchaseResponse= (GetDocumentResponse) object;
 
                         adapter.setPurchaseList(purchaseResponse.getPurchaseList());
+                        showProgressDialog.setValue(false);
                     }
                     else if (key== SERVER_ERROR)
                     {
                         toastMessage.setValue((String) object);
+                        showProgressDialog.setValue(false);
                     }
                 }
             }
