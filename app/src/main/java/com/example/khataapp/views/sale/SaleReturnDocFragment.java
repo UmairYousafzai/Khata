@@ -57,15 +57,10 @@ public class SaleReturnDocFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Item.totalAmount=0;
-        Item.totalQty=0;
         viewModel= new ViewModelProvider(this).get(SaleReturnDocViewModel.class);
         navController = NavHostFragment.findNavController(this);
         progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
-
         mBinding.setViewModel(viewModel);
-
         getLiveData();
     }
 
@@ -88,7 +83,7 @@ public class SaleReturnDocFragment extends Fragment {
                 {
                     SaleReturnDocFragmentDirections.ActionSaleReturnDocFragmentToSaleDocListFragment navAction=
                             SaleReturnDocFragmentDirections.actionSaleReturnDocFragmentToSaleDocListFragment();
-                    navAction.setDocType(3);
+                    navAction.setDocType(4);
                     navController.navigate(navAction);
                 }
                 else if (action== SEARCH_SUPPLIER_BTN)

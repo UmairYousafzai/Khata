@@ -6,6 +6,7 @@
     <data>
 
         <import type="com.example.khataapp.utils.CONSTANTS" />
+        <import type="com.example.khataapp.utils.Converter" />
 
         <variable
             name="viewModel"
@@ -44,7 +45,7 @@
                 android:id="@+id/tv_Authorize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/tv_background"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="2dp"
@@ -72,27 +73,28 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_Authorize"
                 app:layout_constraintTop_toTopOf="@+id/tv_Authorize" />
-
             <TextView
                 android:id="@+id/date_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="@string/date"
-                app:layout_constraintBottom_toTopOf="@+id/tv_date"
-                app:layout_constraintEnd_toEndOf="@id/tv_date"
-                app:layout_constraintStart_toStartOf="@+id/tv_date"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Authorize" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_date"
+                app:layout_constraintStart_toEndOf="@id/tv_date"
+                app:layout_constraintTop_toTopOf="@id/tv_date"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp" />
 
             <TextView
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
                 android:background="@drawable/seach_view_background"
                 android:drawablePadding="8dp"
                 android:elevation="5dp"
+                android:layout_marginTop="10dp"
                 android:padding="8dp"
                 android:text="@={viewModel.date}"
                 android:textColor="@color/black"
@@ -100,21 +102,22 @@
                 app:drawableLeftCompat="@drawable/ic_calendar_line"
                 app:drawableStartCompat="@drawable/ic_calendar_line"
                 app:drawableTint="@color/app_theme_color"
+                app:layout_constraintTop_toBottomOf="@+id/tv_Authorize"
                 app:layout_constraintBottom_toTopOf="@id/spinner_select_customer_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/date_title" />
+                app:layout_constraintStart_toEndOf="@id/date_title"
+                />
 
 
             <TextView
                 android:id="@+id/doc_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="@string/doc_no"
-                app:layout_constraintBottom_toTopOf="@+id/tv_doc_number"
-                app:layout_constraintEnd_toEndOf="@id/tv_doc_number"
-                app:layout_constraintStart_toStartOf="@+id/tv_doc_number"
-                app:layout_constraintTop_toBottomOf="@+id/tv_Authorize" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_doc_number"
+                app:layout_constraintEnd_toStartOf="@id/tv_doc_number"
+                app:layout_constraintTop_toTopOf="@id/tv_doc_number"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp" />
 
             <TextView
                 android:id="@+id/tv_doc_number"
@@ -125,13 +128,15 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/seach_view_background"
                 android:elevation="5dp"
+                android:layout_marginTop="10dp"
                 android:padding="8dp"
                 android:text="@={viewModel.docNumber}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/spinner_select_customer_layout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/doc_title" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_Authorize"
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/spinner_select_customer_layout"
@@ -139,7 +144,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:elevation="5dp"
                 android:hint="@string/select_supplier"
                 app:boxBackgroundColor="@color/white"
@@ -184,7 +189,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:elevation="5dp"
                 android:hint="@string/select_products"
                 app:boxBackgroundColor="@color/white"
@@ -235,14 +240,14 @@
                 android:weightSum="5"
                 android:layout_marginHorizontal="20dp"
                 android:gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 >
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CTN SIZE"
+                    android:text="Ctn Size"
                     android:textColor="@color/app_theme_color"
                     android:textStyle="bold"
                     android:textSize="18sp"
@@ -254,7 +259,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="QTY"
+                    android:text="Qty"
                     android:textColor="@color/app_theme_color"
                     android:textStyle="bold"
                     android:textSize="18sp"
@@ -266,7 +271,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FREE"
+                    android:text="Free"
                     android:textColor="@color/app_theme_color"
                     android:textStyle="bold"
                     android:textSize="18sp"
@@ -308,7 +313,7 @@
                 android:layout_height="300dp"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/rv_background"
                 android:elevation="5dp"
                 android:padding="5dp"
@@ -382,9 +387,8 @@
                 android:id="@+id/tv_sub_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.subTotalAmount,default=1234}"
+                android:text="@{Converter.FormatDoubleNumbers(viewModel.subTotalAmount),default=RSamodfdsdsdsddsdsdfddvdun}"
                 android:textSize="18sp"
-
                 app:layout_constraintTop_toTopOf="@id/tv__sub_total_heading"
                 app:layout_constraintStart_toEndOf="@id/tv__sub_total_heading"
                 app:layout_constraintBottom_toBottomOf="@id/tv__sub_total_heading"
@@ -410,7 +414,7 @@
                 android:id="@+id/tv_tax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.gstTax, default=123}"
+                android:text="@{Converter.FormatDoubleNumbers(viewModel.gstTax),default=RSamodfdsdsdsddsdsdfddvdun}"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="@id/tv_tax_heading"
                 app:layout_constraintStart_toEndOf="@id/tv_tax_heading"
@@ -440,7 +444,8 @@
                 android:id="@+id/tv_all_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.totalAmount,default=1234}"
+                android:text="@{Converter.FormatDoubleNumbers(viewModel.totalAmount),default=RSamodfdsdsdsddsdsdfddvdun}"
+
                 android:textSize="18sp"
 
                 app:layout_constraintTop_toTopOf="@id/tv_all_total_heading"

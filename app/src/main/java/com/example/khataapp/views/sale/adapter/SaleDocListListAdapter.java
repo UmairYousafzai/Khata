@@ -16,13 +16,13 @@ import java.util.List;
 public class SaleDocListListAdapter extends RecyclerView.Adapter<SaleDocListListAdapter.SaleListListViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private List<Document> documentList;
-    private SaleDocListViewModel saleViewModel;
+    private final List<Document> documentList;
+    private final SaleDocListViewModel saleViewModel;
 
-    public SaleDocListListAdapter( SaleDocListViewModel saleViewModel) {
+    public SaleDocListListAdapter(SaleDocListViewModel saleViewModel) {
         documentList = new ArrayList<>();
 
-            this.saleViewModel= saleViewModel;
+        this.saleViewModel = saleViewModel;
 
 
     }
@@ -30,12 +30,11 @@ public class SaleDocListListAdapter extends RecyclerView.Adapter<SaleDocListList
     @NonNull
     @Override
     public SaleListListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (layoutInflater==null)
-        {
-            layoutInflater= LayoutInflater.from(parent.getContext());
+        if (layoutInflater == null) {
+            layoutInflater = LayoutInflater.from(parent.getContext());
         }
 
-        SaleCardBinding binding = SaleCardBinding.inflate(layoutInflater,parent,false);
+        SaleCardBinding binding = SaleCardBinding.inflate(layoutInflater, parent, false);
 
         return new SaleListListViewHolder(binding);
     }
@@ -49,8 +48,7 @@ public class SaleDocListListAdapter extends RecyclerView.Adapter<SaleDocListList
 
         holder.mBinding.setDocument(document);
 
-            holder.mBinding.setSaleViewModel(saleViewModel);
-
+        holder.mBinding.setSaleViewModel(saleViewModel);
 
 
         holder.mBinding.executePendingBindings();
@@ -63,8 +61,7 @@ public class SaleDocListListAdapter extends RecyclerView.Adapter<SaleDocListList
 
     public void setPurchaseList(List<Document> list) {
         documentList.clear();
-        if (list!=null && list.size()>0)
-        {
+        if (list != null && list.size() > 0) {
             documentList.addAll(list);
         }
 
@@ -72,10 +69,10 @@ public class SaleDocListListAdapter extends RecyclerView.Adapter<SaleDocListList
 
     }
 
-    public static class SaleListListViewHolder extends RecyclerView.ViewHolder
-    {
+    public static class SaleListListViewHolder extends RecyclerView.ViewHolder {
 
         SaleCardBinding mBinding;
+
         public SaleListListViewHolder(@NonNull SaleCardBinding binding) {
             super(binding.getRoot());
 

@@ -57,8 +57,6 @@ public class SaleDocFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Item.totalAmount=0;
-        Item.totalQty=0;
         viewModel= new ViewModelProvider(this).get(SaleDocViewModel.class);
         navController = NavHostFragment.findNavController(this);
         progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());

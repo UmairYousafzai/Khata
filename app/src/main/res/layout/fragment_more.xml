@@ -91,7 +91,6 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
-            app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toStartOf="@id/sale_card"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/background_image_home">
@@ -105,16 +104,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:padding="2dp"
                     android:src="@drawable/ic_buy" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="  Purchase  "
                     android:textColor="@color/font_color_dark"
-                    android:textStyle="bold" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
 
@@ -127,7 +126,6 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
-            app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="@id/purchase_card"
             app:layout_constraintEnd_toStartOf="@id/stock_card"
             app:layout_constraintStart_toEndOf="@+id/purchase_card"
@@ -142,16 +140,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:padding="2dp"
                     android:src="@drawable/ic_sale" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="       Sale       "
                     android:textColor="@color/font_color_dark"
-                    android:textStyle="bold" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -163,7 +161,6 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
-            app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="@id/purchase_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/sale_card"
@@ -178,16 +175,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:padding="2dp"
                     android:src="@drawable/ic_boxes" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="Stock Book"
                     android:textColor="@color/font_color_dark"
-                    android:textStyle="bold" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -196,12 +193,12 @@
             android:id="@+id/notification_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
-            app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toStartOf="@id/recycler_card"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sale_card">
 
@@ -214,16 +211,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:padding="2dp"
                     android:src="@drawable/ic_notification_alert" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="Notification"
                     android:textColor="@color/font_color_dark"
-                    android:textStyle="bold" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
 
@@ -236,7 +233,6 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
-            app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="@id/notification_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/notification_card"
@@ -251,16 +247,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:padding="2dp"
                     android:src="@drawable/ic_recycle_line" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="Recycle Bin"
                     android:textColor="@color/font_color_dark"
-                    android:textStyle="bold" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -271,11 +267,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_setting_line"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="@string/setting"
             android:textColor="@color/font_color_dark"
             android:textSize="12sp"
@@ -291,11 +287,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_setting_line"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="@string/help_support"
             android:textColor="@color/font_color_dark"
             android:textSize="12sp"
@@ -311,11 +307,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_info_circle_line"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
             android:gravity="center"
-                android:padding="10dp"
+            android:padding="5dp"
             android:text="@string/about_us"
             android:textColor="@color/font_color_dark"
             android:textSize="12sp"
@@ -330,18 +326,17 @@
             android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="@string/logout"
             android:textColor="@color/white"
-            app:elevation="5dp"
-            app:cornerRadius="20dp"
-            android:layout_marginTop="20dp"
             app:backgroundTint="@color/app_theme_color"
-            app:layout_constraintVertical_bias="0.5"
-            app:layout_constraintTop_toBottomOf="@id/btn_about_us"
+            app:cornerRadius="20dp"
+            app:elevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/btn_about_us"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

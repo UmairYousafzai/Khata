@@ -53,7 +53,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
     private final ObservableField<ArrayAdapter<String>> productAdapter;
     private final HashMap<String, String> productHashMap;
     private final ObservableField<String> selectedProductName;
-    private String supplierCode, productBarCode, productName = "";
+    private String supplierCode="", productBarCode, productName = "";
     private List<Item> itemList;
     private final ObservableField<String> totalQty;
     private final ObservableField<String> subTotalAmount;
@@ -63,6 +63,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
     private final ObservableField<String> docNumber;
     private boolean gstOldFlg = false;
     private final MutableLiveData<String> actionMutableLiveData;
+    private boolean isAuthorizeRequest=false;
 
 
     public PurchaseReturnViewModel(@NonNull Application application) {
@@ -86,7 +87,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         supplierHashMap = new HashMap<>();
         productAdapter = new ObservableField<>();
         selectedProductName = new ObservableField<>("");
-        totalAmount = new ObservableField<>("");
+        totalAmount = new ObservableField<>("0");
         gstTax = new ObservableField<>("");
         gstFlag = new ObservableField<>(false);
         docNumber = new ObservableField<>("------");
@@ -104,6 +105,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
             savePurchaseReturn("0");
         } else if(key==AUTHORIZE_BTN)
         {
+            isAuthorizeRequest=true;
             showProgressDialog.setValue(true);
             savePurchaseReturn("3");
         }
@@ -185,7 +187,6 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         return date;
     }
 
-
     public void addItemToProductAdapter() {
         isEdit.setValue(true);
 
@@ -196,8 +197,8 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
 
 
                 try {
-                    double qty = Item.totalQty;
-                    double amount = Item.totalAmount;
+                    double qty = Double.parseDouble(totalQty.get())+item.getQty();
+                    double amount = Double.parseDouble(totalAmount.get())+item.getAmount();
 
                     totalQty.set(String.valueOf(qty));
                     subTotalAmount.set(String.valueOf(amount));
@@ -212,7 +213,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                         totalAmount.set(String.valueOf(amount));
                     }
                 } catch (Exception e) {
-                    Log.e(TAG + "ConverSion error:", e.getMessage());
+                    Log.e("Conversion error:", e.getMessage());
                 }
 
             }
@@ -225,6 +226,28 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         }
     }
 
+    public void addItemToProductAdapter(Item item) {
+        if (item != null) {
+            try {
+                double qty = Double.parseDouble(totalQty.get()) + item.getQty();
+                double amount = Double.parseDouble(totalAmount.get()) + item.getAmount();
+                totalQty.set(String.valueOf(qty));
+                subTotalAmount.set(String.valueOf(amount));
+                if (gstFlag.get()) {
+                    double subAmount = Double.parseDouble(subTotalAmount.get());
+                    double gstPercentage = (17 * subAmount) / 100;
+                    gstTax.set(String.valueOf(gstPercentage));
+                    double tAmount = Double.parseDouble(totalAmount.get());
+                    tAmount += gstPercentage;
+                    totalAmount.set(String.valueOf(tAmount));
+                } else {
+                    totalAmount.set(String.valueOf(amount));
+                }
+            } catch (Exception e) {
+                Log.e("Conversion error:", e.getMessage());
+            }
+        }
+    }
 
     public MutableLiveData<Item> getItemMutableLiveData() {
         return itemMutableLiveData;
@@ -320,24 +343,26 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
     private void setFields(Document document) {
         docNumber.set(document.getDocNo());
         date.set(Converter.StringToFormatDate(document.getDocDate()));
-        selectedSupplierName.set(document.getSupplierName());
+        selectedSupplierName.set(document.getPartyName());
         totalAmount.set(String.valueOf(document.getTotalAmount()));
         subTotalAmount.set(String.valueOf(document.getTotalAmount()));
         adapter.setItemList(document.getItems());
         actionMutableLiveData.setValue("UPDATE");
-        supplierCode=document.getSupplierCode();
+        supplierCode=document.getPartyCode();
+
+        double quantity=0;
         for (Item item : document.getItems()) {
-            Item.totalQty += item.getQty();
-            Item.totalAmount += item.getAmount();
+            quantity+=item.getQty();
         }
-        totalQty.set(String.valueOf(Item.totalQty));
+        totalQty.set(String.valueOf(quantity));
 
     }
+
 
     private void savePurchaseReturn(String authorizeKey) {
         if (!date.get().isEmpty()) {
             if (!supplierCode.isEmpty()) {
-                if (Item.totalAmount != 0) {
+                if (!totalAmount.get().equals("0")) {
                     String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
                     String userID = SharedPreferenceHelper.getInstance(getApplication()).getUserID();
                     Document document = new Document();
@@ -345,7 +370,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                     document.setAction(actionMutableLiveData.getValue());
                     document.setBusinessId(businessID);
                     document.setLocationCode("000001");
-                    document.setSupplierCode(supplierCode);
+                    document.setPartyCode(supplierCode);
                     document.setTotalAmount(Double.parseDouble(totalAmount.get()));
                     document.setUserId(userID);
                     document.setStatus(authorizeKey);
@@ -396,13 +421,21 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                     } else if (key == SERVER_ERROR) {
                         toastMessage.setValue((String) object);
                         showProgressDialog.setValue(false);
+                        isAuthorizeRequest=false;
 
                     } else if (key == SAVE_DOCUMENT_RESPONSE) {
                         SaveDocumentResponse saveDocumentResponse = (SaveDocumentResponse) object;
                         if (saveDocumentResponse.getCode() == 200) {
-                            isEdit.setValue(false);
-                            docNumber.set(saveDocumentResponse.getDocument().getDocNo());
-                            actionMutableLiveData.setValue("UPDATE");
+                            if (isAuthorizeRequest)
+                            {
+                                isAuthorizeRequest=false;
+                                clearData();
+                            }
+                            else
+                            {
+                                isEdit.setValue(false);
+                                docNumber.set(saveDocumentResponse.getDocument().getDocNoBusinessWise());
+                                actionMutableLiveData.setValue("UPDATE"); }
                         }
 
                         toastMessage.setValue(saveDocumentResponse.getMessage());
@@ -422,6 +455,17 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
 
             }
         });
+    }
+
+    private void clearData() {
+        docNumber.set("");
+        selectedSupplierName.set("");
+        adapter.clearList();
+        itemList.clear();
+        totalAmount.set("0");
+        totalQty.set("0");
+        subTotalAmount.set("0");
+        gstTax.set("0");
     }
 
     private void setupProductSpinner(List<Item> list) {

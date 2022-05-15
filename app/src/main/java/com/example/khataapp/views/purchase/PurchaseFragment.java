@@ -62,8 +62,7 @@ public class PurchaseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
 
-        Item.totalAmount=0;
-        Item.totalQty=0;
+
         viewModel= new ViewModelProvider(this).get(PurchaseViewModel.class);
         navController = NavHostFragment.findNavController(this);
 

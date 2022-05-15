@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.saleReturnDocFragment);
         } else if (item.getItemId() == R.id.action_purchase_return) {
             navController.navigate(R.id.purchaseReturnFragment);
-        }else if (item.getItemId() == R.id.action_item) {
+        } else if (item.getItemId() == R.id.action_item) {
             navController.navigate(R.id.itemListFragment);
         } else if (item.getItemId() == R.id.action_stock_adjustment) {
             navController.navigate(R.id.stockAdjustmentFragment);
@@ -186,9 +186,7 @@ public class MainActivity extends AppCompatActivity {
     public void signOut() {
         dataViewModel.deleteParties();
         dataViewModel.deleteUser();
-        SharedPreferenceHelper.getInstance(this).setIsLogin(false);
-        SharedPreferenceHelper.getInstance(this).setBUSINESS_ID("");
-        SharedPreferenceHelper.getInstance(this).setUserID("");
+        SharedPreferenceHelper.getInstance(this).deleteSharedPreference();
         navController.navigate(R.id.splashScreenFragment);
     }
 
@@ -196,10 +194,9 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        int currentFragmentID= navController.getCurrentDestination().getId();
+        int currentFragmentID = navController.getCurrentDestination().getId();
 
-        if (currentFragmentID==R.id.splashScreenFragment)
-        {
+        if (currentFragmentID == R.id.splashScreenFragment) {
             finish();
         }
 

@@ -72,7 +72,7 @@ public class Converter {
                 e.printStackTrace();
             }
 
-            DateFormat dateFormat= new SimpleDateFormat("dd-MM-yyyy");
+            DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
 
             if (date1 != null) {
                 formatDate= dateFormat.format(date1);
@@ -141,5 +141,17 @@ public class Converter {
     public  static String FormatDoubleNumbers(double num)
     {
        return "Rs "+new DecimalFormat("##.##").format(num);
+    }
+    public  static String FormatDoubleNumbers(String num)
+    {
+        String[] numberArray= num.split("\\.");
+        if (numberArray.length>1)
+        {
+            if (numberArray[1].length()>2)
+            {
+                num=numberArray[0]+"."+numberArray[1].substring(0,2);
+            }
+        }
+       return num;
     }
 }

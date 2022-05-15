@@ -1,6 +1,7 @@
 package com.example.khataapp.views.authantication;
 
 import static com.example.khataapp.utils.CONSTANTS.LOGIN_BTN;
+import static com.example.khataapp.utils.CONSTANTS.NAVIGATE_SIGNUP_BTN;
 
 import android.os.Bundle;
 
@@ -68,10 +69,10 @@ public class LoginFragment extends Fragment {
                 SharedPreferenceHelper.getInstance(requireContext()).setUserID(user.getUserId());
                 SharedPreferenceHelper.getInstance(requireContext()).setBUSINESS_ID(user.getBusinessId());
                 SharedPreferenceHelper.getInstance(requireContext()).setBusinessName(user.getBusinessName());
+                SharedPreferenceHelper.getInstance(requireContext()).setLocationID(user.getLocationId());
+                SharedPreferenceHelper.getInstance(requireContext()).setDefaultPartyID(user.getDefaultPartyCode());
                 SharedPreferenceHelper.getInstance(requireContext()).setIsLogin(true);
-
                 viewModel.insertUser(user);
-
             }
         });
 
@@ -110,7 +111,7 @@ public class LoginFragment extends Fragment {
 
             if (LOGIN_BTN == key) {
                 viewModel.login();
-            } else {
+            } else if (NAVIGATE_SIGNUP_BTN==key){
                 NavDirections navDirections = LoginFragmentDirections.actionLoginFragmentToSignUpFragment();
                 navController.navigate(navDirections);
             }
@@ -140,5 +141,12 @@ public class LoginFragment extends Fragment {
         });
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        viewModel.getMoveToHomeScreenLiveData().setValue(false);
+        viewModel.getUserNameError().setValue(null);
+        viewModel.getPasswordError().setValue(null);
+        viewModel.getBtnAction().setValue(0);
+    }
 }

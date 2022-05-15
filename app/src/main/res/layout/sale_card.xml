@@ -69,7 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@{document.docNo,default=12345}"
+                android:text="@{document.docNoBusinessWise,default=12345}"
                 android:textColor="@color/app_theme_color"
                 android:textSize="20sp"
                 android:textStyle="bold"

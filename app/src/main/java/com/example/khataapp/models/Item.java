@@ -121,14 +121,12 @@ public class Item extends BaseObservable implements Parcelable {
     @Expose
     private double amount;
 
-
-    public static double totalQty = 0;
-    public static double totalAmount = 0;
     public static boolean IS_PURCHASE = true;
 
     public Item() {
 
     }
+
 
     protected Item(Parcel in) {
         barcode = in.readString();
@@ -222,23 +220,13 @@ public class Item extends BaseObservable implements Parcelable {
         }
     };
 
-    public static void setTotalQty(double totalQty) {
-        Item.totalQty = totalQty;
-    }
-
-    public static void setTotalAmount(double totalAmount) {
-        Item.totalAmount = totalAmount;
-    }
-
     public double getQty() {
         return qty;
     }
 
     public void setQty(double qty) {
         if (this.qty != qty) {
-            totalQty -= this.qty;
             this.qty = qty;
-            totalQty += this.qty;
             if (IS_PURCHASE) {
                 setAmount(qty * unitCost);
 
@@ -286,10 +274,8 @@ public class Item extends BaseObservable implements Parcelable {
     }
 
     public void setAmount(double amount) {
-        totalAmount -= this.amount;
 
         this.amount = amount;
-        totalAmount += this.amount;
     }
 
     public int getBtn_action() {
@@ -402,6 +388,11 @@ public class Item extends BaseObservable implements Parcelable {
 
     public void setUnitCost(double unitCost) {
         this.unitCost = unitCost;
+        if (IS_PURCHASE)
+        {
+            setAmount(this.qty*unitCost);
+
+        }
     }
 
     public double getUnitRetail() {
@@ -412,6 +403,10 @@ public class Item extends BaseObservable implements Parcelable {
     public void setUnitRetail(double unitRetail) {
         this.unitRetail = unitRetail;
         this.cost = unitRetail;
+        if (!IS_PURCHASE)
+        {
+            setAmount(qty*unitRetail);
+        }
     }
 
     public double getCtnPcs() {

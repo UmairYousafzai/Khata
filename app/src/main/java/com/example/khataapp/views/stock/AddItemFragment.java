@@ -63,7 +63,7 @@ public class AddItemFragment extends Fragment {
     private Item editedItem;
     private String saveAction = "INSERT";
     private String departmentCode = "0001", supplierCode = "", barcode = "", uan = "";
-    private List<String> uanList=new ArrayList<>();
+    private List<String> uanList = new ArrayList<>();
 
 
     @Override
@@ -71,7 +71,6 @@ public class AddItemFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         mBinding = FragmentAddItemBinding.inflate(inflater, container, false);
-
         return mBinding.getRoot();
     }
 
@@ -81,7 +80,6 @@ public class AddItemFragment extends Fragment {
 
         stockViewModel = new ViewModelProvider(this).get(StockViewModel.class);
         progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
-
 
         getDepartment();
         getSupplier();
@@ -108,7 +106,7 @@ public class AddItemFragment extends Fragment {
     }
 
     private void getItemByCode() {
-        new Handler().postDelayed(() -> stockViewModel.getItemByCode(barcode),2000);
+        new Handler().postDelayed(() -> stockViewModel.getItemByCode(barcode), 2000);
         stockViewModel.getItemMutableLiveData().observe(getViewLifecycleOwner(), this::setupFields);
     }
 
@@ -126,8 +124,7 @@ public class AddItemFragment extends Fragment {
                 mBinding.departmentSpinnerLayout.setVisibility(View.VISIBLE);
                 mBinding.btnDepartment.setChecked(true);
                 mBinding.departmentSpinner.setText(departmentName);
-            }
-            else{
+            } else {
                 departmentCode = "0001";
             }
             supplierCode = editedItem.getSupplierCode();
@@ -136,15 +133,13 @@ public class AddItemFragment extends Fragment {
                 mBinding.supplierSpinnerLayout.setVisibility(View.VISIBLE);
                 mBinding.btnSupplier.setChecked(true);
                 mBinding.supplierSpinner.setText(supplierName);
-            }
-            else
-            {
-                supplierCode="000001";
+            } else {
+                supplierCode = "000001";
             }
 
             barcode = editedItem.getBarcode();
             uan = editedItem.getUan();
-            uanList=editedItem.getUanList();
+            uanList = editedItem.getUanList();
         }
     }
 
@@ -158,7 +153,7 @@ public class AddItemFragment extends Fragment {
             } else {
                 mBinding.departmentSpinnerLayout.setVisibility(View.GONE);
                 mBinding.departmentSpinner.setText("");
-                departmentCode="0001";
+                departmentCode = "0001";
 
             }
         });
@@ -170,7 +165,7 @@ public class AddItemFragment extends Fragment {
             } else {
                 mBinding.supplierSpinnerLayout.setVisibility(View.GONE);
                 mBinding.supplierSpinner.setText("");
-                supplierCode="000001";
+                supplierCode = "000001";
             }
         });
 
@@ -231,14 +226,12 @@ public class AddItemFragment extends Fragment {
 
                             if (departmentNameList.size() != 0) {
                                 String name = mBinding.departmentSpinner.getText().toString();
-                                if (!name.isEmpty())
-                                {
+                                if (!name.isEmpty()) {
                                     departmentCode = departmentHashMapForID.get(name);
                                     item.setDepartmentCode(departmentCode);
                                     item.setGroupCode(departmentHashMapForID.get(name));
                                     item.setSubGroupCode(departmentHashMapForID.get(name));
-                                }
-                                else {
+                                } else {
                                     item.setDepartmentCode(departmentCode);
                                     item.setGroupCode(departmentCode);
                                     item.setSubGroupCode(departmentCode);

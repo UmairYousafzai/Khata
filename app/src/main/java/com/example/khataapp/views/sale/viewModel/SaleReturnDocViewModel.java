@@ -54,7 +54,7 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
     private final ObservableField<ArrayAdapter<String>> productAdapter;
     private final HashMap<String, String> productHashMap;
     private final ObservableField<String> selectedProductName;
-    private String customerCode, productBarCode, productName = "";
+    private String customerCode="", productBarCode, productName = "";
     private List<Item> itemList;
     private final ObservableField<String> totalQty;
     private final ObservableField<String> subTotalAmount;
@@ -64,12 +64,12 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
     private final ObservableField<String> docNumber;
     private boolean gstOldFlg = false;
     private final MutableLiveData<String> actionMutableLiveData;
+    private boolean isAuthorizeRequest=false;
 
 
     public SaleReturnDocViewModel(@NonNull Application application) {
         super(application);
         Item.IS_PURCHASE=false;
-
         repository = new SaleRepository();
         btnAction = new MutableLiveData<>();
         party = new MutableLiveData<>();
@@ -77,7 +77,7 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
         showProgressDialog = new MutableLiveData<>();
         itemMutableLiveData = new MutableLiveData<>();
         actionMutableLiveData = new MutableLiveData<>("INSERT");
-        adapter = new ProductSaleRecyclerAdapter(this,null,1);
+        adapter = new ProductSaleRecyclerAdapter(this,null,2);
         toastMessage = new MutableLiveData<>();
         date = new ObservableField<>(DateUtil.getInstance().getDate());
         totalQty = new ObservableField<>("0");
@@ -87,7 +87,7 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
         customerHashMap = new HashMap<>();
         productAdapter = new ObservableField<>();
         selectedProductName = new ObservableField<>("");
-        totalAmount = new ObservableField<>("");
+        totalAmount = new ObservableField<>("0");
         gstTax = new ObservableField<>("");
         gstFlag = new ObservableField<>(false);
         docNumber = new ObservableField<>("------");
@@ -105,6 +105,7 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
             saveSaleDocument("0");
         } else if(key==AUTHORIZE_BTN)
         {
+            isAuthorizeRequest=true;
             showProgressDialog.setValue(true);
             saveSaleDocument("3");
         }
@@ -189,16 +190,14 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
 
     public void addItemToProductAdapter() {
         isEdit.setValue(true);
-
         if (!adapter.checkItemExists(itemMutableLiveData.getValue())) {
             Item item = new Item();
             item = itemMutableLiveData.getValue();
             if (item != null) {
 
-
                 try {
-                    double qty = Item.totalQty;
-                    double amount = Item.totalAmount;
+                    double qty = Double.parseDouble(totalQty.get())+item.getQty();
+                    double amount = Double.parseDouble(totalAmount.get())+item.getAmount();
 
                     totalQty.set(String.valueOf(qty));
                     subTotalAmount.set(String.valueOf(amount));
@@ -213,16 +212,36 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
                         totalAmount.set(String.valueOf(amount));
                     }
                 } catch (Exception e) {
-                    Log.e("ConverSion error:", e.getMessage());
+                    Log.e("Conversion error:", e.getMessage());
                 }
-
             }
-
-
             adapter.addItem(itemMutableLiveData.getValue());
-
         } else {
             toastMessage.setValue("Item already Exists");
+        }
+    }
+
+
+    public void addItemToProductAdapter(Item item) {
+        if (item != null) {
+            try {
+                double qty = Double.parseDouble(totalQty.get()) + item.getQty();
+                double amount = Double.parseDouble(totalAmount.get()) + item.getAmount();
+                totalQty.set(String.valueOf(qty));
+                subTotalAmount.set(String.valueOf(amount));
+                if (gstFlag.get()) {
+                    double subAmount = Double.parseDouble(subTotalAmount.get());
+                    double gstPercentage = (17 * subAmount) / 100;
+                    gstTax.set(String.valueOf(gstPercentage));
+                    double tAmount = Double.parseDouble(totalAmount.get());
+                    tAmount += gstPercentage;
+                    totalAmount.set(String.valueOf(tAmount));
+                } else {
+                    totalAmount.set(String.valueOf(amount));
+                }
+            } catch (Exception e) {
+                Log.e("Conversion error:", e.getMessage());
+            }
         }
     }
 
@@ -319,29 +338,30 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
         repository.getSaleDocByCode(docCode);
         getServerResponse();
     }
-    private void setFields(Document document)
-    {
+
+    private void setFields(Document document) {
         docNumber.set(document.getDocNo());
         date.set(Converter.StringToFormatDate(document.getDocDate()));
-        selectedCustomerName.set(document.getSupplierName());
+        selectedCustomerName.set(document.getPartyName());
         totalAmount.set(String.valueOf(document.getTotalAmount()));
         subTotalAmount.set(String.valueOf(document.getTotalAmount()));
         adapter.setItemList(document.getItems());
         actionMutableLiveData.setValue("UPDATE");
-        customerCode=document.getPartyCode();
-        for (Item item: document.getItems())
-        {
-            Item.totalQty+=item.getQty();
-            Item.totalAmount+=item.getAmount();
+        customerCode=document.getSupplierCode();
+
+        double quantity=0;
+        for (Item item : document.getItems()) {
+            quantity+=item.getQty();
         }
-        totalQty.set(String.valueOf(Item.totalQty));
+        totalQty.set(String.valueOf(quantity));
 
     }
+
 
     private void saveSaleDocument(String authorizeKey) {
         if (!date.get().isEmpty()) {
             if (!customerCode.isEmpty()) {
-                if (Item.totalAmount != 0) {
+                if (!totalAmount.get().equals("0")) {
                     String businessID = SharedPreferenceHelper.getInstance(getApplication()).getBUSINESS_ID();
                     String userID = SharedPreferenceHelper.getInstance(getApplication()).getUserID();
                     Document document = new Document();
@@ -349,7 +369,7 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
                     document.setAction(actionMutableLiveData.getValue());
                     document.setBusinessId(businessID);
                     document.setLocationCode("000001");
-                    document.setDocType("3");
+                    document.setDocType("4");
                     document.setPartyCode(customerCode);
                     document.setTotalAmount(Double.parseDouble(totalAmount.get()));
                     document.setUserId(userID);
@@ -397,13 +417,23 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
                         toastMessage.setValue((String) object);
                         actionMutableLiveData.setValue("INSERT");
                         showProgressDialog.setValue(false);
+                        isAuthorizeRequest=false;
 
                     } else if (key == SAVE_DOCUMENT_RESPONSE) {
                         SaveDocumentResponse saveDocumentResponse = (SaveDocumentResponse) object;
                         if (saveDocumentResponse.getCode() == 200) {
-                            isEdit.setValue(false);
-                            docNumber.set(saveDocumentResponse.getDocument().getDocNo());;
-                            actionMutableLiveData.setValue("UPDATE");
+                            if (isAuthorizeRequest)
+                            {
+                                isAuthorizeRequest=true;
+                                clearData();
+                            }
+                            else
+                            {
+                                isEdit.setValue(false);
+                                docNumber.set(saveDocumentResponse.getDocument().getDocNoBusinessWise());
+                                actionMutableLiveData.setValue("UPDATE");
+                            }
+
                         }
 
                         toastMessage.setValue(saveDocumentResponse.getMessage());
@@ -424,6 +454,16 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
 
             }
         });
+    }
+    private void clearData() {
+        docNumber.set("");
+        selectedCustomerName.set("");
+        adapter.clearList();
+        itemList.clear();
+        totalAmount.set("0");
+        totalQty.set("0");
+        subTotalAmount.set("0");
+        gstTax.set("0");
     }
 
     private void setupProductSpinner(List<Item> list) {
@@ -450,7 +490,6 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplication(), android.R.layout.simple_spinner_dropdown_item, customerNameList);
-
         customerAdapter.set(adapter);
 
     }

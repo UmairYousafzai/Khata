@@ -34,6 +34,7 @@ import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
 import com.example.khataapp.network.ApiClient;
 import com.example.khataapp.utils.DataViewModel;
+import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +55,7 @@ public class SignUpFragment extends Fragment {
     private HashMap<String,String> locationCodeHashMap=new HashMap<>();
     private boolean isPasswordSame= false;
     private DataViewModel dataViewModel;
-    private ProgressDialog progressDialog ;
+    private AlertDialog progressDialog;
 
 
     @Override
@@ -72,7 +73,7 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        progressDialog= new ProgressDialog(requireContext());
+        progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
 
 
         navController = NavHostFragment.findNavController(this);
@@ -105,23 +106,7 @@ public class SignUpFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (mBinding.etPassword.getText()!=null)
-                {
-                    String password =mBinding.etPassword.getText().toString();
-
-                    if (password.equals(editable.toString()))
-                    {
-                        isPasswordSame= true;
-                        mBinding.etConfirmPasswordLayout.setError(null);
-
-                    }
-                    else
-                    {
-                        isPasswordSame=false;
-                        mBinding.etConfirmPasswordLayout.setError("Please enter valid password");
-                    }
-                }
-
+                mBinding.etConfirmPasswordLayout.setError(null);
             }
         });
     }
@@ -145,15 +130,16 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                SaveUser();
 
-                if (isPasswordSame)
-                {
-                    SaveUser();
-                }
-                else
-                {
-                    Toast.makeText(requireContext(), "Please enter valid password", Toast.LENGTH_SHORT).show();
-                }
+//                if (isPasswordSame)
+//                {
+//                    SaveUser();
+//                }
+//                else
+//                {
+//                    Toast.makeText(requireContext(), "Please enter valid password", Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });
@@ -169,104 +155,145 @@ public class SignUpFragment extends Fragment {
 
     }
 
+    public boolean validateData()
+    {
+        boolean check = true;
+
+        if (mBinding.etUserName.getText()!=null && mBinding.etUserName.getText().toString().isEmpty())
+        {
+            mBinding.etUserNameLayout.setError("Please Enter UserName");
+            mBinding.etUserName.requestFocus();
+            check= false;
+        }    if (mBinding.etPhoneNumber.getText()!=null && mBinding.etPhoneNumber.getText().toString().isEmpty())
+        {
+            mBinding.etPhoneNumberLayout.setError("Please Enter Phone Number");
+            mBinding.etPhoneNumber.requestFocus();
+            check= false;
+        }   if (mBinding.etEmail.getText()!=null && mBinding.etEmail.getText().toString().isEmpty())
+        {
+            mBinding.etEmailLayout.setError("Please Enter Email");
+            mBinding.etEmail.requestFocus();
+            check= false;
+        } if (mBinding.etBusinessName.getText()!=null && mBinding.etBusinessName.getText().toString().isEmpty())
+        {
+            mBinding.etBusinessNameLayout.setError("Please Enter Business Name");
+            mBinding.etBusinessName.requestFocus();
+            check= false;
+        }if (mBinding.locationSpinner.getText()!=null && mBinding.locationSpinner.getText().toString().isEmpty())
+        {
+            Toast.makeText(requireContext(), "Please Select Location", Toast.LENGTH_SHORT).show();
+            check= false;
+        }if  (mBinding.etPassword.getText().toString().equals( mBinding.etConfirmPassword.getText().toString()))
+        {
+            mBinding.etConfirmPasswordLayout.setError("Please Type correct Reconfirm  Password");
+            mBinding.etConfirmPassword.requestFocus();
+            check= false;
+        }
+
+
+        return check;
+    }
     private void SaveUser() {
-        ProgressDialog progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setMessage("Saving....");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        SignUpUser signUpUser = new SignUpUser();
 
-        String username="",phoneNumber="",email="",address="",password="",locationCode="";
-        if (mBinding.etUserName.getText()!=null)
-        {
-            username= mBinding.etUserName.getText().toString();
-            signUpUser.setUserName(username);
-        }
-             if (mBinding.etPhoneNumber.getText()!=null)
-        {
-            phoneNumber= mBinding.etPhoneNumber.getText().toString();
-            signUpUser.setMobile(phoneNumber);
-
-        }
-             if (mBinding.etEmail.getText()!=null)
-        {
-            email= mBinding.etEmail.getText().toString();
-            signUpUser.setEmail(email);
-
-        }
-             if (mBinding.etAddress.getText()!=null)
-        {
-            address= mBinding.etAddress.getText().toString();
-            signUpUser.setAddress(address);
-
-        }
-             if (mBinding.etBusinessName.getText()!=null)
-        {
-            signUpUser.setBusiness(mBinding.etBusinessName.getText().toString());
-
-        }
-             if (mBinding.etPassword.getText()!=null)
-        {
-            password= mBinding.etPassword.getText().toString();
-            signUpUser.setPassword(password);
-
-        }
-             if (mBinding.locationSpinner.getText()!=null)
+        if (validateData())
         {
 
-            locationCode= locationCodeHashMap.get(mBinding.locationSpinner.getText().toString());
-            signUpUser.setLocationCode(locationCode);
+            progressDialog.show();
+            SignUpUser signUpUser = new SignUpUser();
+            String username="",phoneNumber="",email="",address="",password="",locationCode="";
+            if (mBinding.etUserName.getText()!=null)
+            {
+                username= mBinding.etUserName.getText().toString();
+                signUpUser.setUserName(username);
+            }
+            if (mBinding.etPhoneNumber.getText()!=null)
+            {
+                phoneNumber= mBinding.etPhoneNumber.getText().toString();
+                signUpUser.setMobile(phoneNumber);
+
+            }
+            if (mBinding.etEmail.getText()!=null)
+            {
+                email= mBinding.etEmail.getText().toString();
+                signUpUser.setEmail(email);
+
+            }
+            if (mBinding.etAddress.getText()!=null)
+            {
+                address= mBinding.etAddress.getText().toString();
+                signUpUser.setAddress(address);
+
+            }
+            if (mBinding.etBusinessName.getText()!=null)
+            {
+                signUpUser.setBusiness(mBinding.etBusinessName.getText().toString());
+
+            }
+            if (mBinding.etPassword.getText()!=null)
+            {
+                password= mBinding.etPassword.getText().toString();
+                signUpUser.setPassword(password);
+
+            }
+            if (mBinding.locationSpinner.getText()!=null)
+            {
+
+                locationCode= locationCodeHashMap.get(mBinding.locationSpinner.getText().toString());
+                signUpUser.setLocationCode(locationCode);
+
+            }
+
+
+            Call<LoginResponse> call = ApiClient.getInstance().getApi().saveUser(signUpUser);
+            String finalPassword = password;
+            String finalUsername = username;
+            call.enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<LoginResponse> call, @NotNull Response<LoginResponse> response) {
+
+                    if (response.isSuccessful())
+                    {
+                        if (response.body()!=null)
+                        {
+                            LoginResponse loginResponse = response.body();
+                            if (loginResponse.getCode()==200)
+                            {
+                                SharedPreferenceHelper.getInstance(requireContext()).setUserID(loginResponse.getUser().getUserId());
+                                SharedPreferenceHelper.getInstance(requireContext()).setBUSINESS_ID(loginResponse.getUser().getBusinessId());
+                                SharedPreferenceHelper.getInstance(requireContext()).setIsLogin(true);
+                                dataViewModel.insertUser(loginResponse.getUser());
+                                login(finalUsername, finalPassword);
+                                //                             navController.navigate(R.id.action_signUpFragment_to_homeFragment);
+
+                            }
+                            Toast.makeText(requireContext(), ""+loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+
+                        }
+                        else
+                        {
+                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                    else
+                    {
+                        Toast.makeText(requireContext(), ""+response.message(), Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<LoginResponse> call, @NotNull Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(requireContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
 
         }
-
-
-             Call<LoginResponse> call = ApiClient.getInstance().getApi().saveUser(signUpUser);
-        String finalPassword = password;
-        String finalUsername = username;
-        call.enqueue(new Callback<LoginResponse>() {
-                 @Override
-                 public void onResponse(@NotNull Call<LoginResponse> call, @NotNull Response<LoginResponse> response) {
-
-                     if (response.isSuccessful())
-                     {
-                         if (response.body()!=null)
-                         {
-                             LoginResponse loginResponse = response.body();
-                             if (loginResponse.getCode()==200)
-                             {
-                                 SharedPreferenceHelper.getInstance(requireContext()).setUserID(loginResponse.getUser().getUserId());
-                                 SharedPreferenceHelper.getInstance(requireContext()).setBUSINESS_ID(loginResponse.getUser().getBusinessId());
-                                 SharedPreferenceHelper.getInstance(requireContext()).setIsLogin(true);
-                                 dataViewModel.insertUser(loginResponse.getUser());
-                                 login(finalUsername, finalPassword);
-                                 //                             navController.navigate(R.id.action_signUpFragment_to_homeFragment);
-
-                             }
-                             Toast.makeText(requireContext(), ""+loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
-
-
-
-                         }
-                         else
-                         {
-                             Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
-                         }
-
-                     }
-                     else
-                     {
-                         Toast.makeText(requireContext(), ""+response.message(), Toast.LENGTH_SHORT).show();
-                     }
-                     progressDialog.dismiss();
-
-                 }
-
-                 @Override
-                 public void onFailure(@NotNull Call<LoginResponse> call, @NotNull Throwable t) {
-                     progressDialog.dismiss();
-                     Toast.makeText(requireContext(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
-                 }
-             });
 
 
 

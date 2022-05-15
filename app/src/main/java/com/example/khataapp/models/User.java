@@ -39,6 +39,17 @@ public class User {
     @SerializedName("BusinessName")
     @Expose
     private String businessName;
+    @SerializedName("DefaultPartyCode")
+    @Expose
+    private String defaultPartyCode;
+
+    public String getDefaultPartyCode() {
+        return defaultPartyCode;
+    }
+
+    public void setDefaultPartyCode(String defaultPartyCode) {
+        this.defaultPartyCode = defaultPartyCode;
+    }
 
     public int getUserID_pk() {
         return userID_pk;

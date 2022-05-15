@@ -65,8 +65,10 @@
         <entry key="..\:/AndroidProjects/Khata/app/src/main/res/layout/purchase_card.xml" value="0.49" />
         <entry key="..\:/AndroidProjects/Khata/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.26944444444444443" />
         <entry key="..\:/AndroidProjects/Khata/app/src/main/res/menu/menu_main.xml" value="0.30625" />
+        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/drawable/ic_boxes.xml" value="0.1205" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/drawable/ic_buy.xml" value="0.122" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/drawable/ic_notification_alert.xml" value="0.122" />
+        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/drawable/ic_recycle_line.xml" value="0.1205" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/drawable/ic_sale.xml" value="0.122" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/activity_main.xml" value="0.49" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/card_view_purchase_doc.xml" value="0.67" />
@@ -85,12 +87,12 @@
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_item_list.xml" value="0.30625" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_login.xml" value="0.5823529411764706" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_money.xml" value="0.30625" />
-        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_more.xml" value="0.5" />
+        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_more.xml" value="0.33" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_party_full_info.xml" value="0.5" />
-        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_purchase.xml" value="0.33" />
-        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_purchase_return.xml" value="0.1" />
-        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_sale_doc.xml" value="0.1" />
-        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_sale_doc__return.xml" value="0.1469265367316342" />
+        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_purchase.xml" value="0.22438162544169613" />
+        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_purchase_return.xml" value="0.15" />
+        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_sale_doc.xml" value="0.25" />
+        <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_sale_doc__return.xml" value="0.33" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_sale_doc_list.xml" value="0.20416666666666666" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_splash_screen.xml" value="0.30625" />
         <entry key="..\:/Umair Data/Android projects repository/Khata/app/src/main/res/layout/fragment_stock_adjustment.xml" value="0.30625" />

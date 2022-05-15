@@ -25,7 +25,8 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     private LayoutInflater layoutInflater;
     private PurchaseViewModel purchaseViewModel;
     private PurchaseReturnViewModel purchaseReturnViewModel;
-    private int key;
+    private final int key;
+    private final Item beforeEditItem;
 
     public ProductRecyclerAdapter(PurchaseViewModel purchaseViewModel, PurchaseReturnViewModel purchaseReturnViewModel, int key) {
         itemList = new ArrayList<>();
@@ -39,6 +40,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         }
 
         this.key = key;
+        beforeEditItem= new Item();
     }
 
     @NonNull
@@ -83,8 +85,6 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         itemList.clear();
         if (list != null) {
             itemList.addAll(list);
-
-
         }
         notifyDataSetChanged();
     }
@@ -98,50 +98,68 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
     public void removeItem(Item item) {
         if (item != null) {
+            if (editCalculation(item)) {
+                itemList.remove(item);
 
-            item.setQty(0);
-            item.setAmount(0);
-            if (key == 1) {
-                purchaseViewModel.getSubTotalAmount().set(String.valueOf(Item.totalAmount));
-                purchaseViewModel.getTotalQty().set(String.valueOf(Item.totalQty));
-                try {
-                    if (purchaseViewModel.getGstFlag().get()) {
-                        double stAmount = Item.totalAmount;
-                        double gstPercentage = (17 * stAmount) / 100;
-                        double totalAmount = stAmount + gstPercentage;
-                        purchaseViewModel.getTotalAmount().set(String.valueOf(totalAmount));
-                        purchaseViewModel.getGstTax().set(String.valueOf(gstPercentage));
-
-                    } else {
-                        purchaseViewModel.getTotalAmount().set(String.valueOf(Item.totalAmount));
-                    }
-                } catch (Exception e) {
-                    Log.e(ProductRecyclerAdapter.class.getSimpleName(), e.toString());
-                }
-
-            } else {
-                purchaseReturnViewModel.getSubTotalAmount().set(String.valueOf(Item.totalAmount));
-                purchaseReturnViewModel.getTotalQty().set(String.valueOf(Item.totalQty));
-                try {
-                    if (purchaseReturnViewModel.getGstFlag().get()) {
-                        double stAmount = Item.totalAmount;
-                        double gstPercentage = (17 * stAmount) / 100;
-                        double totalAmount = stAmount + gstPercentage;
-                        purchaseReturnViewModel.getTotalAmount().set(String.valueOf(totalAmount));
-                        purchaseReturnViewModel.getGstTax().set(String.valueOf(gstPercentage));
-
-                    } else {
-                        purchaseReturnViewModel.getTotalAmount().set(String.valueOf(Item.totalAmount));
-                    }
-                } catch (Exception e) {
-                    Log.e(ProductRecyclerAdapter.class.getSimpleName(), e.toString());
-                }
             }
-
-
-            itemList.remove(item);
             notifyDataSetChanged();
         }
+    }
+
+    private boolean editCalculation(Item item) {
+        double qty = 0, amount = 0;
+        boolean flag = false;
+
+
+        if (key == 1) {
+
+            qty = Double.parseDouble(purchaseViewModel.getTotalQty().get()) - item.getQty();
+            amount = Double.parseDouble(purchaseViewModel.getSubTotalAmount().get()) - item.getAmount();
+            purchaseViewModel.getSubTotalAmount().set(String.valueOf(amount));
+            purchaseViewModel.getTotalQty().set(String.valueOf(qty));
+            try {
+                if (purchaseViewModel.getGstFlag().get()) {
+                    double stAmount = Double.parseDouble(purchaseViewModel.getSubTotalAmount().get());
+                    double gstPercentage = (17 * stAmount) / 100;
+                    double totalAmount = stAmount + gstPercentage;
+                    purchaseViewModel.getTotalAmount().set(String.valueOf(totalAmount));
+                    purchaseViewModel.getGstTax().set(String.valueOf(gstPercentage));
+
+                } else {
+                    purchaseViewModel.getTotalAmount().set(String.valueOf(amount));
+                }
+                flag = true;
+            } catch (Exception e) {
+                Log.e(ProductRecyclerAdapter.class.getSimpleName(), e.toString());
+                flag = false;
+
+            }
+
+        } else {
+            qty = Double.parseDouble(purchaseReturnViewModel.getTotalQty().get()) - item.getQty();
+            amount = Double.parseDouble(purchaseReturnViewModel.getSubTotalAmount().get()) - item.getAmount();
+            purchaseReturnViewModel.getSubTotalAmount().set(String.valueOf(amount));
+            purchaseReturnViewModel.getTotalQty().set(String.valueOf(qty));
+            try {
+                if (purchaseReturnViewModel.getGstFlag().get()) {
+                    double stAmount = Double.parseDouble(purchaseReturnViewModel.getSubTotalAmount().get());
+                    double gstPercentage = (17 * stAmount) / 100;
+                    double totalAmount = stAmount + gstPercentage;
+                    purchaseReturnViewModel.getTotalAmount().set(String.valueOf(totalAmount));
+                    purchaseReturnViewModel.getGstTax().set(String.valueOf(gstPercentage));
+
+                } else {
+                    purchaseReturnViewModel.getTotalAmount().set(String.valueOf(amount));
+                }
+                flag = true;
+
+            } catch (Exception e) {
+                flag = false;
+                Log.e(ProductRecyclerAdapter.class.getSimpleName(), e.toString());
+            }
+        }
+
+        return flag;
     }
 
     public List<Item> getItemList() {
@@ -174,10 +192,11 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             mBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    mBinding.etCost.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                    mBinding.freeQty.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                    mBinding.qty.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    beforeEditItem.setUnitCost(itemList.get(getAdapterPosition()).getUnitCost());
+                    beforeEditItem.setQty(itemList.get(getAdapterPosition()).getQty());
+                    mBinding.etCost.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    mBinding.freeQty.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    mBinding.qty.setInputType(InputType.TYPE_CLASS_NUMBER);
                     mBinding.etCost.setFocusableInTouchMode(true);
                     mBinding.qty.setFocusableInTouchMode(true);
                     mBinding.freeQty.setFocusableInTouchMode(true);
@@ -209,49 +228,21 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
                     mBinding.btnEdit.setVisibility(View.VISIBLE);
                     mBinding.btnDone.setVisibility(View.GONE);
                     mBinding.setItem(itemList.get(getAdapterPosition()));
-
+                    editCalculation(beforeEditItem);
                     if (key == 1) {
+                        purchaseViewModel.addItemToProductAdapter(itemList.get(getAdapterPosition()));
                         purchaseViewModel.getToastMessage().setValue("Item Edit Successfully");
-                        purchaseViewModel.getSubTotalAmount().set(String.valueOf(Item.totalAmount));
-                        purchaseViewModel.getTotalQty().set(String.valueOf(Item.totalQty));
+
                     } else {
+                        purchaseReturnViewModel.addItemToProductAdapter(itemList.get(getAdapterPosition()));
                         purchaseReturnViewModel.getToastMessage().setValue("Item Edit Successfully");
-                        purchaseReturnViewModel.getSubTotalAmount().set(String.valueOf(Item.totalAmount));
-                        purchaseReturnViewModel.getTotalQty().set(String.valueOf(Item.totalQty));
-                    }
-
-
-                    if (key == 1) {
-                        try {
-                            if (purchaseViewModel.getGstFlag().get()) {
-                                double gstPercentage = (17 * Item.totalAmount) / 100;
-                                purchaseViewModel.getGstTax().set(String.valueOf(gstPercentage));
-                                purchaseViewModel.getTotalAmount().set(String.valueOf(Item.totalAmount + gstPercentage));
-
-                            } else {
-                                purchaseViewModel.getTotalAmount().set(String.valueOf(Item.totalAmount));
-                            }
-                        } catch (Exception e) {
-                            Log.e(ProductRecyclerAdapter.class.getSimpleName(), e.toString());
-                        }
-                    } else {
-                        try {
-                            if (purchaseReturnViewModel.getGstFlag().get()) {
-                                double gstPercentage = (17 * Item.totalAmount) / 100;
-                                purchaseReturnViewModel.getGstTax().set(String.valueOf(gstPercentage));
-                                purchaseReturnViewModel.getTotalAmount().set(String.valueOf(Item.totalAmount + gstPercentage));
-
-                            } else {
-                                purchaseReturnViewModel.getTotalAmount().set(String.valueOf(Item.totalAmount));
-                            }
-                        } catch (Exception e) {
-                            Log.e(ProductRecyclerAdapter.class.getSimpleName(), e.toString());
-                        }
                     }
 
 
                 }
             });
         }
+
+
     }
 }
