@@ -50,14 +50,14 @@ public class SaleReturnDocFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mBinding = FragmentSaleDocReturnBinding.inflate(inflater,container,false);
+        mBinding = FragmentSaleDocReturnBinding.inflate(inflater, container, false);
         return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel= new ViewModelProvider(this).get(SaleReturnDocViewModel.class);
+        viewModel = new ViewModelProvider(this).get(SaleReturnDocViewModel.class);
         navController = NavHostFragment.findNavController(this);
         progressDialog = DialogUtil.getInstance().getProgressDialog(requireContext());
         mBinding.setViewModel(viewModel);
@@ -79,33 +79,26 @@ public class SaleReturnDocFragment extends Fragment {
             @Override
             public void onChanged(Integer action) {
 
-                if (action==2)
-                {
-                    SaleReturnDocFragmentDirections.ActionSaleReturnDocFragmentToSaleDocListFragment navAction=
-                            SaleReturnDocFragmentDirections.actionSaleReturnDocFragmentToSaleDocListFragment();
+                if (action == 2) {
+                    SaleReturnDocFragmentDirections.ActionSaleReturnDocFragmentToSaleDocListFragment navAction =
+                            SaleReturnDocFragmentDirections.actionSaleReturnDocFragmentToSaleDocListFragment("Sale Return Doc List");
                     navAction.setDocType(4);
                     navController.navigate(navAction);
-                }
-                else if (action== SEARCH_SUPPLIER_BTN)
-                {
+                } else if (action == SEARCH_SUPPLIER_BTN) {
                     mBinding.customerSpinner.setFocusableInTouchMode(true);
                     mBinding.customerSpinner.setInputType(InputType.TYPE_CLASS_TEXT);
                     mBinding.customerSpinner.setText("");
                     openKeyBoard(mBinding.customerSpinner);
 
-                }  else if (action== SEARCH_ITEMS_BTN)
-                {
+                } else if (action == SEARCH_ITEMS_BTN) {
                     mBinding.itemSpinner.setFocusableInTouchMode(true);
                     mBinding.itemSpinner.setInputType(InputType.TYPE_CLASS_TEXT);
                     mBinding.itemSpinner.setText("");
 
                     openKeyBoard(mBinding.itemSpinner);
-                }
-                else if (action== DATE_BTN)
-                {
+                } else if (action == DATE_BTN) {
                     openDateDialog();
-                }  else if (action== NEW_BTN)
-                {
+                } else if (action == NEW_BTN) {
                     viewModel.getActionMutableLiveData().setValue("INSERT");
                     clearFields();
                 }
@@ -116,8 +109,7 @@ public class SaleReturnDocFragment extends Fragment {
         viewModel.getItemMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Item>() {
             @Override
             public void onChanged(Item item) {
-                if (item!=null)
-                {
+                if (item != null) {
                     showProductDialog();
 
                 }
@@ -128,8 +120,7 @@ public class SaleReturnDocFragment extends Fragment {
             @Override
             public void onChanged(String s) {
 
-                if (s!=null)
-                {
+                if (s != null) {
                     Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -139,13 +130,10 @@ public class SaleReturnDocFragment extends Fragment {
             @Override
             public void onChanged(Boolean isEdit) {
 
-                if (isEdit)
-                {
+                if (isEdit) {
                     mBinding.saveFab.setVisibility(View.VISIBLE);
                     mBinding.newFab.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     mBinding.newFab.setVisibility(View.VISIBLE);
                     mBinding.saveFab.setVisibility(View.GONE);
 
@@ -157,20 +145,16 @@ public class SaleReturnDocFragment extends Fragment {
             @Override
             public void onChanged(Boolean showProgressDialog) {
 
-                if (showProgressDialog)
-                {
+                if (showProgressDialog) {
                     progressDialog.show();
-                }
-                else
-                {
+                } else {
                     progressDialog.dismiss();
                 }
             }
         });
 
-        if (navController.getCurrentBackStackEntry()!=null)
-        {
-            MutableLiveData<Document> purchaseLiveData= navController.getCurrentBackStackEntry()
+        if (navController.getCurrentBackStackEntry() != null) {
+            MutableLiveData<Document> purchaseLiveData = navController.getCurrentBackStackEntry()
                     .getSavedStateHandle()
                     .getLiveData(DOCUMENT);
 
@@ -178,9 +162,13 @@ public class SaleReturnDocFragment extends Fragment {
                 @Override
                 public void onChanged(Document document) {
 
-                    if (document !=null)
-                    {
+                    if (document != null) {
                         viewModel.getPurchaseByDocCode(document.getDocNo());
+                        if (!document.getStatus().equals("Unauthorize"))
+                        {
+                            disableViews();
+
+                        }
                     }
                 }
             });
@@ -210,18 +198,18 @@ public class SaleReturnDocFragment extends Fragment {
     private void openDateDialog() {
 
         Calendar calendar = Calendar.getInstance();
-        int day= calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH)+1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
-        DatePickerDialog datePickerDialog= new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                int checkMonth = (month ) % 10, checkDay = (dayOfMonth % 10);
+                int checkMonth = (month) % 10, checkDay = (dayOfMonth % 10);
 
                 String mMonth, mDay;
                 if (checkMonth > 0 && month < 9) {
-                    mMonth = "0" + (month );
+                    mMonth = "0" + (month);
                 } else {
                     mMonth = String.valueOf(month);
 
@@ -234,11 +222,11 @@ public class SaleReturnDocFragment extends Fragment {
 
                     mDay = String.valueOf(dayOfMonth);
                 }
-                String date= year +"-"+ mMonth +"-" +mDay;
+                String date = year + "-" + mMonth + "-" + mDay;
                 viewModel.getDate().set(date);
                 viewModel.getIsEdit().setValue(true);
             }
-        },year,month,day);
+        }, year, month, day);
         datePickerDialog.show();
     }
 
@@ -246,7 +234,7 @@ public class SaleReturnDocFragment extends Fragment {
 
         CustomProductDialogSaleReturnBinding dialogBinding = CustomProductDialogSaleReturnBinding.inflate(getLayoutInflater());
 
-        AlertDialog alertDialog= new AlertDialog.Builder(requireContext()).setView(dialogBinding.getRoot())
+        AlertDialog alertDialog = new AlertDialog.Builder(requireContext()).setView(dialogBinding.getRoot())
                 .setCancelable(false)
                 .create();
 
@@ -273,27 +261,33 @@ public class SaleReturnDocFragment extends Fragment {
     }
 
 
-    public void openKeyBoard(View view)
-    {
-        if (view.requestFocus())
-        {
+    public void openKeyBoard(View view) {
+        if (view.requestFocus()) {
             InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.showSoftInput(view,InputMethodManager.SHOW_IMPLICIT);
+            inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
         }
 
     }
 
-    public void closeKeyBoard()
-    {
+    public void closeKeyBoard() {
         View view = requireActivity().getCurrentFocus();
-
-        if (view!=null)
-        {
+        if (view != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
-
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-
-
+    }
+    private void disableViews()
+    {
+        mBinding.customerSpinner.setEnabled(false);
+        mBinding.btnSearchSupplier.setEnabled(false);
+        mBinding.btnSearchProduct.setEnabled(false);
+        mBinding.itemSpinner.setEnabled(false);
+        mBinding.tvAuthorize.setEnabled(false);
+        mBinding.tvPDF.setEnabled(false);
+        mBinding.tvRetrieve.setEnabled(false);
+        mBinding.gstCheckBox.setEnabled(false);
+        mBinding.newFab.setEnabled(false);
+        mBinding.saveFab.setEnabled(false);
+        mBinding.rvListPurchase.setEnabled(false);
     }
 }

@@ -12,6 +12,7 @@ import androidx.databinding.ObservableField;
 import com.example.khataapp.Repository.PartyRepository;
 import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.models.request.Voucher;
+import com.example.khataapp.utils.DateUtil;
 import com.example.khataapp.utils.SharedPreferenceHelper;
 
 import java.math.BigDecimal;
@@ -52,6 +53,7 @@ public class AddAmountViewModel extends BaseViewModel {
         amountDetailVisibilityLiveData = new ObservableField<>(false);
         scriptEngine = new ScriptEngineManager().getEngineByName("rhino");
         repository= new PartyRepository();
+        date= DateUtil.getInstance().getDate();
 
     }
 
@@ -167,9 +169,7 @@ public class AddAmountViewModel extends BaseViewModel {
         this.billNumLiveData = billNumLiveData;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+
 
     public void setBillImage(String billImage) {
         this.billImage = billImage;

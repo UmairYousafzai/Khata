@@ -247,13 +247,15 @@
             android:orientation="horizontal"
             android:layout_gravity="bottom"
             android:layout_weight="1"
+            android:gravity="center"
             android:weightSum="1">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_debit"
+                android:id="@+id/btn_payment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Debit"
+                android:text="Payment"
+                android:gravity="center"
                 app:backgroundTint="@color/custom_red_color"
                 android:layout_weight="0.5"
                 android:layout_margin="5dp" />
@@ -263,6 +265,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Receipt"
+                android:gravity="center"
                 app:backgroundTint="@android:color/holo_green_dark"
                 android:layout_weight="0.5"
                 android:layout_margin="5dp" />

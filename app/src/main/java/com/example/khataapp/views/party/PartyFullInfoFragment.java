@@ -67,6 +67,7 @@ public class PartyFullInfoFragment extends Fragment {
             party = PartyFullInfoFragmentArgs.fromBundle(getArguments()).getParty();
             if (party != null) {
                 viewModel.voucherDetail(party.getPartyCode());
+                setUi(party);
             }
         }
 
@@ -75,6 +76,16 @@ public class PartyFullInfoFragment extends Fragment {
         getDataFromDialog();
         btnClickListener();
         liveDataObservers();
+    }
+
+    private void setUi(Party party) {
+
+        if (party.getPartyType().equals("s")) {
+            mBinding.btnReceipt.setVisibility(View.GONE);
+        } else {
+            mBinding.btnPayment.setVisibility(View.GONE);
+        }
+
     }
 
     private void liveDataObservers() {
@@ -92,7 +103,17 @@ public class PartyFullInfoFragment extends Fragment {
 
         mBinding.tvDialogOpener1.setOnClickListener(v -> navController.navigate(R.id.action_partyFullInfoFragment_to_setReminderBottomSheetDialogFragment));
 
-        mBinding.btnDebit.setOnClickListener(new View.OnClickListener() {
+        mBinding.btnPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PartyFullInfoFragmentDirections.ActionPartyFullInfoFragmentToAddAmountFragment action =
+                        PartyFullInfoFragmentDirections.actionPartyFullInfoFragmentToAddAmountFragment(party);
+
+                navController.navigate(action);
+            }
+        });
+        mBinding.btnReceipt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

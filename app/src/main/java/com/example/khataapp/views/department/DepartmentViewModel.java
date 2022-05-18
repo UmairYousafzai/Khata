@@ -367,7 +367,8 @@ public class DepartmentViewModel extends AndroidViewModel {
 
 
         }   else if (key == ADD_SUB_GROUP_BTN) {
-            if (!departmentID.isEmpty()&& !groupID.isEmpty())
+
+            if ((departmentID!=null&&groupID!=null)&&(!departmentID.isEmpty()&& !groupID.isEmpty()))
             {
                 subGroupEditTextVisibility.set(true);
                 editSubGroupName.set("");

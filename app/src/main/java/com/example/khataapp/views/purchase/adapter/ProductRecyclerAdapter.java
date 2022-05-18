@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khataapp.databinding.ItemCardTwoBinding;
+import com.example.khataapp.databinding.SaleItemCardBinding;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.views.purchase.viewmodel.PurchaseReturnViewModel;
 import com.example.khataapp.views.purchase.viewmodel.PurchaseViewModel;
@@ -27,6 +28,8 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     private PurchaseReturnViewModel purchaseReturnViewModel;
     private final int key;
     private final Item beforeEditItem;
+    private boolean isAuthenticate = false;
+
 
     public ProductRecyclerAdapter(PurchaseViewModel purchaseViewModel, PurchaseReturnViewModel purchaseReturnViewModel, int key) {
         itemList = new ArrayList<>();
@@ -68,6 +71,10 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             holder.mBinding.setPurchaseReturnViewModel(purchaseReturnViewModel);
 
         }
+        if (isAuthenticate) {
+            disableUi(holder.mBinding);
+
+        }
         holder.mBinding.setKey(key);
         holder.mBinding.setItem(item);
         holder.mBinding.executePendingBindings();
@@ -75,6 +82,10 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
     }
 
+    private void disableUi(ItemCardTwoBinding mBinding) {
+        mBinding.btnEdit.setEnabled(false);
+        mBinding.btnCancel.setEnabled(false);
+    }
     @Override
     public int getItemCount() {
         return itemList.size();
@@ -104,6 +115,10 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             }
             notifyDataSetChanged();
         }
+    }
+
+    public void setAuthenticate(boolean authenticate) {
+        isAuthenticate = authenticate;
     }
 
     private boolean editCalculation(Item item) {

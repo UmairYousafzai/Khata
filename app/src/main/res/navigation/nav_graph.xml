@@ -313,6 +313,9 @@
             android:name="purchaseType"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="header"
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -337,6 +340,9 @@
             android:name="docType"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="header"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/saleReturnDocFragment"

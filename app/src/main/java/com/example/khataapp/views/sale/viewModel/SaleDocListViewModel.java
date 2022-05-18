@@ -37,15 +37,18 @@ public class SaleDocListViewModel extends AndroidViewModel {
 
     public void onClick(Document document)
     {
-        if (document.getStatus().equals("Unauthorize"))
-        {
-            documentMutableLiveData.setValue(document);
+//        if (document.getStatus().equals("Unauthorize"))
+//        {
+//            documentMutableLiveData.setValue(document);
+//
+//        }
+//        else
+//        {
+//            toastMessage.setValue("Authorized Documents Cannot be Edit.");
+//        }
 
-        }
-        else
-        {
-            toastMessage.setValue("Authorized Documents Cannot be Edit.");
-        }
+        documentMutableLiveData.setValue(document);
+
     }
 
     public MutableLiveData<Boolean> getShowProgressDialog() {

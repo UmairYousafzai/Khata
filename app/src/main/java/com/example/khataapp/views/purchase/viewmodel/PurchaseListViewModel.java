@@ -37,15 +37,10 @@ public class PurchaseListViewModel extends AndroidViewModel {
 
     public void onClick(Document document)
     {
-        if (document.getStatus().equals("Unauthorize"))
-        {
+
             purchaseMutableLiveData.setValue(document);
 
-        }
-        else
-        {
-            toastMessage.setValue("Authorized Documents Cannot be Edit.");
-        }
+
     }
 
     public MutableLiveData<Document> getPurchaseMutableLiveData() {

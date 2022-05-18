@@ -26,6 +26,7 @@ public class ProductSaleRecyclerAdapter extends RecyclerView.Adapter<ProductSale
     private SaleReturnDocViewModel saleReturnDocViewModel;
     private SaleDocViewModel saleViewModel;
     private int key;
+    private boolean isAuthenticate = false;
     private Item beforeEditItem;
 
     public ProductSaleRecyclerAdapter(SaleReturnDocViewModel saleReturnDocViewModel, SaleDocViewModel saleViewModel, int key) {
@@ -63,11 +64,20 @@ public class ProductSaleRecyclerAdapter extends RecyclerView.Adapter<ProductSale
             holder.mBinding.setSaleViewModel(saleViewModel);
 
         }
+        if (isAuthenticate) {
+            disableUi(holder.mBinding);
+
+        }
         holder.mBinding.setKey(key);
         holder.mBinding.setItem(item);
         holder.mBinding.executePendingBindings();
 
 
+    }
+
+    private void disableUi(SaleItemCardBinding mBinding) {
+        mBinding.btnEdit.setEnabled(false);
+        mBinding.btnCancel.setEnabled(false);
     }
 
     @Override
@@ -173,6 +183,9 @@ public class ProductSaleRecyclerAdapter extends RecyclerView.Adapter<ProductSale
         notifyDataSetChanged();
     }
 
+    public void setAuthenticate(boolean authenticate) {
+        isAuthenticate = authenticate;
+    }
 
     public boolean checkItemExists(Item item) {
         return itemList.contains(item);

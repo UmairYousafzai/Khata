@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,6 +23,7 @@ import com.example.khataapp.databinding.FragmentPurchaseListBinding;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.views.purchase.viewmodel.PurchaseListViewModel;
+import com.example.khataapp.views.sale.SaleDocListFragmentArgs;
 
 
 public class PurchaseListFragment extends Fragment {
@@ -64,6 +66,9 @@ public class PurchaseListFragment extends Fragment {
             } else {
                 viewModel.getPurchasesReturnList();
             }
+            ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(
+                    SaleDocListFragmentArgs.fromBundle(getArguments()).getHeader()
+            );
         }
 
         viewModel.getShowProgressDialog().observe(getViewLifecycleOwner(), new Observer<Boolean>() {

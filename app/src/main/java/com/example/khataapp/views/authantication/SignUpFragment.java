@@ -183,7 +183,7 @@ public class SignUpFragment extends Fragment {
         {
             Toast.makeText(requireContext(), "Please Select Location", Toast.LENGTH_SHORT).show();
             check= false;
-        }if  (mBinding.etPassword.getText().toString().equals( mBinding.etConfirmPassword.getText().toString()))
+        }if  (!mBinding.etPassword.getText().toString().equals( mBinding.etConfirmPassword.getText().toString()))
         {
             mBinding.etConfirmPasswordLayout.setError("Please Type correct Reconfirm  Password");
             mBinding.etConfirmPassword.requestFocus();
@@ -350,9 +350,7 @@ public class SignUpFragment extends Fragment {
     }
 
     private void saveLocation(PostLocation postLocation) {
-        ProgressDialog progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setMessage("Saving....");
-        progressDialog.setCancelable(false);
+
         progressDialog.show();
 
         Call<ServerResponse> call = ApiClient.getInstance().getApi().saveLocation(postLocation);
@@ -489,9 +487,6 @@ public class SignUpFragment extends Fragment {
 
 
     private void login(String username, String password) {
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setTitle("Redirecting");
         progressDialog.show();
 
         Call<LoginResponse> call = ApiClient.getInstance().getApi().login(username,password);
@@ -515,8 +510,7 @@ public class SignUpFragment extends Fragment {
 
                             dataViewModel.insertUser(loginResponse.getUser());
                             Toast.makeText(requireContext(), "" + loginResponse.getUser().getUserName(), Toast.LENGTH_LONG).show();
-                            progressDialog.setMessage("Syncing...");
-                            progressDialog.setTitle("Parties");
+
                             progressDialog.show();
                             getParties("c");
                         }

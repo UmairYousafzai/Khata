@@ -18,6 +18,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -41,6 +42,7 @@ import com.example.khataapp.R;
 import com.example.khataapp.databinding.FragmentAddAmountBinding;
 import com.example.khataapp.databinding.ImageSelectDialogBinding;
 import com.example.khataapp.models.Party;
+import com.example.khataapp.utils.DateUtil;
 import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.utils.ImageUtil;
 import com.example.khataapp.utils.Permission;
@@ -79,6 +81,7 @@ public class AddAmountFragment extends Fragment {
 
         if (getArguments() != null) {
             Party party = AddAmountFragmentArgs.fromBundle(getArguments()).getParty();
+            setUI(party);
             if (party.getPartyType().equals("c")) {
                 viewModel.setVoucherType("CR");
             } else {
@@ -93,6 +96,21 @@ public class AddAmountFragment extends Fragment {
         editTextFocusListener();
         textWatcher();
 
+    }
+
+    private void setUI(Party party) {
+
+        if (party.getPartyType().equals("s"))
+        {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Supplier Voucher");
+        }
+        else
+        {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Customer Voucher");
+
+        }
+
+        mBinding.btnDate.setText(DateUtil.getInstance().getDate());
     }
 
     private void textWatcher() {
@@ -149,9 +167,6 @@ public class AddAmountFragment extends Fragment {
             showAndHideCustomKeyBoard();
         });
 
-        mBinding.btnDate.setOnClickListener(view -> {
-            openDateDialog();
-        });
 
         mBinding.tvAddBillNo.setOnClickListener(view -> {
             if (mBinding.etBillNum.getVisibility() == View.VISIBLE)
@@ -201,40 +216,6 @@ public class AddAmountFragment extends Fragment {
 
     }
 
-    private void openDateDialog() {
-
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int year = calendar.get(Calendar.YEAR);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-                int checkMonth = (month) % 10, checkDay = (dayOfMonth % 10);
-
-                String mMonth, mDay;
-                if (checkMonth > 0 && month < 9) {
-                    mMonth = "0" + (month);
-                } else {
-                    mMonth = String.valueOf(month);
-
-                }
-
-                if (checkDay > 0 && dayOfMonth < 10) {
-                    mDay = "0" + (dayOfMonth);
-
-                } else {
-
-                    mDay = String.valueOf(dayOfMonth);
-                }
-                String date = year + "-" + mMonth + "-" + mDay;
-                mBinding.btnDate.setText(date);
-                viewModel.setDate(date + "T00:00:00");
-            }
-        }, year, month, day);
-        datePickerDialog.show();
-    }
 
 
     private void showSelectImageDialog() {

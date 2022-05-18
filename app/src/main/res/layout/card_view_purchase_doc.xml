@@ -61,15 +61,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginLeft="3dp"
-                android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="@{String.valueOf(voucherDetail.totalAmount)}"
-                android:textAllCaps="false"
+                android:text="@{String.valueOf(voucherDetail.totalAmount),default=1234}"
                 android:textColor="#ECB069"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_card" />
+                app:layout_constraintTop_toTopOf="@id/textView5" />
 
             <TextView
                 android:id="@+id/tv_quantity_card"

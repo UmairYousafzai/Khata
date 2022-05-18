@@ -204,7 +204,7 @@
             android:id="@+id/btn_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date"
+            android:text="Today Date"
             android:textColor="@color/font_color_dark"
             android:textSize="11sp"
             app:backgroundTint="@color/white"

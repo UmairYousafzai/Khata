@@ -33,6 +33,7 @@ import com.example.khataapp.databinding.CustomProductDialogSaleBinding;
 import com.example.khataapp.databinding.FragmentSaleDocBinding;
 import com.example.khataapp.models.Document;
 import com.example.khataapp.models.Item;
+import com.example.khataapp.utils.DateUtil;
 import com.example.khataapp.utils.DialogUtil;
 import com.example.khataapp.views.sale.viewModel.SaleDocViewModel;
 
@@ -84,7 +85,7 @@ public class SaleDocFragment extends Fragment {
                 if (action==2)
                 {
                     SaleDocFragmentDirections.ActionSaleDocFragmentToSaleDocListFragment navAction=
-                            SaleDocFragmentDirections.actionSaleDocFragmentToSaleDocListFragment();
+                            SaleDocFragmentDirections.actionSaleDocFragmentToSaleDocListFragment("Sale Doc List");
                     navAction.setDocType(2);
                     navController.navigate(navAction);                }
                 else if (action== SEARCH_SUPPLIER_BTN)
@@ -182,6 +183,11 @@ public class SaleDocFragment extends Fragment {
                     if (document !=null)
                     {
                         viewModel.getPurchaseByDocCode(document.getDocNo());
+                        if (!document.getStatus().equals("Unauthorize"))
+                        {
+                            disableViews();
+
+                        }
                     }
                 }
             });
@@ -192,7 +198,7 @@ public class SaleDocFragment extends Fragment {
 
     private void clearFields() {
 
-        mBinding.tvDate.setText("yyyy-mm-dd");
+        mBinding.tvDate.setText(DateUtil.getInstance().getDate());
         mBinding.tvDocNumber.setText("---------");
         mBinding.customerSpinner.setText("");
         mBinding.itemSpinner.setText("");
@@ -302,5 +308,20 @@ public class SaleDocFragment extends Fragment {
         }
 
 
+    }
+
+    private void disableViews()
+    {
+        mBinding.customerSpinner.setEnabled(false);
+        mBinding.btnSearchSupplier.setEnabled(false);
+        mBinding.btnSearchProduct.setEnabled(false);
+        mBinding.itemSpinner.setEnabled(false);
+        mBinding.tvAuthorize.setEnabled(false);
+        mBinding.tvPDF.setEnabled(false);
+        mBinding.tvRetrieve.setEnabled(false);
+        mBinding.gstCheckBox.setEnabled(false);
+        mBinding.newFab.setEnabled(false);
+        mBinding.saveFab.setEnabled(false);
+        mBinding.rvListPurchase.setEnabled(false);
     }
 }

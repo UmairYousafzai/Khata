@@ -33,7 +33,7 @@ public interface Dao {
     @Query("Delete from Party where partyCode=:partyCode")
     void deleteParty( String partyCode);
 
-    @Query("Select *from Party  where partyType=:type order by id_pk desc  ")
+    @Query("Select *from Party  where partyType=:type order by partyName asc  ")
     LiveData<List<Party>> getParties(String type);
 
 }

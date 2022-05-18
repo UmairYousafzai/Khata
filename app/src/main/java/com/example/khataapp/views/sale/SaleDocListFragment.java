@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -59,6 +60,9 @@ public class SaleDocListFragment extends Fragment {
         if (getArguments()!=null)
         {
             viewModel.getDocument(SaleDocListFragmentArgs.fromBundle(getArguments()).getDocType());
+            ((AppCompatActivity)requireActivity()).getSupportActionBar().setTitle(
+                    SaleDocListFragmentArgs.fromBundle(getArguments()).getHeader()
+            );
         }
 
         viewModel.getShowProgressDialog().observe(getViewLifecycleOwner(), showProgressDialog -> {
