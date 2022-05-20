@@ -374,7 +374,15 @@
         android:id="@+id/stockAdjustmentFragment"
         android:name="com.example.khataapp.views.stockAdjustment.StockAdjustmentFragment"
         android:label="Stock Adjustment"
-        tools:layout="@layout/fragment_stock_adjustment"/>
+        tools:layout="@layout/fragment_stock_adjustment">
+        <action
+            android:id="@+id/action_stockAdjustmentFragment_to_stockAdjustListFragment"
+            app:destination="@id/stockAdjustListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stockAdjustListFragment"
+        android:name="com.example.khataapp.views.stockAdjustment.StockAdjustListFragment"
+        android:label="StockAdjustListFragment" />
 
 
 </navigation>

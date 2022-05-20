@@ -6,10 +6,11 @@
     <data>
 
         <import type="com.example.khataapp.utils.CONSTANTS" />
+        <import type="com.example.khataapp.utils.Converter" />
 
         <variable
             name="viewModel"
-            type="com.example.khataapp.views.purchase.viewmodel.PurchaseViewModel" />
+            type="com.example.khataapp.views.stockAdjustment.viewModel.StockAdjustViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -51,6 +52,7 @@
                 android:text="@string/authorize"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                android:onClick="@{()-> viewModel.onClick(CONSTANTS.AUTHORIZE_BTN)}"
                 app:layout_constraintEnd_toStartOf="@id/tv_PDF"
                 app:layout_constraintStart_toEndOf="@id/tv_Retrieve"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -156,8 +158,8 @@
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="false"
                     android:inputType="none"
-                    android:text="@={viewModel.selectedSupplierName}"
-                    app:setTextAdapter="@{viewModel.supplierAdapter}"
+                    android:text="@={viewModel.selectedType}"
+                    app:setTextAdapter="@{viewModel.typeAdapter}"
                     />
             </com.google.android.material.textfield.TextInputLayout>
             <ImageButton
@@ -381,9 +383,8 @@
                 android:id="@+id/tv_sub_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.subTotalAmount,default=1234}"
+                android:text="@{Converter.FormatDoubleNumbers(viewModel.subTotalAmount),default=RSamodfdsdsdsddsdsdfddvdun}"
                 android:textSize="18sp"
-
                 app:layout_constraintTop_toTopOf="@id/tv__sub_total_heading"
                 app:layout_constraintStart_toEndOf="@id/tv__sub_total_heading"
                 app:layout_constraintBottom_toBottomOf="@id/tv__sub_total_heading"
@@ -409,7 +410,7 @@
                 android:id="@+id/tv_tax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.gstTax, default=123}"
+                android:text="@{Converter.FormatDoubleNumbers(viewModel.gstTax),default=RSamodfdsdsdsddsdsdfddvdun}"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="@id/tv_tax_heading"
                 app:layout_constraintStart_toEndOf="@id/tv_tax_heading"
@@ -439,7 +440,8 @@
                 android:id="@+id/tv_all_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.totalAmount,default=1234}"
+                android:text="@{Converter.FormatDoubleNumbers(viewModel.totalAmount),default=RSamodfdsdsdsddsdsdfddvdun}"
+
                 android:textSize="18sp"
 
                 app:layout_constraintTop_toTopOf="@id/tv_all_total_heading"

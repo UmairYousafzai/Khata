@@ -20,11 +20,15 @@ import com.example.khataapp.models.SaveDepartmentResponse;
 import com.example.khataapp.models.SaveGroupResponse;
 import com.example.khataapp.models.SaveDocumentResponse;
 import com.example.khataapp.models.SaveSubGroupResponse;
+import com.example.khataapp.models.request.SaveStockAdjustmentRequest;
+import com.example.khataapp.models.response.stockAdjustment.GetStockAdjustByCode;
+import com.example.khataapp.models.response.stockAdjustment.GetStockAdjustResponse;
 import com.example.khataapp.models.response.ServerResponse;
 import com.example.khataapp.models.SignUpUser;
 import com.example.khataapp.models.SubGroup;
 import com.example.khataapp.models.request.Voucher;
 import com.example.khataapp.models.response.party.SavePartyResponse;
+import com.example.khataapp.models.response.stockAdjustment.SaveStockAdjustmentResponse;
 import com.example.khataapp.models.response.voucher.VoucherResponse;
 
 import retrofit2.Call;
@@ -132,5 +136,20 @@ public interface Api {
 
     @GET("api/Party/PartyVoucherHistory")
     Call<VoucherResponse> getVoucherDetail(@Query("partyCode")String partyCode,@Query("businessId")String businessId);
+
+    /****************************   Stock Adjustment  **********************/
+
+    @POST("api/Wastage/SaveWastage")
+    Call<SaveStockAdjustmentResponse> saveStockAdjustDoc(@Body SaveStockAdjustmentRequest stockAdjustmentRequest);
+
+    @GET("api/Wastage/WastageData")
+    Call<GetDocumentResponse> getStockAdjustmentList(@Query("BusinessId")String businessID);
+
+    @GET("api/Wastage/WastageByCode")
+    Call<GetStockAdjustByCode> getStockAdjustmentByCode(@Query("DocNo")String docNO);
+
+
+
+
 
 }

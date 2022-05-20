@@ -70,6 +70,7 @@ public class Document implements Parcelable {
     @SerializedName("Party")
     @Expose
     private String party;
+
     @SerializedName("DocumentDetail")
     @Expose
     private List<Item> items= new ArrayList<>();
