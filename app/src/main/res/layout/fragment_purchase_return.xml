@@ -130,7 +130,7 @@
                 android:elevation="5dp"
                 android:layout_marginTop="10dp"
                 android:padding="8dp"
-                android:text="@={viewModel.docNumber}"
+                android:text="@={viewModel.docNumberBusiness}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/spinner_select_customer_layout"
@@ -336,7 +336,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rv_list_purchase"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_total_qty"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:gravity="end"
                 />
@@ -378,7 +378,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rv_list_purchase"
                 app:layout_constraintStart_toEndOf="@id/tv_total_qty"
                 app:layout_constraintEnd_toStartOf="@id/tv_sub_total"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:gravity="end"
                 />

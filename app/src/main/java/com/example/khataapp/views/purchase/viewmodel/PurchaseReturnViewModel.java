@@ -42,7 +42,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> btnAction;
     private final MutableLiveData<Party> party;
     private final MutableLiveData<Item> itemMutableLiveData;
-    private final ProductRecyclerAdapter adapter;
+    private ProductRecyclerAdapter adapter;
     private final MutableLiveData<String> toastMessage;
     private final MutableLiveData<Boolean> isEdit;
     private final MutableLiveData<Boolean> showProgressDialog;
@@ -60,7 +60,8 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
     private final ObservableField<String> totalAmount;
     private final ObservableField<String> gstTax;
     private final ObservableField<Boolean> gstFlag;
-    private final ObservableField<String> docNumber;
+    private final ObservableField<String> docNumberBusiness;
+    private String docNumber="";
     private boolean gstOldFlg = false;
     private final MutableLiveData<String> actionMutableLiveData;
     private boolean isAuthorizeRequest=false;
@@ -90,7 +91,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         totalAmount = new ObservableField<>("0");
         gstTax = new ObservableField<>("");
         gstFlag = new ObservableField<>(false);
-        docNumber = new ObservableField<>("------");
+        docNumberBusiness = new ObservableField<>("------");
         productHashMap = new HashMap<>();
         itemList = new ArrayList<>();
         getSuppliers();
@@ -331,8 +332,8 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         getServerResponse();
     }
 
-    public ObservableField<String> getDocNumber() {
-        return docNumber;
+    public ObservableField<String> getDocNumberBusiness() {
+        return docNumberBusiness;
     }
 
     public void getPurchaseReturnByDocCode(String docCode) {
@@ -341,7 +342,8 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
     }
 
     private void setFields(Document document) {
-        docNumber.set(document.getDocNo());
+        docNumberBusiness.set(document.getDocNoBusinessWise());
+        docNumber= document.getDocNo();
         date.set(Converter.StringToFormatDate(document.getDocDate()));
         selectedSupplierName.set(document.getPartyName());
         totalAmount.set(String.valueOf(document.getTotalAmount()));
@@ -376,8 +378,10 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                     document.setUserId(userID);
                     document.setStatus(authorizeKey);
                     document.setDocDate(date.get());
+
                     if (actionMutableLiveData.getValue().equals("UPDATE")) {
-                        document.setDocNo(docNumber.get());
+                        document.setDocNoBusinessWise(docNumberBusiness.get());
+                        document.setDocNo(docNumber);
                     }
                     showProgressDialog.setValue(true);
 
@@ -435,7 +439,8 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
                             else
                             {
                                 isEdit.setValue(false);
-                                docNumber.set(saveDocumentResponse.getDocument().getDocNoBusinessWise());
+                                docNumberBusiness.set(saveDocumentResponse.getDocument().getDocNoBusinessWise());
+                                docNumber= saveDocumentResponse.getDocument().getDocNo();
                                 actionMutableLiveData.setValue("UPDATE"); }
                         }
 
@@ -459,7 +464,7 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
     }
 
     private void clearData() {
-        docNumber.set("");
+        docNumberBusiness.set("");
         selectedSupplierName.set("");
         adapter.clearList();
         itemList.clear();
@@ -467,6 +472,8 @@ public class PurchaseReturnViewModel extends AndroidViewModel {
         totalQty.set("0");
         subTotalAmount.set("0");
         gstTax.set("0");
+        docNumber="";
+        adapter = new ProductRecyclerAdapter(null, this, 2);
     }
 
     private void setupProductSpinner(List<Item> list) {

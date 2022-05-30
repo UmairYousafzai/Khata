@@ -57,7 +57,7 @@
     <string name="do_you_want_to_add_vendor">Do you want to add vendor?</string>
     <string name="select_supplier">Select Supplier</string>
     <string name="rs">Rs </string>
-    <string name="stock">Stock</string>
+    <string name="stock">Ctn</string>
     <string name="department">Department</string>
     <string name="document">Purchase</string>
     <string name="doc_no">Doc.no.</string>

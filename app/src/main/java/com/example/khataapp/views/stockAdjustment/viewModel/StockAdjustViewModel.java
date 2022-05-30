@@ -17,15 +17,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.khataapp.Interface.CallBackListener;
-import com.example.khataapp.models.Document;
-import com.example.khataapp.models.GetDocumentByCode;
 import com.example.khataapp.models.GetItemResponse;
 import com.example.khataapp.models.Item;
 import com.example.khataapp.models.Party;
-import com.example.khataapp.models.SaveDocumentResponse;
 import com.example.khataapp.models.request.SaveStockAdjustmentRequest;
 import com.example.khataapp.models.response.stockAdjustment.GetStockAdjustByCode;
-import com.example.khataapp.models.response.stockAdjustment.GetStockAdjustResponse;
 import com.example.khataapp.models.response.stockAdjustment.SaveStockAdjustmentResponse;
 import com.example.khataapp.utils.Converter;
 import com.example.khataapp.utils.DateUtil;
@@ -62,7 +58,8 @@ public class StockAdjustViewModel extends AndroidViewModel
     private final ObservableField<String> totalAmount;
     private final ObservableField<String> gstTax;
     private final ObservableField<Boolean> gstFlag;
-    private final ObservableField<String> docNumber;
+    private final ObservableField<String> docNumberBusiness;
+    private String docNumber="";
     private boolean gstOldFlg = false;
     private final MutableLiveData<String> actionMutableLiveData;
     private boolean isAuthorizeRequest=false;
@@ -93,7 +90,7 @@ public class StockAdjustViewModel extends AndroidViewModel
         totalAmount = new ObservableField<>("0");
         gstTax = new ObservableField<>("");
         gstFlag = new ObservableField<>(false);
-        docNumber = new ObservableField<>("------");
+        docNumberBusiness = new ObservableField<>("------");
         productHashMap = new HashMap<>();
         itemList = new ArrayList<>();
         getProducts();
@@ -327,8 +324,8 @@ public class StockAdjustViewModel extends AndroidViewModel
         getServerResponse();
     }
 
-    public ObservableField<String> getDocNumber() {
-        return docNumber;
+    public ObservableField<String> getDocNumberBusiness() {
+        return docNumberBusiness;
     }
 
     public void getStockAdjustmentByDocCode(String docCode) {
@@ -339,7 +336,8 @@ public class StockAdjustViewModel extends AndroidViewModel
     }
 
     private void setFields(SaveStockAdjustmentRequest document) {
-        docNumber.set(document.getDocNo());
+        docNumberBusiness.set(document.getDocNoBusinessWise());
+        docNumber= document.getDocNo();
         date.set(Converter.StringToFormatDate(document.getDocDate()));
         totalAmount.set(String.valueOf(document.getTotalAmount()));
         subTotalAmount.set(String.valueOf(document.getTotalAmount()));
@@ -347,7 +345,7 @@ public class StockAdjustViewModel extends AndroidViewModel
 
         adapter.setItemList(document.getDocumentDetail());
         actionMutableLiveData.setValue("UPDATE");
-        if (document.getStatus().equals("W"))
+        if (document.getDocType().equals("W"))
         {
             selectedType.set("Waste");
 
@@ -384,7 +382,8 @@ public class StockAdjustViewModel extends AndroidViewModel
                     document.setStatus(authorizeKey);
                     document.setDocDate(date.get());
                     if (actionMutableLiveData.getValue().equals("UPDATE")) {
-                        document.setDocNo(docNumber.get());
+                        document.setDocNoBusinessWise(docNumberBusiness.get());
+                        document.setDocNo(docNumber);
                     } else {
                         document.setDocNo("");
 
@@ -433,7 +432,8 @@ public class StockAdjustViewModel extends AndroidViewModel
                             else
                             {
                                 isEdit.setValue(false);
-                                docNumber.set(saveDocumentResponse.getData().getDocNoBusinessWise());
+                                docNumberBusiness.set(saveDocumentResponse.getData().getDocNoBusinessWise());
+                                docNumber= saveDocumentResponse.getData().getDocNo();
                                 actionMutableLiveData.setValue("UPDATE");
                             }
 
@@ -461,7 +461,8 @@ public class StockAdjustViewModel extends AndroidViewModel
     }
 
     private void clearData() {
-        docNumber.set("");
+        docNumber="";
+        docNumberBusiness.set("");
         selectedType.set("");
         adapter.clearList();
         itemList.clear();

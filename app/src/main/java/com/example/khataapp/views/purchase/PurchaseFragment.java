@@ -293,6 +293,7 @@ public class PurchaseFragment extends Fragment {
 
     private void disableViews()
     {
+
         mBinding.supplierSpinner.setEnabled(false);
         mBinding.btnSearchSupplier.setEnabled(false);
         mBinding.btnSearchProduct.setEnabled(false);

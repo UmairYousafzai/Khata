@@ -1,6 +1,7 @@
 package com.example.khataapp.views.authantication;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.khataapp.R;
@@ -314,6 +316,8 @@ public class SignUpFragment extends Fragment {
                 .create();
         alertDialog.show();
 
+        binding.etLocation.requestFocus();
+
         binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -400,6 +404,8 @@ public class SignUpFragment extends Fragment {
                 .setView(binding.getRoot())
                 .create();
         alertDialog.show();
+
+        binding.searchView.requestFocus();
 
         binding.locationRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         LocationListAdapter adapter= new LocationListAdapter();
@@ -611,6 +617,14 @@ public class SignUpFragment extends Fragment {
         else
         {
             return "break";
+        }
+
+    }
+
+    public void openKeyBoard(View view) {
+        if (view.requestFocus()) {
+            InputMethodManager inputMethodManager = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
         }
 
     }

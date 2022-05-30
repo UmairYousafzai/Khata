@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="5"
+                android:weightSum="4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -61,20 +61,7 @@
                     android:focusableInTouchMode="false"
                     />
 
-                <EditText
-                    android:id="@+id/freeQty"
 
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@={Converter.toString(freeQty,item.freeQty,item.freeQty)}"
-                    android:textSize="16sp"
-                    android:hint="@string/free"
-                    android:inputType="none"
-                    android:focusableInTouchMode="false"
-                    android:selectAllOnFocus="true"
-                    android:gravity="center"
-                    />
 
                 <EditText
                     android:id="@+id/etCost"
@@ -82,7 +69,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@={Converter.toString(etCost,item.unitRetail,item.unitRetail)}"
+                    android:text="@={Converter.toString(etCost,item.unitCost,item.unitCost)}"
                     android:textSize="16sp"
                     android:hint="@string/cost"
                     android:inputType="none"

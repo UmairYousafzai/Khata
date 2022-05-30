@@ -94,7 +94,7 @@
                 android:id="@+id/tv_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{@string/stock+item.ctnPcs}"
+                android:text="@{@string/stock+item.ctnPcs,default=Ctn12}"
                 android:textSize="16sp"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toStartOf="@id/btn_edit"

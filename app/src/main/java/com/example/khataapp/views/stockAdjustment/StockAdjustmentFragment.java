@@ -249,7 +249,6 @@ public class StockAdjustmentFragment extends Fragment {
         mBinding.itemSpinner.setEnabled(false);
         mBinding.tvAuthorize.setEnabled(false);
         mBinding.tvPDF.setEnabled(false);
-        mBinding.tvRetrieve.setEnabled(false);
         mBinding.gstCheckBox.setEnabled(false);
         mBinding.newFab.setEnabled(false);
         mBinding.saveFab.setEnabled(false);

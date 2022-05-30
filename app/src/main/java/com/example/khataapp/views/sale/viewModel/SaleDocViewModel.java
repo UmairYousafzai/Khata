@@ -60,7 +60,9 @@ public class SaleDocViewModel extends AndroidViewModel {
     private final ObservableField<String> totalAmount;
     private final ObservableField<String> gstTax;
     private final ObservableField<Boolean> gstFlag;
-    private final ObservableField<String> docNumber;
+    private final ObservableField<String> docNumberBusiness;
+    private String docNumber="";
+
     private boolean gstOldFlg = false;
     private final MutableLiveData<String> actionMutableLiveData;
     private boolean isAuthorizeRequest = false;
@@ -90,7 +92,7 @@ public class SaleDocViewModel extends AndroidViewModel {
         totalAmount = new ObservableField<>("0");
         gstTax = new ObservableField<>("");
         gstFlag = new ObservableField<>(false);
-        docNumber = new ObservableField<>("------");
+        docNumberBusiness = new ObservableField<>("------");
         productHashMap = new HashMap<>();
         itemList = new ArrayList<>();
         getCustomer();
@@ -330,8 +332,8 @@ public class SaleDocViewModel extends AndroidViewModel {
         getServerResponse();
     }
 
-    public ObservableField<String> getDocNumber() {
-        return docNumber;
+    public ObservableField<String> getDocNumberBusiness() {
+        return docNumberBusiness;
     }
 
     public void getPurchaseByDocCode(String docCode) {
@@ -340,7 +342,8 @@ public class SaleDocViewModel extends AndroidViewModel {
     }
 
     private void setFields(Document document) {
-        docNumber.set(document.getDocNo());
+        docNumberBusiness.set(document.getDocNoBusinessWise());
+        docNumber= document.getDocNo();
         date.set(Converter.StringToFormatDate(document.getDocDate()));
         selectedCustomerName.set(document.getPartyName());
         totalAmount.set(String.valueOf(document.getTotalAmount()));
@@ -377,7 +380,8 @@ public class SaleDocViewModel extends AndroidViewModel {
                     document.setStatus(authorizeKey);
                     document.setDocDate(date.get());
                     if (actionMutableLiveData.getValue().equals("UPDATE")) {
-                        document.setDocNo(docNumber.get());
+                        document.setDocNoBusinessWise(docNumberBusiness.get());
+                        document.setDocNo(docNumber);
                     } else {
                         document.setDocNo("");
 
@@ -387,12 +391,18 @@ public class SaleDocViewModel extends AndroidViewModel {
                     repository.saveSaleDocument(document);
 
                 } else {
+                    showProgressDialog.setValue(false);
+
                     toastMessage.setValue("Please Enter Products");
                 }
             } else {
+                showProgressDialog.setValue(false);
+
                 toastMessage.setValue("Please select Customer");
             }
         } else {
+            showProgressDialog.setValue(false);
+
             toastMessage.setValue("Please select Date");
         }
 
@@ -432,7 +442,8 @@ public class SaleDocViewModel extends AndroidViewModel {
                                 clearData();
                             } else {
                                 isEdit.setValue(false);
-                                docNumber.set(saveDocumentResponse.getDocument().getDocNoBusinessWise());
+                                docNumberBusiness.set(saveDocumentResponse.getDocument().getDocNoBusinessWise());
+                                docNumber= saveDocumentResponse.getDocument().getDocNo();
                                 actionMutableLiveData.setValue("UPDATE");
                             }
                         }
@@ -459,7 +470,8 @@ public class SaleDocViewModel extends AndroidViewModel {
     }
 
     private void clearData() {
-        docNumber.set("");
+        docNumber="";
+        docNumberBusiness.set("");
         selectedCustomerName.set("");
         adapter.clearList();
         itemList.clear();
