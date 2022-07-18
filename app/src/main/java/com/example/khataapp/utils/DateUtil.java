@@ -20,6 +20,7 @@ public class DateUtil {
 
     public String getDate()
     {
+        //date
         Date date= Calendar.getInstance().getTime();
 
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
