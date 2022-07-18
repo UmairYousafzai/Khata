@@ -256,6 +256,7 @@ public class SaleDocFragment extends Fragment {
         AlertDialog alertDialog= new AlertDialog.Builder(requireContext()).setView(dialogBinding.getRoot())
                 .setCancelable(false)
                 .create();
+        viewModel.getItemMutableLiveData().getValue().setSchemeQty(0);
 
         dialogBinding.setViewModel(viewModel);
 

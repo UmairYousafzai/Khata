@@ -90,5 +90,9 @@
     <string name="attached_bill">Attached Bill</string>
     <string name="item">Item</string>
     <string name="stock_adjustment">Stock Adjustment</string>
+    <string name="scheme">Scheme</string>
+    <string name="free_qty">Free Qty</string>
+    <string name="ctn">CTN</string>
+    <string name="s_qty">S-Qty</string>
 
 </resources>

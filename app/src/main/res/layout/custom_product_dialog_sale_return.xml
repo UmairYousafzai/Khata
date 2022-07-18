@@ -100,7 +100,7 @@
                 android:textColor="@color/black"
                 android:selectAllOnFocus="true"
 
-                android:text="@={Converter.toString(free,viewModel.itemMutableLiveData.freeQty,viewModel.itemMutableLiveData.freeQty)}"
+                android:text="@={Converter.toString(free,viewModel.itemMutableLiveData.schemeQty,viewModel.itemMutableLiveData.schemeQty)}"
 
                 />
 

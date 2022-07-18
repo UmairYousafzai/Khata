@@ -387,7 +387,7 @@
                 android:id="@+id/tv_sub_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{Converter.FormatDoubleNumbers(viewModel.subTotalAmount),default=RSamodfdsdsdsddsdsdfddvdun}"
+                android:text="@{Converter.FormatDoubleNumbers(viewModel.subTotalAmount),default=1234}"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="@id/tv__sub_total_heading"
                 app:layout_constraintStart_toEndOf="@id/tv__sub_total_heading"
@@ -414,7 +414,7 @@
                 android:id="@+id/tv_tax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{Converter.FormatDoubleNumbers(viewModel.gstTax),default=RSamodfdsdsdsddsdsdfddvdun}"
+                android:text="@{Converter.FormatDoubleNumbers(viewModel.gstTax),default=1234}"
                 android:textSize="18sp"
                 app:layout_constraintTop_toTopOf="@id/tv_tax_heading"
                 app:layout_constraintStart_toEndOf="@id/tv_tax_heading"
@@ -444,7 +444,7 @@
                 android:id="@+id/tv_all_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{Converter.FormatDoubleNumbers(viewModel.totalAmount),default=RSamodfdsdsdsddsdsdfddvdun}"
+                android:text="@{Converter.FormatDoubleNumbers(viewModel.totalAmount),default=1234}"
 
                 android:textSize="18sp"
 

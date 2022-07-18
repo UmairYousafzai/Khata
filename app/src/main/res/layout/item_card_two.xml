@@ -101,7 +101,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{Converter.FormatDoubleNumbers(item.amount),default=RSamodfdsdsdsddsdsdfddvdun}"
+                    android:text="@{Converter.FormatDoubleNumbers(item.amount),default=1234}"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:gravity="center"

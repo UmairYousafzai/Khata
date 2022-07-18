@@ -120,7 +120,7 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
         if (item != null) {
             adapter.removeItem(item);
             isEdit.setValue(true);
-
+            itemMutableLiveData.setValue(null);
         }
     }
 
@@ -348,7 +348,13 @@ public class SaleReturnDocViewModel extends AndroidViewModel {
         totalAmount.set(String.valueOf(document.getTotalAmount()));
         subTotalAmount.set(String.valueOf(document.getTotalAmount()));
         adapter.setAuthenticate(document.getStatus().equals("3"));
-        adapter.setItemList(document.getItems());
+        List<Item> list= new ArrayList<>();
+        for (Item model:document.getItems())
+        {
+            model.setSchemeQty(model.getFreeQty());
+            list.add(model);
+        }
+        adapter.setItemList(list);
         actionMutableLiveData.setValue("UPDATE");
         customerCode=document.getSupplierCode();
 

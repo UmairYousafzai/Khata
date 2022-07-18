@@ -96,11 +96,12 @@
                 android:id="@+id/free"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:inputType="none"
+                android:focusable="false"
                 android:textColor="@color/black"
                 android:selectAllOnFocus="true"
 
-                android:text="@={Converter.toString(free,viewModel.itemMutableLiveData.freeQty,viewModel.itemMutableLiveData.freeQty)}"
+                android:text="@={Converter.toString(free,viewModel.itemMutableLiveData.schemeQty,viewModel.itemMutableLiveData.schemeQty)}"
 
                 />
 

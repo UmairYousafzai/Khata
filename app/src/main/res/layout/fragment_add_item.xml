@@ -228,6 +228,69 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_scheme_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/scheme"
+                    xmnls:boxBackgroundColor="@color/white"
+                    app:hintTextColor="@color/app_theme_color"
+                    app:startIconTint="@color/app_theme_color"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/et_cost_price_layout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/et_free_qty_layout"
+                    android:elevation="5dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_scheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:nextFocusDown="@+id/edit_text_person_in_contact_phone"
+                        android:singleLine="true"
+                        android:inputType="numberDecimal"
+                        android:text="@{String.valueOf(item.scheme)}"
+                        android:selectAllOnFocus="true"
+
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/app_theme_color" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_free_qty_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/free_qty"
+                    xmnls:boxBackgroundColor="@color/white"
+                    xmnls:hintTextColor="@color/app_theme_color"
+                    app:startIconTint="@color/app_theme_color"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/et_sale_price_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/et_scheme_layout"
+                    android:elevation="5dp"
+
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_free_qty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:nextFocusDown="@+id/edit_text_person_in_contact_phone"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:text="@{String.valueOf(item.freeQty)}"
+                        android:selectAllOnFocus="true"
+
+                        android:textColor="@color/font_color_dark" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/btn_supplier"
@@ -239,7 +302,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_cost_price_layout" />
+                    app:layout_constraintTop_toBottomOf="@id/et_scheme_layout" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/supplier_spinner_layout"

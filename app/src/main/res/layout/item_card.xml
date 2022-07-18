@@ -28,6 +28,7 @@
                 android:id="@+id/image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:src="@drawable/ic_placeholder"
                 app:imageUrl="@{item.productImage}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

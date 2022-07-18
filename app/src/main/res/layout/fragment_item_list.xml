@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
                 android:background="@color/white"
-
+                tools:listitem="@layout/item_card"
                 app:setAdapter="@{viewModel.adapter}"
                />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

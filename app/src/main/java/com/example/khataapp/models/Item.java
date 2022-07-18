@@ -5,9 +5,11 @@ import android.os.Parcelable;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+
 import com.example.khataapp.BR;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Item extends BaseObservable implements Parcelable {
@@ -56,7 +58,7 @@ public class Item extends BaseObservable implements Parcelable {
     @SerializedName("UnitRetail")
     @Expose
     private double unitRetail;
-    @SerializedName("CtnPcs")
+    @SerializedName("CtnSize")
     @Expose
     private double ctnPcs;
     @SerializedName("SupplierCode")
@@ -108,8 +110,11 @@ public class Item extends BaseObservable implements Parcelable {
     private double qty = 0;
     @SerializedName("FreeQty")
     @Expose
-    @Bindable
+
     private double freeQty;
+    @SerializedName("Scheme")
+    @Expose
+    private double scheme;
     @SerializedName("Cost")
     @Expose
     @Bindable
@@ -120,11 +125,21 @@ public class Item extends BaseObservable implements Parcelable {
     @SerializedName("Amount")
     @Expose
     private double amount;
+    @SerializedName("FreeCtn")
+    @Expose
+    @Bindable
+    private String freeCtn = "";
+    @SerializedName("CtnQtY")
+    @Expose
+    @Bindable
+    private String ctnQtY = "";
+
+    @Bindable
+    private double schemeQty;
 
     public static boolean IS_PURCHASE = true;
 
     public Item() {
-
     }
 
 
@@ -160,9 +175,13 @@ public class Item extends BaseObservable implements Parcelable {
         btn_action = in.readInt();
         qty = in.readDouble();
         freeQty = in.readDouble();
+        scheme = in.readDouble();
         cost = in.readDouble();
         discount = in.readDouble();
         amount = in.readDouble();
+        freeCtn = in.readString();
+        ctnQtY = in.readString();
+        schemeQty = in.readDouble();
     }
 
     @Override
@@ -198,9 +217,13 @@ public class Item extends BaseObservable implements Parcelable {
         dest.writeInt(btn_action);
         dest.writeDouble(qty);
         dest.writeDouble(freeQty);
+        dest.writeDouble(scheme);
         dest.writeDouble(cost);
         dest.writeDouble(discount);
         dest.writeDouble(amount);
+        dest.writeString(freeCtn);
+        dest.writeString(ctnQtY);
+        dest.writeDouble(schemeQty);
     }
 
     @Override
@@ -227,15 +250,28 @@ public class Item extends BaseObservable implements Parcelable {
     public void setQty(double qty) {
         if (this.qty != qty) {
             this.qty = qty;
+
+            setCtnQtY(calculateCtnQty(qty));
+            if (this.qty >= scheme) {
+                setSchemeQty(calculateSchemeQty(qty));
+            }
             if (IS_PURCHASE) {
                 setAmount(qty * unitCost);
-
             } else {
                 setAmount(qty * unitRetail);
-
             }
+
+
             notifyPropertyChanged(BR.qty);
         }
+    }
+
+    private double calculateSchemeQty(double qty) {
+        int noOfScheme = (int) (qty / scheme);
+        int freeItems = (int) (noOfScheme * freeQty);
+
+        return freeItems;
+
     }
 
 
@@ -244,10 +280,8 @@ public class Item extends BaseObservable implements Parcelable {
     }
 
     public void setFreeQty(double freeQty) {
-        if (this.freeQty != freeQty) {
-            this.freeQty = freeQty;
-            notifyPropertyChanged(BR.freeQty);
-        }
+        this.freeQty = freeQty;
+
     }
 
     public double getCost() {
@@ -388,9 +422,8 @@ public class Item extends BaseObservable implements Parcelable {
 
     public void setUnitCost(double unitCost) {
         this.unitCost = unitCost;
-        if (IS_PURCHASE)
-        {
-            setAmount(this.qty*unitCost);
+        if (IS_PURCHASE) {
+            setAmount(this.qty * unitCost);
 
         }
     }
@@ -403,9 +436,8 @@ public class Item extends BaseObservable implements Parcelable {
     public void setUnitRetail(double unitRetail) {
         this.unitRetail = unitRetail;
         this.cost = unitRetail;
-        if (!IS_PURCHASE)
-        {
-            setAmount(qty*unitRetail);
+        if (!IS_PURCHASE) {
+            setAmount(qty * unitRetail);
         }
     }
 
@@ -521,5 +553,73 @@ public class Item extends BaseObservable implements Parcelable {
         this.userID = userID;
     }
 
+    public double getScheme() {
+        return scheme;
+    }
 
+    public void setScheme(double scheme) {
+        this.scheme = scheme;
+    }
+
+    public String getFreeCtn() {
+        return freeCtn;
+    }
+
+    public void setFreeCtn(String freeCtn) {
+        if (!this.freeCtn.equals(freeCtn)) {
+
+            this.freeCtn = freeCtn;
+        }
+        notifyPropertyChanged(BR.freeCtn);
+    }
+
+    public String getCtnQtY() {
+
+        return ctnQtY;
+    }
+
+    public void setCtnQtY(String ctnQtY) {
+        if (!this.ctnQtY.equals(ctnQtY)) {
+            this.ctnQtY = ctnQtY;
+
+        }
+        notifyPropertyChanged(BR.ctnQtY);
+    }
+
+    public double getSchemeQty() {
+        return schemeQty;
+    }
+
+    public void setSchemeQty(double schemeQty) {
+        if (this.schemeQty != schemeQty) {
+            this.schemeQty = schemeQty;
+            setFreeCtn(calculateSchemeCtnQty(schemeQty));
+            notifyPropertyChanged(BR.schemeQty);
+        }
+    }
+
+    private String calculateCtnQty(double qty) {
+
+
+        int ctn = 0;
+        int pcs = 0;
+        if (ctnPcs != 0.0) {
+            ctn = ((int) qty / (int) ctnPcs);
+            pcs = ((int) qty % (int) ctnPcs);
+        }
+
+        return ctn + "-" + pcs;
+    }
+
+    private String calculateSchemeCtnQty(double qty) {
+
+        int ctn = 0;
+        int pcs = 0;
+        if (ctnPcs != 0.0) {
+            ctn = ((int) qty / (int) ctnPcs);
+            pcs = ((int) qty % (int) ctnPcs);
+        }
+
+        return ctn + "-" + pcs;
+    }
 }

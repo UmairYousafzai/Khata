@@ -223,6 +223,14 @@ public class AddItemFragment extends Fragment {
 
                                 item.setUnitRetail(Double.parseDouble(mBinding.etSalePrice.getText().toString()));
                             }
+                            if (mBinding.etScheme.getText().toString().length() > 0) {
+
+                                item.setScheme(Double.parseDouble(mBinding.etScheme.getText().toString()));
+                            }
+                            if (mBinding.etFreeQty.getText().toString().length() > 0) {
+
+                                item.setFreeQty(Double.parseDouble(mBinding.etFreeQty.getText().toString()));
+                            }
 
                             if (departmentNameList.size() != 0) {
                                 String name = mBinding.departmentSpinner.getText().toString();

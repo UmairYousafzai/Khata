@@ -173,6 +173,7 @@ public class ProductSaleRecyclerAdapter extends RecyclerView.Adapter<ProductSale
         List<Item> list = new ArrayList<>();
         for (Item model : itemList) {
             model.setProductImage("");
+            model.setFreeQty(model.getSchemeQty());
             list.add(model);
         }
         return list;
@@ -205,11 +206,11 @@ public class ProductSaleRecyclerAdapter extends RecyclerView.Adapter<ProductSale
                     beforeEditItem.setUnitRetail(itemList.get(getAdapterPosition()).getUnitRetail());
                     beforeEditItem.setQty(itemList.get(getAdapterPosition()).getQty());
                     mBinding.etCost.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    mBinding.freeQty.setInputType(InputType.TYPE_CLASS_NUMBER);
+//                    mBinding.freeQty.setInputType(InputType.TYPE_CLASS_NUMBER);
                     mBinding.qty.setInputType(InputType.TYPE_CLASS_NUMBER);
                     mBinding.etCost.setFocusableInTouchMode(true);
                     mBinding.qty.setFocusableInTouchMode(true);
-                    mBinding.freeQty.setFocusableInTouchMode(true);
+//                    mBinding.freeQty.setFocusableInTouchMode(true);
                     mBinding.itemCardTwoCard.setCardBackgroundColor(Color.parseColor("#F2F2F2"));
                     mBinding.btnDone.setVisibility(View.VISIBLE);
                     mBinding.btnEdit.setVisibility(View.GONE);
@@ -228,11 +229,11 @@ public class ProductSaleRecyclerAdapter extends RecyclerView.Adapter<ProductSale
                 @Override
                 public void onClick(View v) {
                     mBinding.etCost.setInputType(InputType.TYPE_NULL);
-                    mBinding.freeQty.setInputType(InputType.TYPE_NULL);
+//                    mBinding.freeQty.setInputType(InputType.TYPE_NULL);
                     mBinding.qty.setInputType(InputType.TYPE_NULL);
                     mBinding.etCost.setFocusableInTouchMode(false);
                     mBinding.qty.setFocusableInTouchMode(false);
-                    mBinding.freeQty.setFocusableInTouchMode(false);
+//                    mBinding.freeQty.setFocusableInTouchMode(false);
                     mBinding.itemCardTwoCard.setCardBackgroundColor(Color.WHITE);
                     mBinding.btnEdit.setVisibility(View.VISIBLE);
                     mBinding.btnDone.setVisibility(View.GONE);

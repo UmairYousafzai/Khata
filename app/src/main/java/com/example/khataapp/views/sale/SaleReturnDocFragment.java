@@ -238,6 +238,7 @@ public class SaleReturnDocFragment extends Fragment {
                 .setCancelable(false)
                 .create();
 
+        viewModel.getItemMutableLiveData().getValue().setSchemeQty(0);
         dialogBinding.setViewModel(viewModel);
 
         alertDialog.show();

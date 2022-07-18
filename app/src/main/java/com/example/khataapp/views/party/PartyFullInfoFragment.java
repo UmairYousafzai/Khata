@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import com.example.khataapp.R;
 import com.example.khataapp.databinding.FragmentPartyFullInfoBinding;
 import com.example.khataapp.models.Party;
+import com.example.khataapp.utils.MessageUtil;
 import com.example.khataapp.viewModel.PartyViewModel;
 
 
@@ -103,25 +104,23 @@ public class PartyFullInfoFragment extends Fragment {
 
         mBinding.tvDialogOpener1.setOnClickListener(v -> navController.navigate(R.id.action_partyFullInfoFragment_to_setReminderBottomSheetDialogFragment));
 
-        mBinding.btnPayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        mBinding.btnPayment.setOnClickListener(view -> {
 
-                PartyFullInfoFragmentDirections.ActionPartyFullInfoFragmentToAddAmountFragment action =
-                        PartyFullInfoFragmentDirections.actionPartyFullInfoFragmentToAddAmountFragment(party);
+            PartyFullInfoFragmentDirections.ActionPartyFullInfoFragmentToAddAmountFragment action =
+                    PartyFullInfoFragmentDirections.actionPartyFullInfoFragmentToAddAmountFragment(party);
 
-                navController.navigate(action);
-            }
+            navController.navigate(action);
         });
-        mBinding.btnReceipt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        mBinding.btnReceipt.setOnClickListener(view -> {
 
-                PartyFullInfoFragmentDirections.ActionPartyFullInfoFragmentToAddAmountFragment action =
-                        PartyFullInfoFragmentDirections.actionPartyFullInfoFragmentToAddAmountFragment(party);
+            PartyFullInfoFragmentDirections.ActionPartyFullInfoFragmentToAddAmountFragment action =
+                    PartyFullInfoFragmentDirections.actionPartyFullInfoFragmentToAddAmountFragment(party);
 
-                navController.navigate(action);
-            }
+            navController.navigate(action);
+        });
+
+        mBinding.btnWhatsappReminder.setOnClickListener(view -> {
+            MessageUtil.getInstance().sendwts(requireContext(),party.getMobile());
         });
     }
 

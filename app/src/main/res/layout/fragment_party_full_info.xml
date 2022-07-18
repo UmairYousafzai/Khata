@@ -121,7 +121,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/tv_reports"
                 android:layout_marginStart="5dp"
-                app:layout_constraintEnd_toStartOf="@id/btn_reminder"
+                app:layout_constraintEnd_toStartOf="@id/btn_whatsapp_reminder"
 
                 />
 
@@ -137,7 +137,7 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <ImageButton
-                android:id="@+id/btn_reminder"
+                android:id="@+id/btn_whatsapp_reminder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_whatsapp_svgrepo_com"
@@ -155,9 +155,9 @@
                 android:layout_height="wrap_content"
                 android:text="Reminder"
                 android:textColor="@color/font_color_dark"
-                app:layout_constraintTop_toBottomOf="@id/btn_reminder"
-                app:layout_constraintStart_toStartOf="@id/btn_reminder"
-                app:layout_constraintEnd_toEndOf="@id/btn_reminder"
+                app:layout_constraintTop_toBottomOf="@id/btn_whatsapp_reminder"
+                app:layout_constraintStart_toStartOf="@id/btn_whatsapp_reminder"
+                app:layout_constraintEnd_toEndOf="@id/btn_whatsapp_reminder"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <ImageButton
@@ -169,7 +169,7 @@
                 android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_reminder"
+                app:layout_constraintStart_toEndOf="@id/btn_whatsapp_reminder"
                 app:layout_constraintBottom_toTopOf="@id/tv_sms"
                 android:layout_marginStart="5dp" />
 

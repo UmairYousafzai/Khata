@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="5"
+                android:weightSum="7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -66,15 +66,41 @@
                     android:focusableInTouchMode="false"
                     />
 
-                <EditText
-                    android:id="@+id/freeQty"
+                <TextView
+                    android:id="@+id/ctn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@={item.ctnQtY}"
+                    android:textSize="16sp"
+                    android:hint="0-0"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    />
+
+                <TextView
+                    android:id="@+id/schemeqty"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(item.schemeQty)}"
+                    android:textSize="16sp"
+                    android:hint="@string/s_qty"
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    />
+
+                <TextView
+                    android:id="@+id/schemeCtn"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@={Converter.toString(freeQty,item.freeQty,item.freeQty)}"
+                    android:text="@={item.freeCtn}"
                     android:textSize="16sp"
-                    android:hint="@string/free"
+                    android:hint="0-0"
                     android:inputType="none"
                     android:focusableInTouchMode="false"
                     android:selectAllOnFocus="true"
@@ -89,7 +115,7 @@
                     android:layout_weight="1"
                     android:text="@={Converter.toString(etCost,item.unitRetail,item.unitRetail)}"
                     android:textSize="16sp"
-                    android:hint="@string/cost"
+                    android:hint="@string/rate"
                     android:inputType="none"
                     android:gravity="center"
                     android:focusableInTouchMode="false"
