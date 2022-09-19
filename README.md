@@ -1,0 +1,7 @@
+# Khata Inventory Management system with link to the main web module![All](https://user-images.githubusercontent.com/91127248/191057265-280aef89-1766-4a4d-86c0-274d4059d03a.jpg)
+![Cash Register](https://user-images.githubusercontent.com/91127248/191057273-6c92f4b2-4d4b-4156-a5d8-d96b301a9169.jpg)
+![Customers](https://user-images.githubusercontent.com/91127248/191057276-877c02a2-40b3-4087-b504-547a7a4a1f4b.jpg)
+![Digi Cash](https://user-images.githubusercontent.com/91127248/191057281-164d1e67-38d9-4bd3-99e8-3455c9849bb0.jpg)
+![More Business Detail](https://user-images.githubusercontent.com/91127248/191057285-e817a0ed-a6f8-4ead-b948-119b9a3319e3.jpg)
+![More](https://user-images.githubusercontent.com/91127248/191057288-624631c1-773a-4e70-a7ee-42235694613b.jpg)
+![Search Filter](https://user-images.githubusercontent.com/91127248/191057291-4f616d7f-6042-4092-8d45-80c2fdf9be63.jpg)
