@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private static Retrofit retrofitClient;
-    private static final String BASE_URL = "https://easyapi.serveu.pk/";
+    private static final String BASE_URL = "";
     private static ApiClient mInstance;
 
 
